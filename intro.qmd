@@ -1,9 +1,15 @@
-# Introduction
+# How to Use this Book
 
-This is a book created from markdown and executable code.
+This book explores data on opportunity gaps at University of California San Diego (UCSD). 
 
-See @knuth84 for additional discussion of literate programming.
+## Data Sources
 
-```{r}
-1 + 1
-```
+### UCUES- University of California Undergraduate Experience Survey
+* More on response rates and sample sizes
+
+* More on group definitions
+
+* More on exploring the data yourself
+
+
+### UCGSES University of California Graduate Student Experience Survey

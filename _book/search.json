@@ -14,6 +14,13 @@
     "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
   },
   {
+    "objectID": "C1_Affordable_Learning.html#undergraduates",
+    "href": "C1_Affordable_Learning.html#undergraduates",
+    "title": "2  Affordable Learning and Financial Support",
+    "section": "2.1 Undergraduates",
+    "text": "2.1 Undergraduates\nAll data come from UCUES\n\n2.1.1 Food Security\nStudent respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions.\nFor more information on this measure, please visit UCOP Measuring Food Insecurity\n\n2.1.1.1 Food Security over Time\nThese visuals display the percentage respondents who are “food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security.\nThe percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD’s food security rates are slightly higher or equal to the overal UC system rate.\n\n\n\n\n\n\n\n2.1.1.2 Food Security Differences by Group\nFocusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average.\nConversely, the food security rates of American Indian students (50%), First Generation students (49%) Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), are less than the student body average. For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don’t recieve Pell Grants (64%) and African American students (44%)."
+  },
+  {
     "objectID": "summary.html",
     "href": "summary.html",
     "title": "3  Summary",
@@ -26,19 +33,5 @@
     "title": "References",
     "section": "",
     "text": "Knuth, Donald E. 1984. “Literate Programming.” Comput.\nJ. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97."
-  },
-  {
-    "objectID": "chapter_1.html",
-    "href": "chapter_1.html",
-    "title": "2  Affordable Learning and Financial Support",
-    "section": "",
-    "text": "3 Affordable Learning and Financial Support\nThis is a chapter about affordable learning and financial support at University of California San Diego"
-  },
-  {
-    "objectID": "chapter_1.html#undergraduates",
-    "href": "chapter_1.html#undergraduates",
-    "title": "2  Affordable Learning and Financial Support",
-    "section": "2.1 Undergraduates",
-    "text": "2.1 Undergraduates\nAll data come from UCUES\n\n2.1.1 Food Security\nStudent respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions.\nFor more information on this measure, please visit UCOP Measuring Food Insecurity\n\n2.1.1.1 Food Security over Time\nThese visuals display the percentage respondents who are “food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security.\nThe percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD’s food security rates are slightly higher or equal to the overal UC system rate.\n\n\nWarning: Unknown levels in `f`: Food insecure\n\nWarning: Unknown levels in `f`: Food insecure\n\n\n`summarise()` has grouped output by 'year'. You can override using the\n`.groups` argument.\n`summarise()` has grouped output by 'year'. You can override using the\n`.groups` argument.\nScale for 'y' is already present. Adding another scale for 'y', which will\nreplace the existing scale.\n\n\n\n\n\n\n\n2.1.1.2 Food Security Differences by Group\nFocusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average.\nConversely, the food security rates of American Indian students (50%), First Generation students (49%) Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), are less than the student body average. For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don’t recieve Pell Grants (64%) and African American students (44%).\n\n\nWarning: Unknown levels in `f`: Food insecure\n\nWarning: Unknown levels in `f`: Food insecure\n\n\n`summarise()` has grouped output by 'comp', 'group_label'. You can override\nusing the `.groups` argument.\n\n\nWarning: Unknown levels in `f`: Food insecure\n\nWarning: Unknown levels in `f`: Food insecure\n\n\n`summarise()` has grouped output by 'comp', 'group_label'. You can override\nusing the `.groups` argument.\nScale for 'y' is already present. Adding another scale for 'y', which will\nreplace the existing scale."
   }
 ]
