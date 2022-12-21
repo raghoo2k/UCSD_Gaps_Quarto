@@ -1,0 +1,25 @@
+---
+title: "Affordable Learning and Financial Support"
+editor: visual
+---
+
+# Affordable Learning and Financial Support
+
+This is a chapter about affordable learning and financial support at University of California San Diego
+
+```{r}
+#| label: load-packages
+#| include: false
+library("tidyverse")
+#install.packages("palmerpenguins")
+```
+
+```{r}
+#| label: scatterplot
+#| echo: FALSE
+
+ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
+  geom_point(alpha = 0.5, size = 2) +
+  scale_color_viridis_c() +
+  theme_minimal()
+```
