@@ -55,17 +55,22 @@ All data come from UCUES
 
 ### Food Security
 
-Student respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions. For more information on this measure, please visit [UCOP Measuring Food Insecurity](https://www.universityofcalifornia.edu/sites/default/files/measuring-food-insecurity.pdf)
+Student respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions. 
 
-These visuals display the percentage respondents who are "food secure."
+For more information on this measure, please visit [UCOP Measuring Food Insecurity](https://www.universityofcalifornia.edu/sites/default/files/measuring-food-insecurity.pdf)
 
-### Change over time (All Students)
 
-The percent of undergraduates who are food secure has remained relatively stable over time,and follows the overall UC pattern.
+#### Food Security over Time
+
+These visuals display the percentage respondents who are "food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security. 
+
+
+The percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD's food security rates are slightly higher or equal to the overal UC system rate. 
 
 ```{r}
 #| label: food_secure_ug_overtime
 #| echo: FALSE
+#| warning: FALSE
 
 foodsecure_uccomp<-ucall%>%
   filter(q=="Food Security"&campus=="UC")%>%
@@ -102,12 +107,39 @@ direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 
 ```
 
-```{r}
-#| label: scatterplot
-#| echo: FALSE
 
-ggplot(mpg, aes(x = hwy, y = cty, color = cyl)) +
-  geom_point(alpha = 0.5, size = 2) +
-  scale_color_viridis_c() +
-  theme_minimal()
+#### Food Security Differences by Group
+
+Focusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average. 
+
+Conversely, the food security rates of American Indian students (50%), First Generation students (49%) Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), are less than the student body average. For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don't recieve Pell Grants (64%) and African American students (44%).
+
+```{r}
+#| label: food_secure_ug_differences_2022
+#| echo: FALSE
+#| warning: FALSE
+foodsecure_all_2022<-es%>%
+filter(q=="Food Security"&year=="2022"&comp=="All")%>%
+  clean_vibe_foodsecure(.)%>%
+collapse_positive_vibe(.)
+
+foodsecure_2022<-es%>%
+  filter(q=="Food Security"&year=="2022")%>%
+  clean_vibe_foodsecure(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=foodsecure_all_2022$value)%>%
+  create_diff_cols(.)
+
+  
+plot_lollipop_div(foodsecure_2022)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.15,.1),
+  #second axis- real value
+  sec.axis = sec_axis(~ . +foodsecure_all_2022$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="Food secure",
+       subtitle ="UCSD Undergrads who are food secure",
+       y=lab_diff_axis_ug,
+       caption=caption_ug)
 ```
