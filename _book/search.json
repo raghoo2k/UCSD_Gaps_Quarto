@@ -30,8 +30,15 @@
   {
     "objectID": "chapter_1.html",
     "href": "chapter_1.html",
-    "title": "2  Chapter 1",
+    "title": "2  Affordable Learning and Financial Support",
     "section": "",
-    "text": "3 Chapter 1 Affordable Learning and Financial Support\nThis is a chapter about affordable learning and financial support at University of California San Diego"
+    "text": "3 Affordable Learning and Financial Support\nThis is a chapter about affordable learning and financial support at University of California San Diego"
+  },
+  {
+    "objectID": "chapter_1.html#undergraduates",
+    "href": "chapter_1.html#undergraduates",
+    "title": "2  Affordable Learning and Financial Support",
+    "section": "3.1 Undergraduates",
+    "text": "3.1 Undergraduates\nAll data come from UCUES\n\n3.1.1 Food Security\nStudent respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions. For more information on this measure, please visit UCOP Measuring Food Insecurity\nThese visuals display the percentage respondents who are “food secure.”\n\n\n3.1.2 Change over time (All Students)\nThe percent of undergraduates who are food secure has remained relatively stable over time,and follows the overall UC pattern.\n\n\nWarning: Unknown levels in `f`: Food insecure\n\nWarning: Unknown levels in `f`: Food insecure\n\n\n`summarise()` has grouped output by 'year'. You can override using the\n`.groups` argument.\n`summarise()` has grouped output by 'year'. You can override using the\n`.groups` argument.\nScale for 'y' is already present. Adding another scale for 'y', which will\nreplace the existing scale."
   }
 ]

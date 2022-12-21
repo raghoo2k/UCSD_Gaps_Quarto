@@ -3,15 +3,103 @@ title: "Affordable Learning and Financial Support"
 editor: visual
 ---
 
-# Affordable Learning and Financial Support
-
 This is a chapter about affordable learning and financial support at University of California San Diego
 
 ```{r}
-#| label: load-packages
-#| include: false
-library("tidyverse")
-#install.packages("palmerpenguins")
+#| label: run_scripts
+#| include: FALSE
+
+source("rscripts/load_packages.R", local = knitr::knit_global())
+
+source("rscripts/functions_clean_data.R" ,local = knitr::knit_global())
+
+source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
+
+```
+
+```{r}
+#| label: load_data
+#| include: FALSE
+
+#ucues
+es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+  filter(wg=="Affordable")%>%
+  label_groups(.)
+
+ucall<-read_excel("data/ucues_alluc.xlsx")
+
+gses<-read_excel("data/UCGSES.xlsx")%>%
+  filter(wg=="Affordable")%>%
+  label_groups(.)
+
+ucall_gses<-read_excel("data/gses_alluc.xlsx")
+
+```
+
+```{r}
+#| label: viz_captions
+#| include: FALSE
+
+#Diff labels
+lab_diff_axis_ug<-"Difference from all undergraduate average"
+lab_diff_axis_grad<-"Difference from all graduate student average"
+
+#caption
+caption_ug<-"Source: UCUES 2022, UC Infocenter"
+caption_grad<-"Source: GSES 2021 UC Infocenter"
+```
+
+## Undergraduates
+
+All data come from UCUES
+
+### Food Security
+
+Student respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions. For more information on this measure, please visit [UCOP Measuring Food Insecurity](https://www.universityofcalifornia.edu/sites/default/files/measuring-food-insecurity.pdf)
+
+These visuals display the percentage respondents who are "food secure."
+
+### Change over time (All Students)
+
+The percent of undergraduates who are food secure has remained relatively stable over time,and follows the overall UC pattern.
+
+```{r}
+#| label: food_secure_ug_overtime
+#| echo: FALSE
+
+foodsecure_uccomp<-ucall%>%
+  filter(q=="Food Security"&campus=="UC")%>%
+  clean_vibe_foodsecure(.)%>%
+  group_by(year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="positive")%>%
+  ungroup(.)%>%
+  mutate(campus="All UC")
+
+food_secure_time<-es%>%
+  #select question and comparison group - leave all years
+  filter(q=="Food Security"&comp=="All")%>%
+  clean_vibe_foodsecure(.)%>%
+  group_by(year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="positive")%>%
+  ungroup(.)%>%
+  mutate(campus="UCSD")%>%
+  bind_rows(., foodsecure_uccomp)
+
+  
+  g_foodsecure_time<-plot_time(food_secure_time)+
+  #need to tweak scale because otherwise it's too zoomed in
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(.5,.75))+
+   labs(title="Food Secure",
+        caption=caption_ug,
+      subtitle = 'Percent of Food Secure respondents',
+         x="UCUES Survey Year")
+
+direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
+
 ```
 
 ```{r}
