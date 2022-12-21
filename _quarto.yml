@@ -8,7 +8,7 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - chapter_1.qmd
+    - C1_Affordable_Learning.qmd
     - summary.qmd
     - references.qmd
 
