@@ -55,17 +55,15 @@ All data come from UCUES
 
 ### Food Security
 
-Student respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions. 
+Student respondents are assigned a food security level: very low food security, low food security, or food secure, based on their responses to six questions.
 
 For more information on this measure, please visit [UCOP Measuring Food Insecurity](https://www.universityofcalifornia.edu/sites/default/files/measuring-food-insecurity.pdf)
 
-
 #### Food Security over Time
 
-These visuals display the percentage respondents who are "food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security. 
+These visuals display the percentage respondents who are "food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security.
 
-
-The percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD's food security rates are slightly higher or equal to the overal UC system rate. 
+The percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD's food security rates are slightly higher or equal to the overal UC system rate.
 
 ```{r}
 #| label: food_secure_ug_overtime
@@ -107,10 +105,9 @@ direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 
 ```
 
-
 #### Food Security Differences by Group
 
-Focusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average. 
+Focusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average.
 
 Conversely, the food security rates of American Indian students (50%), First Generation students (49%) Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), are less than the student body average. For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don't recieve Pell Grants (64%) and African American students (44%).
 
@@ -143,3 +140,225 @@ plot_lollipop_div(foodsecure_2022)+
        y=lab_diff_axis_ug,
        caption=caption_ug)
 ```
+
+
+### Housing Costs
+
+The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions future versions of this document can add to provide historical context. 
+
+The question block prompts: "For the following statements, please indicate whether the statement was never true, sometimes true, or often true for you during the current academic year:" 
+
+"I was unable to pay all the cost of my housing on time."
+
+"I was worried I would not have enough money to cover the cost of my housing" 
+
+Respondents could select "Never True", "Sometime True" and "Often True." For consistency in selecting positive responses - I focus on "Never True" responses- meaning that respondents never were unable to pay (always able to pay) and never worried about their housing costs.
+
+```{r}
+#| label: unable_pay_house_ug_diff_2022
+#| echo: FALSE
+#| warning: FALSE
+payhousingall_2022<-es%>%
+filter(q=="I was unable to pay all of the cost of my housing on time."&year=="2022"&comp=="All")%>%
+  clean_vibe_true3(.)%>%
+collapse_positive_vibe(.)
+
+
+
+payhousing_2022<-es%>%
+  filter(q=="I was unable to pay all of the cost of my housing on time."&year=="2022")%>%
+   clean_vibe_true3(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=payhousingall_2022$value)%>%
+  create_diff_cols(.)
+
+  
+plot_lollipop_div(payhousing_2022)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.15,.15),
+  #second axis- real value
+  sec.axis = sec_axis(~ . +payhousingall_2022$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I was always able to pay all the cost \n of my housing on time",
+       subtitle ="UCSD Undergrads who could always pay all housing cost on time",
+       y=lab_diff_axis_ug,
+       caption=caption_ug)
+```
+
+About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. THis propotion is slightly higher than the UC average of 77% alway able to pay (not pictured). This division differs by students groups. Proportions differ by 17 percentage points, from 72% for African American students to 89% for American Indian students. 
+
+However, most students worry about paying for housing. Overall 46% never worry -similar to the UC average of 45%.   
+```{r}
+#| label: worried_pay_house_ug_diff_2022
+#| echo: FALSE
+#| warning: FALSE
+
+
+worriedhousingall_2022<-es%>%
+filter(q=="I worried I would not have enough money to cover the cost of my housing." & year=="2022"& comp==
+"All")%>%
+  clean_vibe_true3(.)%>%
+collapse_positive_vibe(.)
+
+worriedhousing_2022<-es%>%
+  filter(q=="I worried I would not have enough money to cover the cost of my housing." & year=="2022")%>%
+   clean_vibe_true3(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=worriedhousingall_2022$value)%>%
+  create_diff_cols(.)
+
+  
+plot_lollipop_div(worriedhousing_2022)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.17,.15),
+  #second axis- real value
+  sec.axis = sec_axis(~ . +worriedhousingall_2022$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I never worried I would not have enough \n money to cover the cost of my housing",
+       subtitle ="UCSD Undergrads never worried about paying for housing",
+       y=lab_diff_axis_ug,
+       caption=caption_ug)
+```
+### Worried about Debt/Finances
+
+UCUES has asked "How often during the past academic year have you: Worried about my debt and financial circumstances? since 2014.
+
+
+The question has six possible responses -from negative - Very Often, Often,Somewhat Often, and occasionally, to two coded as positive: rarely and never.
+
+
+#### Worried about Finances Change over Time
+
+Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in student never or rarely worrying in the last wave, to about a third of students. 
+
+```{r}
+#| label: worried_debt_ug_overtime
+#| echo: FALSE
+#| warning: FALSE
+
+worried_time<-ucall%>%
+  #select question and comparison group - leave all years
+  filter(q=="Worried about my debt and financial circumstances"&comp=="All")%>%
+  clean_vibe_freq(.)%>%
+group_by(campus,year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="positive")
+ 
+ g_worried_time<-plot_time(worried_time)+
+  #need to tweak scale because otherwise it's too zoomed in
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(.20,.60))+
+   labs(title="I never or rarely worried \nabout my debt and financial circumstances",
+        caption=caption_ug,
+      subtitle = "Percent of respondents never or rarely worried",
+         x="UCUES Survey Year")
+
+direct.label(g_worried_time,list(cex=30,  "first.qp"))
+
+
+
+
+
+```
+
+
+
+### Differences in financial worries between Students
+
+It's notable that while 2022 saw an increase in students never or rarely worrying, stark differences remain by student group, from half of international students to just 22% of Pell Grant recipients. 
+
+```{r}
+#| label: worried_debt_ug_2022
+#| echo: FALSE
+#| warning: FALSE
+worriedall_2022<-es%>%
+filter(q=="Worried about my debt and financial circumstances" & year=="2022"& comp==
+"All")%>%
+  clean_vibe_freq(.)%>%
+collapse_positive_vibe(.)
+
+worried_2022<-es%>%
+  filter(q=="Worried about my debt and financial circumstances" & year=="2022")%>%
+   clean_vibe_freq(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=worriedall_2022$value)%>%
+  create_diff_cols(.)
+
+  
+plot_lollipop_div(worried_2022)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.2),
+  #second axis- real value
+  sec.axis = sec_axis(~ . +worriedall_2022$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I rarely or never worried \n about my debt and financial circumstances",
+       subtitle ="UCSD Undergrads never or rarely worried",
+       y=lab_diff_axis_ug,
+       caption=caption_ug)
+
+```
+## Graduate Students
+
+### Food Security
+
+#### Change over Time
+```{r}
+#| label: food_g_overtime
+#| echo: FALSE
+#| warning: FALSE
+food_secure_time_grad<-ucall_gses%>%
+  #select question and comparison group 
+  filter(q=="Food Security")%>%
+  clean_vibe_foodsecure(.)%>%
+  group_by(campus,year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="positive")
+
+g_foodsecure_time_grad<-plot_time(food_secure_time_grad)+
+   labs(title="Food Secure",
+        caption=caption_grad,
+      subtitle = 'Percent of Food Secure respondents',
+         x="GSES Survey Year")
+
+direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
+ 
+```
+
+### Difference by Student Group
+```{r}
+#| label: food_g_2021
+#| echo: FALSE
+#| warning: FALSE
+
+foodsecure_all_2021_gses<-gses%>%
+filter(q=="Food security"&year=="2021"&comp=="All")%>%
+  clean_vibe_foodsecure(.)%>%
+collapse_positive_vibe(.)
+
+foodsecure_2021_gses<-gses%>%
+  filter(q=="Food security"&year=="2021")%>%
+  clean_vibe_foodsecure(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=foodsecure_all_2021_gses$value)%>%
+  create_diff_cols(.)
+
+plot_lollipop_div(foodsecure_2021_gses)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.1),
+  #second axis- real value
+  sec.axis = sec_axis(~.+foodsecure_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="Food secure",
+       subtitle ="UCSD Graduate Students who are food secure",
+       y=lab_diff_axis_grad,
+       caption=caption_grad)
+
+
+```
+
+
