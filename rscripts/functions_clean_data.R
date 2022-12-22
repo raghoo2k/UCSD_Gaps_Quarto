@@ -71,6 +71,16 @@ clean_vibe_agree<-function(data){
   
 }
 
+#Code Factor Levels in response
+clean_vibe_agree_neg<-function(data){
+  data%>%
+    mutate(repsonse=as_factor(response))%>%
+    mutate(response=fct_relevel(response, "Strongly Agree","Agree","Somewhat Agree","Strongly Disagree", "Disagree","Somewhat Disagree"))%>%
+    mutate(vibe=fct_collapse(response,
+                             positive=c("Somewhat Disagree","Disagree","Strongly Disagree"),
+                             negative=c("Somewhat Agree","Agree","Strongly Agree")))
+  
+}
 
 #Code Factor Levels in response
 clean_vibe_satisfied<-function(data){

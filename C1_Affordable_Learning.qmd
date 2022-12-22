@@ -44,6 +44,9 @@ ucall_gses<-read_excel("data/gses_alluc.xlsx")
 lab_diff_axis_ug<-"Difference from all undergraduate average"
 lab_diff_axis_grad<-"Difference from all graduate student average"
 
+#subtitle
+subtitle_grad_agree<-"UCSD Graduate Students who somewhat agree, agree, or strongly agree"
+
 #caption
 caption_ug<-"Source: UCUES 2022, UC Infocenter"
 caption_grad<-"Source: GSES 2021 UC Infocenter"
@@ -141,16 +144,15 @@ plot_lollipop_div(foodsecure_2022)+
        caption=caption_ug)
 ```
 
-
 ### Housing Costs
 
-The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions future versions of this document can add to provide historical context. 
+The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions future versions of this document can add to provide historical context.
 
-The question block prompts: "For the following statements, please indicate whether the statement was never true, sometimes true, or often true for you during the current academic year:" 
+The question block prompts: "For the following statements, please indicate whether the statement was never true, sometimes true, or often true for you during the current academic year:"
 
 "I was unable to pay all the cost of my housing on time."
 
-"I was worried I would not have enough money to cover the cost of my housing" 
+"I was worried I would not have enough money to cover the cost of my housing"
 
 Respondents could select "Never True", "Sometime True" and "Often True." For consistency in selecting positive responses - I focus on "Never True" responses- meaning that respondents never were unable to pay (always able to pay) and never worried about their housing costs.
 
@@ -186,9 +188,10 @@ plot_lollipop_div(payhousing_2022)+
        caption=caption_ug)
 ```
 
-About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. THis propotion is slightly higher than the UC average of 77% alway able to pay (not pictured). This division differs by students groups. Proportions differ by 17 percentage points, from 72% for African American students to 89% for American Indian students. 
+About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. THis propotion is slightly higher than the UC average of 77% alway able to pay (not pictured). This division differs by students groups. Proportions differ by 17 percentage points, from 72% for African American students to 89% for American Indian students.
 
-However, most students worry about paying for housing. Overall 46% never worry -similar to the UC average of 45%.   
+However, most students worry about paying for housing. Overall 46% never worry -similar to the UC average of 45%.
+
 ```{r}
 #| label: worried_pay_house_ug_diff_2022
 #| echo: FALSE
@@ -221,17 +224,16 @@ plot_lollipop_div(worriedhousing_2022)+
        y=lab_diff_axis_ug,
        caption=caption_ug)
 ```
+
 ### Worried about Debt/Finances
 
 UCUES has asked "How often during the past academic year have you: Worried about my debt and financial circumstances? since 2014.
 
-
 The question has six possible responses -from negative - Very Often, Often,Somewhat Often, and occasionally, to two coded as positive: rarely and never.
-
 
 #### Worried about Finances Change over Time
 
-Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in student never or rarely worrying in the last wave, to about a third of students. 
+Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in student never or rarely worrying in the last wave, to about a third of students.
 
 ```{r}
 #| label: worried_debt_ug_overtime
@@ -263,11 +265,9 @@ direct.label(g_worried_time,list(cex=30,  "first.qp"))
 
 ```
 
+#### Differences in financial worries between Students
 
-
-### Differences in financial worries between Students
-
-It's notable that while 2022 saw an increase in students never or rarely worrying, stark differences remain by student group, from half of international students to just 22% of Pell Grant recipients. 
+It's notable that while 2022 saw an increase in students never or rarely worrying, stark differences remain by student group, from half of international students to just 22% of Pell Grant recipients.
 
 ```{r}
 #| label: worried_debt_ug_2022
@@ -300,11 +300,85 @@ plot_lollipop_div(worried_2022)+
        caption=caption_ug)
 
 ```
+
+### Manageable Costs
+```{r}
+#| label: manageable_ug_overtime
+#| echo: FALSE
+#| warning: FALSE
+
+manage_ug_time<-ucall%>%
+  #select question and comparison group - leave all years
+  filter(grepl('manageable', q) & comp=="All")%>%
+  clean_vibe_agree(.)%>%
+group_by(campus,year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="positive")
+ 
+ g_manage_ug_time<-plot_time(manage_ug_time)+
+
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(.50,.75))+
+   labs(title="Given the grants and scholarships, if any, that you receive, \nthe total cost of attending this university is manageable",
+        caption=caption_ug,
+      subtitle = "Percent of respondents who agree",
+         x="UCUES Survey Year")
+
+direct.label(g_manage_ug_time,list(cex=30,  "first.qp"))
+```
+
+```{r}
+#| label: manageable_ug_2022
+#| echo: FALSE
+#| warning: FALSE
+manageall_2022<-es%>%
+filter(grepl('manageable', q)& comp==
+"All")%>%
+  clean_vibe_agree(.)%>%
+collapse_positive_vibe(.)
+
+manageable_2022<-es%>%
+  filter(grepl('manageable', q)& year=="2022")%>%
+   clean_vibe_agree(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=manageall_2022$value)%>%
+  create_diff_cols(.)
+
+  
+plot_lollipop_div(manageable_2022)+
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.1,.15),
+  #second axis- real value
+  sec.axis = sec_axis(~ . +manageall_2022$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="Given the grants and scholarships, if any, that you receive, the total cost of attending this university is manageable",
+       subtitle ="UCSD Undergrads who somewhat agree, agree or strongly agree",
+       y=lab_diff_axis_ug,
+       caption=caption_ug)
+
+```
+
+
+
+
+
+### Additional UCUES Questions related to Affordability.
+
+-   Overall, I feel the education is affordable at my campus
+- How satisfied are you with the following aspect of your campus experiences/education? Value of your education for the price you are paying. 
+-   How concerned have you been about paying for your undergraduate education up to now?
+-   ...Next Year?
+-  How often during the past academic year have you: cut down on personal / recreational spending to help pay for college expenses?
+
+
+
 ## Graduate Students
 
 ### Food Security
 
 #### Change over Time
+
 ```{r}
 #| label: food_g_overtime
 #| echo: FALSE
@@ -328,7 +402,8 @@ direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
  
 ```
 
-### Difference by Student Group
+#### Food Security Difference by Student Group
+
 ```{r}
 #| label: food_g_2021
 #| echo: FALSE
@@ -355,6 +430,150 @@ plot_lollipop_div(foodsecure_2021_gses)+
   #labels
    labs(title="Food secure",
        subtitle ="UCSD Graduate Students who are food secure",
+       y=lab_diff_axis_grad,
+       caption=caption_grad)
+
+
+```
+
+### Financial hardship has impeded my success in my program.
+
+```{r}
+#| label: hardship_g_2021
+#| echo: FALSE
+#| warning: FALSE
+
+hardship_all_2021_gses<-gses%>%
+filter(grepl('hardship', q)&year=="2021"&comp=="All")%>%
+  clean_vibe_agree_neg(.)%>%
+collapse_positive_vibe(.)
+
+hardship_2021_gses<-gses%>%
+  filter(q=="Financial hardship has impeded my success in my program."&year=="2021")%>%
+  clean_vibe_agree_neg(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=hardship_all_2021_gses$value)%>%
+  create_diff_cols(.)%>%
+  drop_na(value)
+
+plot_lollipop_div(hardship_2021_gses)  +
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.2),
+  #second axis- real value
+  sec.axis = sec_axis(~.+hardship_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="Financial hardship has impeded my success in my program.",
+       subtitle ="Graduate students who somewhat disagree, disagree, strongly disagree",
+       y=lab_diff_axis_grad,
+       caption=caption_grad)
+
+
+```
+
+
+
+###I've been concerned about money lately.
+
+
+```{r}
+#| label: concerned_g_2021
+#| echo: FALSE
+#| warning: FALSE
+
+concerned_all_2021_gses<-gses%>%
+filter(grepl('concerned', q)&year=="2021"&comp=="All")%>%
+  clean_vibe_agree_neg(.)%>%
+collapse_positive_vibe(.)
+
+concerned_2021_gses<-gses%>%
+  filter(q=="I've been concerned about money lately."&year=="2021")%>%
+  clean_vibe_agree_neg(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=concerned_all_2021_gses$value)%>%
+  create_diff_cols(.)%>%
+  drop_na(value)
+
+plot_lollipop_div(concerned_2021_gses)  +
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.2),
+  #second axis- real value
+  sec.axis = sec_axis(~.+concerned_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I've been concerned about money lately.",
+       subtitle ="Graduate students who somewhat disagree, disagree, strongly disagree",
+       y=lab_diff_axis_grad,
+       caption=caption_grad)
+
+
+```
+
+### I'm confident in my financial situation.
+
+```{r}
+#| label: confident_g_2021
+#| echo: FALSE
+#| warning: FALSE
+
+confident_all_2021_gses<-gses%>%
+filter(grepl('confident', q)&year=="2021"&comp=="All")%>%
+  clean_vibe_agree(.)%>%
+collapse_positive_vibe(.)
+
+confident_2021_gses<-gses%>%
+  filter(q=="I'm confident in my financial situation."&year=="2021")%>%
+  clean_vibe_agree(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=confident_all_2021_gses$value)%>%
+  create_diff_cols(.)%>%
+  drop_na(value)
+
+plot_lollipop_div(confident_2021_gses)  +
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.2),
+  #second axis- real value
+  sec.axis = sec_axis(~.+confident_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I'm confident in my financial situation.",
+       subtitle =subtitle_grad_agree,
+       y=lab_diff_axis_grad,
+       caption=caption_grad)
+
+
+```
+
+
+### I can get by financially without having to cut back on too many of the things that are important to me.
+
+```{r}
+#| label: getby_g_2021
+#| echo: FALSE
+#| warning: FALSE
+
+getby_all_2021_gses<-gses%>%
+filter(grepl('get by', q)& year=="2021" & comp=="All")%>%
+  clean_vibe_agree(.)%>%
+collapse_positive_vibe(.)
+
+getby_2021_gses<-gses%>%
+  filter(q=="I can get by financially without having to cut back on too many of the things that are important to me."&year=="2021")%>%
+  clean_vibe_agree(.)%>%
+  order_comp_group_all(.)%>%
+collapse_positive_vibe(.)%>%
+  mutate(all=getby_all_2021_gses$value)%>%
+  create_diff_cols(.)%>%
+  drop_na(value)
+
+plot_lollipop_div(getby_2021_gses)  +
+  #first axis- divergence
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.2,.2),
+  #second axis- real value
+  sec.axis = sec_axis(~.+getby_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
+  #labels
+   labs(title="I can get by financially without having to cut back on too many of the things that are important to me.",
+       subtitle =subtitle_grad_agree,
        y=lab_diff_axis_grad,
        caption=caption_grad)
 

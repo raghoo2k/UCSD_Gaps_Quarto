@@ -10,7 +10,7 @@ plot_lollipop_div<-function(data){
   text_size=15,
   point_size = 5)+
   #geom_text_repel(aes(y=diff+.01*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
-    geom_text(aes(y= diff+.012*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
+    geom_text(aes(y= diff+.02*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
     theme(
     plot.title=element_text(size=20),
     plot.subtitle=element_text(size=15),
