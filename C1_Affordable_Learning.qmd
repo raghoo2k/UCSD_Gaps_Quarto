@@ -379,7 +379,7 @@ These questions are also available on the 2022 UCUES for further exploration.
 
 ## Graduate Students
 
-There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. 
+There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. The following draw from the UC Graduate Student Experience Survey in 2021, with the exception of Food Security, which includes data from the 2016 Graduate Student Wellbeing Survey. Please refer to #sec-UCGSES for more on UCGSES. 
 
 ### Food Security
 
@@ -407,7 +407,7 @@ g_foodsecure_time_grad<-plot_time(food_secure_time_grad)+
 direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
  
 ```
-
+*Will add additional student groups to mirror following data. 
 
 ```{r}
 #| label: food_g_2021
@@ -443,7 +443,12 @@ plot_lollipop_div(foodsecure_2021_gses)+
 
 ### Financial hardship has impeded my success in my program.
 
+* add comparison with all UC
 
+Graduate students were asked indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Disagree," "Disagree" and 
+"Somewhat disagree" were coded as "positive" responses. 
+
+While about 64% of students disagreed that financial hardship had impeded their success, that number drops to 48% for Hispanic/Latinx students - and First Generation, LGBT, African American, Doctoral students, and International students also have lower levels of disagreement than average.  
 
 ```{r}
 #| label: hardship_g_2021
@@ -482,6 +487,7 @@ plot_lollipop_div(hardship_2021_gses)  +
 
 ### I've been concerned about money lately.
 
+This question continues the format of the previous, with similiar patterns of differences between groups, 
 
 ```{r}
 #| label: concerned_g_2021
@@ -518,6 +524,8 @@ plot_lollipop_div(concerned_2021_gses)  +
 
 ### I'm confident in my financial situation.
 
+For this question, "Strongly Agree," "Agree", and "Somewhat Agree" were considered positive responses. 
+
 ```{r}
 #| label: confident_g_2021
 #| echo: FALSE
@@ -553,6 +561,8 @@ plot_lollipop_div(confident_2021_gses)  +
 
 
 ### I can get by financially without having to cut back on too many of the things that are important to me.
+
+Responses to this question range from just 50% of African American and and Hispanic/Latinx students agreeing,to about 74% of masters students for an almost 25 percentage point difference between student groups. 
 
 ```{r}
 #| label: getby_g_2021

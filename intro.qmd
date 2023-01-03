@@ -1,28 +1,55 @@
 # Data Descriptions
 
-This book explores data on opportunity gaps at University of California San Diego (UCSD). 
+This book explores data on opportunity gaps at University of California San Diego (UCSD).
 
 ## Data Sources
 
 ### University of California Undergraduate Experience Survey (UCUES) {#sec-UCUES}
 
-The University of California Undergraduate Experience Survey (UCUES) is a biennial survey conducted at the UC's nine undergraduate campuses. 
+The University of California Undergraduate Experience Survey (UCUES) is a biennial survey conducted at the UC's nine undergraduate campuses.
 
 For more about UCUES across the UC, and data tables from 2006 onwards, please see [this page on UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/ucues-data-tables-main).
 
-A summary of UCUES at UCSD can be found on UCSD IR website [here](https://ir.ucsd.edu/undergrad/surveys/index.html). A longitudinal comparison of some questions at UCSD can be found [here](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/Satisfaction?:iid=1) for those with an Active Directory login.  
+A summary of UCUES at UCSD can be found on UCSD IR website [here](https://ir.ucsd.edu/undergrad/surveys/index.html). A longitudinal comparison of some questions at UCSD can be found [here](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/Satisfaction?:iid=1) for those with an Active Directory login.
 
-* More on response rates and sample sizes
+-   More on group definitions
 
-* More on group definitions
+-   More on response rates and sample sizes
 
+-   For an interactive view of response rates and sample size see [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/student-survey-completion-and-response-rates)
 
-### UCGSES University of California Graduate Student Experience Survey
+### UCGSES University of California Graduate Student Experience Survey {#sec-UCGSES}
+
+This UC-wide has been conducted once, in 2021. The data table for all UC campuses is available at the [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-data-tables)
+
+-   More on response rates and sample sizes
+
+-   More on group definitions
 
 ### Additional Surveys
+
 Future versions of this report may include information from other student surveys
 
 **Undergraduates**
-*
-*
-**Graduate Students**
+
+-   The CIRP Freshman Survey /New Transfer Survey
+
+-   Your College First Year Survey
+
+-   College Senior Survey
+
+-   Post Baccalaureate
+
+-   Cost of Attendance Survey
+
+**Graduate Students** UCSD data is available [here](https://grad.ucsd.edu/about/grad-data/surveys/index.html)
+
+-   Graduate Student Experience in the Resarch University (gradSERU)
+
+-   Graduate Student Well-Being Survey
+
+-   Graduate and Professional Student Experience and Satisfaction (GPSES)
+
+-   Graduate Student Exit Survey
+
+-   Cost of Attendance Survey
