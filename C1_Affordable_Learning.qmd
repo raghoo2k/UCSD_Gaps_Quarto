@@ -3,7 +3,7 @@ title: "Affordable Learning and Financial Support"
 editor: visual
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego
+This is a chapter about affordable learning and financial support at University of California San Diego. 
 
 ```{r}
 #| label: run_scripts
@@ -54,7 +54,6 @@ caption_grad<-"Source: GSES 2021 UC Infocenter"
 
 ## Undergraduates
 
-All data come from UCUES
 
 ### Food Security
 
@@ -64,9 +63,9 @@ For more information on this measure, please visit [UCOP Measuring Food Insecuri
 
 #### Food Security over Time
 
-These visuals display the percentage respondents who are "food secure. For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure- either low food security or very low food security.
+These visuals display the percentage of respondents who are "food secure". For example, in 2022 58% of UCSD undergraduate respondents were classified as food secure. This means the remaining 42% of respondents were food insecure-classified as either low food security or very low food security.
 
-The percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD's food security rates are slightly higher or equal to the overal UC system rate.
+The percent of undergraduates who are food secure has remained relatively stable over time -between roughly 50-60%. UCSD's food security rates are slightly higher or equal to the overall UC system rate for this time period.
 
 ```{r}
 #| label: food_secure_ug_overtime
@@ -110,9 +109,9 @@ direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 
 #### Food Security Differences by Group
 
-Focusing on UCSD students in 2022, we find that there are significant differences by student group. Students who are not First Generation (64%), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%) as defined by UCOP have higher rates of food security than the student body average of 58%. Food security among international students is the same as the student body average.
+Focusing on UCSD students in 2022, we find that there are significant differences by student group. Some student groups have higher than the student body average food security rate, including students who are not First Generation (64% food secure), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%).  The international student food security rate is the same as the student body average- 58% food secure.
 
-Conversely, the food security rates of American Indian students (50%), First Generation students (49%) Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), are less than the student body average. For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don't recieve Pell Grants (64%) and African American students (44%).
+Conversely some student groups have food security rates below the overall student body rate, including American Indian students (50% food secure), First Generation students (49%), Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don't recieve Pell Grants (64%) and African American students (44%).
 
 ```{r}
 #| label: food_secure_ug_differences_2022
@@ -154,7 +153,7 @@ The question block prompts: "For the following statements, please indicate wheth
 
 "I was worried I would not have enough money to cover the cost of my housing"
 
-Respondents could select "Never True", "Sometime True" and "Often True." For consistency in selecting positive responses - I focus on "Never True" responses- meaning that respondents never were unable to pay (always able to pay) and never worried about their housing costs.
+Respondents could select "Never True", "Sometime True" or "Often True." For consistency in selecting positive responses - I focus on "Never True" responses- meaning that respondents never were unable to pay (always able to pay) and never worried about their housing costs.
 
 ```{r}
 #| label: unable_pay_house_ug_diff_2022
@@ -182,15 +181,15 @@ plot_lollipop_div(payhousing_2022)+
   #second axis- real value
   sec.axis = sec_axis(~ . +payhousingall_2022$value, labels=scales::label_percent(accuracy=1)))+
   #labels
-   labs(title="I was always able to pay all the cost \n of my housing on time",
+   labs(title="I was always able to pay all the cost \nof my housing on time",
        subtitle ="UCSD Undergrads who could always pay all housing cost on time",
        y=lab_diff_axis_ug,
        caption=caption_ug)
 ```
 
-About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. THis propotion is slightly higher than the UC average of 77% alway able to pay (not pictured). This division differs by students groups. Proportions differ by 17 percentage points, from 72% for African American students to 89% for American Indian students.
+About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. This proportion is slightly higher than the UC average of 77% of students always able to pay (not pictured).  Within UCSD, the proportion of students always able to pay on time ranges from 72% for African American students to 89% for American Indian students, a 17 percentage point difference. 
 
-However, most students worry about paying for housing. Overall 46% never worry -similar to the UC average of 45%.
+While most students are always able to pay, the proportion who never worry about paying housing costs is lower. Overall 46% never worry -similar to the UC average of 45%. However, there is a wide range by student groups at UCSD, from 55% of students not received Pell, to only 32% of Pell grant recipients, a difference of over 20 percentage points. This means that almost 70% of Pell Grant Recipients and First Generation students sometimes or often worry about paying for housing.  
 
 ```{r}
 #| label: worried_pay_house_ug_diff_2022
@@ -227,13 +226,12 @@ plot_lollipop_div(worriedhousing_2022)+
 
 ### Worried about Debt/Finances
 
-UCUES has asked "How often during the past academic year have you: Worried about my debt and financial circumstances? since 2014.
+UCUES has asked "How often during the past academic year have you: Worried about my debt and financial circumstances?" since 2014.
 
 The question has six possible responses -from negative - Very Often, Often,Somewhat Often, and occasionally, to two coded as positive: rarely and never.
 
-#### Worried about Finances Change over Time
 
-Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in student never or rarely worrying in the last wave, to about a third of students.
+Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in students never or rarely worrying in the last wave, to about a third of students.
 
 ```{r}
 #| label: worried_debt_ug_overtime
@@ -265,7 +263,6 @@ direct.label(g_worried_time,list(cex=30,  "first.qp"))
 
 ```
 
-#### Differences in financial worries between Students
 
 It's notable that while 2022 saw an increase in students never or rarely worrying, stark differences remain by student group, from half of international students to just 22% of Pell Grant recipients.
 
@@ -294,7 +291,7 @@ plot_lollipop_div(worried_2022)+
   #second axis- real value
   sec.axis = sec_axis(~ . +worriedall_2022$value, labels=scales::label_percent(accuracy=1)))+
   #labels
-   labs(title="I rarely or never worried \n about my debt and financial circumstances",
+   labs(title="I rarely or never worried \nabout my debt and financial circumstances",
        subtitle ="UCSD Undergrads never or rarely worried",
        y=lab_diff_axis_ug,
        caption=caption_ug)
@@ -302,6 +299,9 @@ plot_lollipop_div(worried_2022)+
 ```
 
 ### Manageable Costs
+
+Fifty-eight percent of students somewhat agree, agree, or strongly agree that the total cost of attending UCSD is manageable in 2022, given the the grants and scholarships they receive. Over the past four waves of UCUES, UCSD has had slightly lower proportions of students agree than the UC average.
+
 ```{r}
 #| label: manageable_ug_overtime
 #| echo: FALSE
@@ -326,6 +326,8 @@ group_by(campus,year, vibe)%>%
 
 direct.label(g_manage_ug_time,list(cex=30,  "first.qp"))
 ```
+Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question. Pell grant recipients have the highest rates of agreement, 70%, an over 22 percentage point difference from students not recieving Pell. American Indian, First Generation and Hispanic /Latinx students also have higher than average rates of agreement. This divergent pattern may reflect the variety of financial supports these students have access to. However, African American students have lower rates of agreement. 
+
 
 ```{r}
 #| label: manageable_ug_2022
@@ -364,6 +366,7 @@ plot_lollipop_div(manageable_2022)+
 
 
 ### Additional UCUES Questions related to Affordability.
+These questions are also available on the 2022 UCUES for further exploration. 
 
 -   Overall, I feel the education is affordable at my campus
 - How satisfied are you with the following aspect of your campus experiences/education? Value of your education for the price you are paying. 
@@ -372,12 +375,13 @@ plot_lollipop_div(manageable_2022)+
 -  How often during the past academic year have you: cut down on personal / recreational spending to help pay for college expenses?
 
 
-
 ## Graduate Students
+
+There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. 
 
 ### Food Security
 
-#### Change over Time
+For the two waves available, UCSD has similiar rates of food security in comparison with the UC average. 
 
 ```{r}
 #| label: food_g_overtime
@@ -402,7 +406,6 @@ direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
  
 ```
 
-#### Food Security Difference by Student Group
 
 ```{r}
 #| label: food_g_2021
@@ -438,6 +441,8 @@ plot_lollipop_div(foodsecure_2021_gses)+
 
 ### Financial hardship has impeded my success in my program.
 
+
+
 ```{r}
 #| label: hardship_g_2021
 #| echo: FALSE
@@ -463,7 +468,7 @@ plot_lollipop_div(hardship_2021_gses)  +
   #second axis- real value
   sec.axis = sec_axis(~.+hardship_all_2021_gses$value, labels=scales::label_percent(accuracy=1)))+
   #labels
-   labs(title="Financial hardship has impeded my success in my program.",
+   labs(title="Financial hardship has impeded my success \nin my program.",
        subtitle ="Graduate students who somewhat disagree, disagree, strongly disagree",
        y=lab_diff_axis_grad,
        caption=caption_grad)
@@ -473,7 +478,7 @@ plot_lollipop_div(hardship_2021_gses)  +
 
 
 
-###I've been concerned about money lately.
+### I've been concerned about money lately.
 
 
 ```{r}
