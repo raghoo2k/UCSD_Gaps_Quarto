@@ -4,12 +4,12 @@
     "href": "index.html",
     "title": "UCSD Gaps",
     "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2"
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\nThis is currently a placeholder for future content"
   },
   {
     "objectID": "intro.html#data-sources",
     "href": "intro.html#data-sources",
-    "title": "1  How to Use this Book",
+    "title": "1  Data Descriptions",
     "section": "1.1 Data Sources",
     "text": "1.1 Data Sources\n\n1.1.1 UCUES- University of California Undergraduate Experience Survey\n\nMore on response rates and sample sizes\nMore on group definitions\nMore on exploring the data yourself\n\n\n\n1.1.2 UCGSES University of California Graduate Student Experience Survey"
   },
@@ -32,6 +32,13 @@
     "href": "summary.html",
     "title": "3  Summary",
     "section": "",
-    "text": "In summary, this book has no content whatsoever.\n\n1 + 1\n\n[1] 2"
+    "text": "This is a placeholder for future content"
+  },
+  {
+    "objectID": "references.html",
+    "href": "references.html",
+    "title": "References",
+    "section": "",
+    "text": "This is a placeholder for future content ::: {#refs} :::"
   }
 ]

@@ -1,15 +1,28 @@
-# How to Use this Book
+# Data Descriptions
 
 This book explores data on opportunity gaps at University of California San Diego (UCSD). 
 
 ## Data Sources
 
-### UCUES- University of California Undergraduate Experience Survey
+### University of California Undergraduate Experience Survey (UCUES) {#sec-UCUES}
+
+The University of California Undergraduate Experience Survey (UCUES) is a biennial survey conducted at the UC's nine undergraduate campuses. 
+
+For more about UCUES across the UC, and data tables from 2006 onwards, please see [this page on UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/ucues-data-tables-main).
+
+A summary of UCUES at UCSD can be found on UCSD IR website [here](https://ir.ucsd.edu/undergrad/surveys/index.html). A longitudinal comparison of some questions at UCSD can be found [here](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/Satisfaction?:iid=1) for those with an Active Directory login.  
+
 * More on response rates and sample sizes
 
 * More on group definitions
 
-* More on exploring the data yourself
-
 
 ### UCGSES University of California Graduate Student Experience Survey
+
+### Additional Surveys
+Future versions of this report may include information from other student surveys
+
+**Undergraduates**
+*
+*
+**Graduate Students**

@@ -3,7 +3,7 @@ title: "Affordable Learning and Financial Support"
 editor: visual
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego. 
+This is a chapter about affordable learning and financial support at University of California San Diego.
 
 ```{r}
 #| label: run_scripts
@@ -53,7 +53,9 @@ caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
 
 ## Undergraduates
+ This section covers a few questions prioritized by the Affordable Learning and Financial Support collective impact working group.
 
+Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Instiutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/Affordability?:iid=1)
 
 ### Food Security
 
