@@ -16,5 +16,6 @@ library(bookdown)
 library(writexl)
 library(ggcharts)
 library(directlabels)
+library(geomtextpath)
 
 theme_set(theme_bw(base_size = 10))

@@ -11,11 +11,18 @@ plot_lollipop_div<-function(data){
   point_size = 5)+
   #geom_text_repel(aes(y=diff+.01*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
     geom_text(aes(y= diff+.02*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
+    facet_grid(comp~., switch="y")+
     theme(
     plot.title=element_text(size=20),
     plot.subtitle=element_text(size=15),
     plot.caption=element_text(size=10),
     axis.title.y = element_blank(),
+    #control factet theme
+    strip.background = element_blank(),
+    #can't get strip text to look good
+    strip.text.y = element_blank(),
+    panel.border = element_rect(colour="gray75", size=.75, fill=NA),
+    panel.spacing = unit(0, "lines"), 
     plot.background=element_rect(color="white", fill="white"),
     legend.position="none")
 }

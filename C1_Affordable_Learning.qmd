@@ -138,6 +138,7 @@ plot_lollipop_div(foodsecure_2022)+
   scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.15,.1),
   #second axis- real value
   sec.axis = sec_axis(~ . +foodsecure_all_2022$value, labels=scales::label_percent(accuracy=1)))+
+  
   #labels
    labs(title="Food secure",
        subtitle ="UCSD Undergrads who are food secure",
