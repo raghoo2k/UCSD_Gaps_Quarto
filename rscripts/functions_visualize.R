@@ -26,31 +26,29 @@ plot_lollipop_div<-function(data){
     plot.background=element_rect(color="white", fill="white"),
     legend.position="none")
 }
-
 # plot one dot over time
 plot_time<-function(data){
   
   ggplot(data, aes(x = year, 
                    y = value,
                    group=campus,
-                   color=campus,
-                   label= scales::percent(value,accuracy=1))) +
-    geom_line(size = 1) +
+                   color=campus)) +
+    geom_textline(aes(label=campus),size = 4, hjust=-.0001) +
     scale_color_manual(values=c( "#747678","#00629B"))+
-    #geom_point(size=2)+
-    geom_label_repel(size=5)+
+    geom_label_repel(aes(label= scales::percent(value,accuracy=1)), size=5)+
     scale_y_continuous(labels=scales::percent_format(accuracy=1))+
-   
     theme_classic()+
     theme(
       plot.title = element_text(size=15),
       axis.title.x = element_text(size=15),
       axis.title.y = element_blank(),
       axis.text = element_text(size=15),
-      panel.grid = element_blank()
+      panel.grid = element_blank(),
+      legend.position  = "none"
     )
 
 }
+
 
 
 

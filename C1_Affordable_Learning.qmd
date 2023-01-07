@@ -104,8 +104,10 @@ food_secure_time<-es%>%
         caption=caption_ug,
       subtitle = 'Percent of Food Secure respondents',
          x="UCUES Survey Year")
+  
+  g_foodsecure_time
 
-direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
+#direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 
 ```
 
@@ -145,6 +147,45 @@ plot_lollipop_div(foodsecure_2022)+
        y=lab_diff_axis_ug,
        caption=caption_ug)
 ```
+
+```{r}
+
+#" \n ", scales::percent(value,accuracy=1))
+
+ ggplot(
+  data = foodsecure_2022,aes(
+  y = group_label,
+  x = value,
+  ))+
+  geom_point()+# Make a long line
+  facet_grid(comp~., switch="y", scales="free_y")+
+ geom_textsegment(aes(yend=group_label, xend=all, label=group_label),
+                  hjust=-.01)+
+
+  geom_vline(aes(xintercept=all))+
+theme(
+    plot.title=element_text(size=20),
+    plot.subtitle=element_text(size=15),
+    plot.caption=element_text(size=10),
+    axis.title.y = element_blank(),
+    axis.text.y=element_blank(),
+    #control factet theme
+    strip.background = element_blank(),
+    #can't get strip text to look good
+    strip.text.y = element_blank(),
+    panel.border = element_rect(colour="gray75", size=.75, fill=NA),
+    panel.spacing = unit(0, "lines"), 
+    plot.background=element_rect(color="white", fill="white"),
+    legend.position="none")
+
+
+
+
+
+
+```
+
+
 
 ### Housing Costs
 

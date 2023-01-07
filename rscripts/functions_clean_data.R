@@ -150,8 +150,11 @@ rowwise(.)%>%
       avg_above=="Average"~diff+.001,
       TRUE~diff
     ))%>%
-  ungroup(.)
+  ungroup(.)%>%
+  mutate(group_label=fct_reorder(group_label, diff))
+  
 }
+
 
 
 
