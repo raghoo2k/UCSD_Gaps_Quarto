@@ -99,7 +99,7 @@ clean_vibe_foodsecure<-function(data){
     mutate(repsonse=as_factor(response))%>%
     mutate(response=fct_relevel(response,"Very low food security","Low food security","Food insecure", "Food security"))%>%
     mutate(vibe=fct_collapse(response,
-                             negative=c("Very low food security","Low food security","Food insecure"),
+                             negative=c("Very low food security","Low food security","Food insecure","insecure"),
                              positive=c("Food security")))
   
 }
@@ -129,8 +129,18 @@ collapse_positive_vibe<-function(data){
   group_by(comp, group_label, vibe)%>%
     summarize(value=sum(value),
               N=sum(N))%>%
-    #just show the negative responses
+    #just show the positive responses
     filter(vibe=="positive")%>%
+    mutate(perc=round(value*100))
+}
+
+collapse_negative_vibe<-function(data){
+  data%>%
+    group_by(comp, group_label, vibe)%>%
+    summarize(value=sum(value),
+              N=sum(N))%>%
+    #just show the negative responses
+    filter(vibe=="negative")%>%
     mutate(perc=round(value*100))
 }
 

@@ -80,7 +80,7 @@ foodsecure_uccomp<-ucall%>%
   group_by(year, vibe)%>%
   summarize(value=sum(value),
             N=sum(N))%>%
-  filter(vibe=="positive")%>%
+  filter(vibe=="negative")%>%
   ungroup(.)%>%
   mutate(campus="All UC")
 
@@ -91,7 +91,7 @@ food_secure_time<-es%>%
   group_by(year, vibe)%>%
   summarize(value=sum(value),
             N=sum(N))%>%
-  filter(vibe=="positive")%>%
+  filter(vibe=="negative")%>%
   ungroup(.)%>%
   mutate(campus="UCSD")%>%
   bind_rows(., foodsecure_uccomp)
@@ -99,13 +99,15 @@ food_secure_time<-es%>%
   
   g_foodsecure_time<-plot_time(food_secure_time)+
   #need to tweak scale because otherwise it's too zoomed in
-  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(.5,.75))+
-   labs(title="Food Secure",
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(.4,.5))+
+   labs(title="Food Insecure",
         caption=caption_ug,
-      subtitle = 'Percent of Food Secure respondents',
+      subtitle = 'Percent of Food Insecure respondents',
          x="UCUES Survey Year")
   
   g_foodsecure_time
+  
+  ggsave("viz/food_insecure_time.png", width=9, height=5, units="in")
 
 #direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 

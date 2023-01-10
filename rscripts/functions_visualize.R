@@ -33,7 +33,7 @@ plot_time<-function(data){
                    y = value,
                    group=campus,
                    color=campus)) +
-    geom_textline(aes(label=campus),size = 4, hjust=-.0001) +
+    geom_textline(aes(label=campus), size= 4,hjust=.07) +
     scale_color_manual(values=c( "#747678","#00629B"))+
     geom_label_repel(aes(label= scales::percent(value,accuracy=1)), size=5)+
     scale_y_continuous(labels=scales::percent_format(accuracy=1))+
