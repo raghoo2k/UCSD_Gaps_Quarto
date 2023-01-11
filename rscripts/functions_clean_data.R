@@ -119,9 +119,9 @@ clean_vibe_freq<- function(data){
     mutate(response=fct_relevel(response, "Never","Rarely","Occasionally","Very Often",
                                 "Often","Somewhat Often"))%>%
     mutate(vibe=fct_collapse(response,
-                             negative=c("Occasionally","Very Often",
+                             negative=c("Very Often",
                                         "Often","Somewhat Often"),
-                             positive=c("Never","Rarely")))
+                             positive=c("Occasionally","Never","Rarely")))
 }
 
 collapse_positive_vibe<-function(data){

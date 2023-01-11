@@ -107,11 +107,44 @@ food_secure_time<-es%>%
   
   g_foodsecure_time
   
-  ggsave("viz/food_insecure_time.png", width=9, height=5, units="in")
+  ggsave("viz/food_insecure_time.png", width=9, height=5, units="in", dpi=300)
 
 #direct.label(g_foodsecure_time,list(cex=30,  "first.qp"))
 
 ```
+
+
+```{r}
+food_secure_time_wide<-clean_wide_time(food_secure_time)
+
+  
+  plot_time_dumbell(food_secure_time_wide)+
+   scale_y_continuous(expand=c(0,0), limits=c(.25, .56), breaks=c(.28,.5), labels=c("Less Food Insecure", "More Food Insecure"), position="right")+
+               #labels=scales::percent_format(accuracy=1), )+
+             scale_x_discrete(expand=c(0.2,0))+
+             #set psuedo grid which looks better with later formatting than the grid line
+             geom_segment(data=data, aes(x=year, xend=year, y=.25, yend=.5),
+                                             color="#b2b2b2", size=0.15)+
+    #build diff box
+             #spacing of diff bar is determined on y axis
+            geom_rect(data=data, aes(ymin=.5, ymax=.55, xmin=-Inf, xmax=Inf), fill="grey") +
+             geom_text(data=data, aes(label=paste0(diff*100, "%"), y=.525, x=year), fontface="bold", size=3)+
+            geom_text(data=filter(data, year=="2016"),
+                        +               aes(y=.525, x=year, label="Difference"),
+                        +               color="black", size=3.1, vjust=-2, fontface="bold") +
+     labs(title="Food Insecurity in the UC",
+        caption=caption_ug,
+         subtitle ='Percent of Food Insecure respondents',
+        x="Year")
+    
+
+   ggsave("viz/food_insecure_time.png", width=9, height=5, units="in", dpi=300)
+  
+
+```
+
+
+
 
 #### Food Security Differences by Group
 
@@ -126,63 +159,41 @@ Conversely some student groups have food security rates below the overall studen
 foodsecure_all_2022<-es%>%
 filter(q=="Food Security"&year=="2022"&comp=="All")%>%
   clean_vibe_foodsecure(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 foodsecure_2022<-es%>%
   filter(q=="Food Security"&year=="2022")%>%
   clean_vibe_foodsecure(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=foodsecure_all_2022$value)%>%
   create_diff_cols(.)
 
   
 plot_lollipop_div(foodsecure_2022)+
   #first axis- divergence
-  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.15,.1),
+  scale_y_continuous(labels=scales::percent_format(accuracy=1),limits=c(-.10,.15),
   #second axis- real value
   sec.axis = sec_axis(~ . +foodsecure_all_2022$value, labels=scales::label_percent(accuracy=1)))+
   
   #labels
-   labs(title="Food secure",
-       subtitle ="UCSD Undergrads who are food secure",
+   labs(title="Food Insecure",
+       subtitle ="UCSD Undergrads who are food insecure",
        y=lab_diff_axis_ug,
        caption=caption_ug)
 ```
 
 ```{r}
 
-#" \n ", scales::percent(value,accuracy=1))
 
- ggplot(
-  data = foodsecure_2022,aes(
-  y = group_label,
-  x = value,
-  ))+
-  geom_point()+# Make a long line
-  facet_grid(comp~., switch="y", scales="free_y")+
- geom_textsegment(aes(yend=group_label, xend=all, label=group_label),
-                  hjust=-.01)+
-
-  geom_vline(aes(xintercept=all))+
-theme(
-    plot.title=element_text(size=20),
-    plot.subtitle=element_text(size=15),
-    plot.caption=element_text(size=10),
-    axis.title.y = element_blank(),
-    axis.text.y=element_blank(),
-    #control factet theme
-    strip.background = element_blank(),
-    #can't get strip text to look good
-    strip.text.y = element_blank(),
-    panel.border = element_rect(colour="gray75", size=.75, fill=NA),
-    panel.spacing = unit(0, "lines"), 
-    plot.background=element_rect(color="white", fill="white"),
-    legend.position="none")
+ plot_text_div(foodsecure_2022)+
+  #labels
+   labs(title="Food Insecurity for UCSD Undergrads, 2022",
+       subtitle ="% Food Insecure",
+       caption=caption_ug)
 
 
-
-
+ ggsave("viz/food_insecure_2022.png", width=9, height=5, units="in", dpi=300)
 
 
 ```
@@ -208,7 +219,7 @@ Respondents could select "Never True", "Sometime True" or "Often True." For cons
 payhousingall_2022<-es%>%
 filter(q=="I was unable to pay all of the cost of my housing on time."&year=="2022"&comp=="All")%>%
   clean_vibe_true3(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 
 
@@ -216,7 +227,7 @@ payhousing_2022<-es%>%
   filter(q=="I was unable to pay all of the cost of my housing on time."&year=="2022")%>%
    clean_vibe_true3(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=payhousingall_2022$value)%>%
   create_diff_cols(.)
 
@@ -233,6 +244,28 @@ plot_lollipop_div(payhousing_2022)+
        caption=caption_ug)
 ```
 
+
+
+```{r}
+
+plot_text_div(payhousing_2022)+
+   scale_x_continuous(expand=c(.02,.02), limits=c(.10, .34), breaks=c(.10,.2,.28,.32), labels=c("More Able to Pay", "Student Average", "More Unable to Pay", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=payhousing_2022, aes(xmin=.30, xmax=.34, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=payhousing_2022, aes(label=paste0(round(diff*100,0), "%"), x=.32, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="I was unable to pay all the cost of my housing on time",
+       subtitle ="UCSD Undergrads who were unable to pay housing costs on time, sometimes or often",
+       caption=caption_ug)
+
+ ggsave("viz/payhousing_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+
+
 About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. This proportion is slightly higher than the UC average of 77% of students always able to pay (not pictured).  Within UCSD, the proportion of students always able to pay on time ranges from 72% for African American students to 89% for American Indian students, a 17 percentage point difference. 
 
 While most students are always able to pay, the proportion who never worry about paying housing costs is lower. Overall 46% never worry -similar to the UC average of 45%. However, there is a wide range by student groups at UCSD, from 55% of students not received Pell, to only 32% of Pell grant recipients, a difference of over 20 percentage points. This means that almost 70% of Pell Grant Recipients and First Generation students sometimes or often worry about paying for housing.  
@@ -247,13 +280,13 @@ worriedhousingall_2022<-es%>%
 filter(q=="I worried I would not have enough money to cover the cost of my housing." & year=="2022"& comp==
 "All")%>%
   clean_vibe_true3(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 worriedhousing_2022<-es%>%
   filter(q=="I worried I would not have enough money to cover the cost of my housing." & year=="2022")%>%
    clean_vibe_true3(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=worriedhousingall_2022$value)%>%
   create_diff_cols(.)
 
@@ -264,10 +297,26 @@ plot_lollipop_div(worriedhousing_2022)+
   #second axis- real value
   sec.axis = sec_axis(~ . +worriedhousingall_2022$value, labels=scales::label_percent(accuracy=1)))+
   #labels
-   labs(title="I never worried I would not have enough \n money to cover the cost of my housing",
-       subtitle ="UCSD Undergrads never worried about paying for housing",
+   labs(title="I  worried I would not have enough \n money to cover the cost of my housing",
+       subtitle ="UCSD Undergrads  worried about paying for housing",
        y=lab_diff_axis_ug,
        caption=caption_ug)
+```
+
+
+```{r}
+plot_text_div(worriedhousing_2022)+
+   scale_x_continuous(expand=c(.02,.02), limits=c(.42, .73), breaks=c(.42,.54,.68,.72), labels=c("Less Worried", "Student Average", "More Worried", "Difference from \nAverage"), position="top")+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=payhousing_2022, aes(xmin=.71, xmax=.73, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=payhousing_2022, aes(label=paste0(round(diff*100,0), "%"), x=.72, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="I worried I would not have enough money to cover the cost of my housing",
+       subtitle ="UCSD Undergrads who were, sometimes or often",
+       caption=caption_ug)
+
+ ggsave("viz/worried housing_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 ### Worried about Debt/Finances
@@ -291,7 +340,7 @@ worried_time<-ucall%>%
 group_by(campus,year, vibe)%>%
   summarize(value=sum(value),
             N=sum(N))%>%
-  filter(vibe=="positive")
+  filter(vibe=="negative")
  
  g_worried_time<-plot_time(worried_time)+
   #need to tweak scale because otherwise it's too zoomed in
@@ -307,6 +356,35 @@ direct.label(g_worried_time,list(cex=30,  "first.qp"))
 
 
 
+```
+
+
+```{r}
+worried_time_wide<-clean_wide_time(worried_time)
+
+g_worried_time<-plot_time_dumbell(worried_time_wide) +
+  scale_y_continuous(expand=c(0,0), limits=c(.4, .62), breaks=c(.4,.57), labels=c("Less Worried", "More Worried"), position="right")+
+               #labels=scales::percent_format(accuracy=1), )+
+             scale_x_discrete(expand=c(0.2,0))+
+            
+    #build diff box
+             #spacing of diff bar is determined on y axis
+            geom_rect(data=worried_time_wide, aes(ymin=.6, ymax=.62, xmin=-Inf, xmax=Inf), fill="grey") +
+             geom_text(data=worried_time_wide, aes(label=paste0(diff*100, "%"), y=.61, x=year), fontface="bold", size=3)+
+            geom_text(data=filter(worried_time_wide, year=="2016"),
+                                    aes(y=.61, x=year, label="Difference"),
+                                    color="black", size=3.1, vjust=-2, fontface="bold") +
+   #set psuedo grid which looks better with later formatting than the grid line
+             geom_segment(data=worried_time_wide, aes(x=year, xend=year, y=.4, yend=.6),
+                                  color="#b2b2b2", size=0.15)+
+  labs(title="UC Comparison: I worried about my debt and financial fircumstances",
+        caption=caption_ug,
+      subtitle = "Percent of respondents worried, somewhat often, often, or very often")
+  
+  
+  move_layers(g_worried_time,"GeomSegment", position="bottom")
+  
+   ggsave("viz/worried_time.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
