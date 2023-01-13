@@ -115,11 +115,11 @@ clean_wide_time<-function(data){
     select(year, campus,value)%>%
     pivot_wider(names_from=campus, values_from=value)%>%
     rename("All_UC"="All UC")%>%
-    mutate(diff=round(All_UC-UCSD, 2))%>%
+    mutate(diff=round(UCSD-All_UC, 2))%>%
     mutate(All_UC=case_when(diff==0~UCSD+.001,
                             TRUE~All_UC))%>%
     mutate(year=as.factor(year))%>%
-    mutate(year=fct_relevel(year, "2022","2020","2018","2016"))
+    mutate(year=fct_relevel(year, "2022","2021","2020","2018","2016"))
 }
 
     

@@ -310,8 +310,8 @@ plot_text_div(worriedhousing_2022)+
     scale_y_discrete(expand=c(0,1.2))+
     #build diff box
     #spacing of diff bar is determined on y axis
-    geom_rect(data=payhousing_2022, aes(xmin=.71, xmax=.73, ymin=-Inf, ymax=Inf), fill="grey") +
-    geom_text(data=payhousing_2022, aes(label=paste0(round(diff*100,0), "%"), x=.72, y=group_label, color=avg_above), fontface="bold", size=3)+
+    geom_rect(data=worriedhousing_2022, aes(xmin=.71, xmax=.73, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=worriedhousing_2022, aes(label=paste0(round(diff*100,0), "%"), x=.72, y=group_label, color=avg_above), fontface="bold", size=3)+
   labs(title="I worried I would not have enough money to cover the cost of my housing",
        subtitle ="UCSD Undergrads who were, sometimes or often",
        caption=caption_ug)
@@ -377,7 +377,7 @@ g_worried_time<-plot_time_dumbell(worried_time_wide) +
    #set psuedo grid which looks better with later formatting than the grid line
              geom_segment(data=worried_time_wide, aes(x=year, xend=year, y=.4, yend=.6),
                                   color="#b2b2b2", size=0.15)+
-  labs(title="UC Comparison: I worried about my debt and financial fircumstances",
+  labs(title="UC Comparison: I worried about my debt and financial circumstances",
         caption=caption_ug,
       subtitle = "Percent of respondents worried, somewhat often, often, or very often")
   
@@ -398,13 +398,13 @@ worriedall_2022<-es%>%
 filter(q=="Worried about my debt and financial circumstances" & year=="2022"& comp==
 "All")%>%
   clean_vibe_freq(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 worried_2022<-es%>%
   filter(q=="Worried about my debt and financial circumstances" & year=="2022")%>%
    clean_vibe_freq(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=worriedall_2022$value)%>%
   create_diff_cols(.)
 
@@ -415,14 +415,35 @@ plot_lollipop_div(worried_2022)+
   #second axis- real value
   sec.axis = sec_axis(~ . +worriedall_2022$value, labels=scales::label_percent(accuracy=1)))+
   #labels
-   labs(title="I rarely or never worried \nabout my debt and financial circumstances",
-       subtitle ="UCSD Undergrads never or rarely worried",
+   labs(title="I worried about my debt and financial circumstances",
+       subtitle ="UCSD Undergrads worried",
        y=lab_diff_axis_ug,
        caption=caption_ug)
 
 ```
+```{r}
+plot_text_div(worried_2022)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.25, .62), breaks=c(.25,.42,.55,.61), labels=c("Less Worried", "Student Average", "More Worried", "Difference from \nAverage"), position="top")+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=worried_2022, aes(xmin=.60, xmax=.62, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=worried_2022, aes(label=paste0(round(diff*100,0), "%"), x=.61, y=group_label, color=avg_above), fontface="bold", size=3)+
+   labs(title="I worried about my debt and financial circumstances",
+        caption=caption_ug,
+      subtitle = "Percent of UCSD students worried, somewhat often, often, or very often")
+
+ ggsave("viz/worried_2022.png", width=9, height=5, units="in", dpi=300)
+  
+  
+```
+
+
+
+
 
 ### Manageable Costs
+
 
 Fifty-eight percent of students somewhat agree, agree, or strongly agree that the total cost of attending UCSD is manageable in 2022, given the the grants and scholarships they receive. Over the past four waves of UCUES, UCSD has had slightly lower proportions of students agree than the UC average.
 
@@ -438,7 +459,7 @@ manage_ug_time<-ucall%>%
 group_by(campus,year, vibe)%>%
   summarize(value=sum(value),
             N=sum(N))%>%
-  filter(vibe=="positive")
+  filter(vibe=="negative")
  
  g_manage_ug_time<-plot_time(manage_ug_time)+
 
@@ -450,6 +471,39 @@ group_by(campus,year, vibe)%>%
 
 direct.label(g_manage_ug_time,list(cex=30,  "first.qp"))
 ```
+
+```{r}
+
+manage_ug_time_wide<-clean_wide_time(manage_ug_time)
+
+
+g_manage_time<-plot_time_dumbell(manage_ug_time_wide)+
+  scale_y_continuous(expand=c(0,0), limits=c(.37, .52), breaks=c(.37,.46), labels=c("More Manageable", "Less Manageable"), position="right")+
+  scale_x_discrete(expand=c(0.2,0))+
+    #build diff box
+             #spacing of diff bar is determined on y axis
+            geom_rect(data=manage_ug_time_wide, aes(ymin=.50, ymax=.52, xmin=-Inf, xmax=Inf), fill="grey") +
+             geom_text(data=manage_ug_time_wide, aes(label=paste0(diff*100, "%"), y=.51, x=year), fontface="bold", size=3)+
+            geom_text(data=filter(manage_ug_time_wide, year=="2016"),
+                                    aes(y=.51, x=year, label="Difference"),
+                                    color="black", size=3.1, vjust=-2, fontface="bold") +
+   #set psuedo grid which looks better with later formatting than the grid line
+             geom_segment(data=manage_ug_time_wide, aes(x=year, xend=year, y=.37, yend=.48),
+                                  color="#b2b2b2", size=0.15)+
+  labs(title="UC Comparison: Given the grants and scholarships, if any, that you receive, \nthe total cost of attending UCSD is manageable",
+        caption=caption_ug,
+      subtitle = "Percent of respondents somewhat disagree,disagree, or strongly disagree")
+  
+  
+  move_layers(g_manage_time,"GeomSegment", position="bottom")
+  
+   ggsave("viz/manageable_time.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+
+
+
 Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question. Pell grant recipients have the highest rates of agreement, 70%, an over 22 percentage point difference from students not recieving Pell. American Indian, First Generation and Hispanic /Latinx students also have higher than average rates of agreement. This divergent pattern may reflect the variety of financial supports these students have access to. However, African American students have lower rates of agreement. 
 
 
@@ -461,13 +515,13 @@ manageall_2022<-es%>%
 filter(grepl('manageable', q)& comp==
 "All")%>%
   clean_vibe_agree(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 manageable_2022<-es%>%
   filter(grepl('manageable', q)& year=="2022")%>%
    clean_vibe_agree(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=manageall_2022$value)%>%
   create_diff_cols(.)
 
@@ -486,6 +540,20 @@ plot_lollipop_div(manageable_2022)+
 ```
 
 
+```{r}
+plot_text_div(manageable_2022)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.29, .54), breaks=c(.3,.42,.49,.53), labels=c("More Managable",  "Average", "Less Manageable", "Difference from \nAverage"), position="top")+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=manageable_2022, aes(xmin=.52, xmax=.54, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=manageable_2022, aes(label=paste0(round(diff*100,0), "%"), x=.53, y=group_label, color=avg_above), fontface="bold", size=3)+
+   labs(title="Given the grants and scholarships, if any, that you receive, \nthe total cost of attending UCSD is manageable",
+        caption=caption_ug,
+      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+
+ ggsave("viz/manage_2022.png", width=9, height=5, units="in", dpi=300)
+```
 
 
 
@@ -518,10 +586,10 @@ food_secure_time_grad<-ucall_gses%>%
   group_by(campus,year, vibe)%>%
   summarize(value=sum(value),
             N=sum(N))%>%
-  filter(vibe=="positive")
+  filter(vibe=="negative")
 
 g_foodsecure_time_grad<-plot_time(food_secure_time_grad)+
-   labs(title="Food Secure",
+   labs(title="Food InSecure",
         caption=caption_grad,
       subtitle = 'Percent of Food Secure respondents',
          x="GSES Survey Year")
@@ -529,6 +597,35 @@ g_foodsecure_time_grad<-plot_time(food_secure_time_grad)+
 direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
  
 ```
+
+```{r}
+food_grad_wide<-clean_wide_time(food_secure_time_grad)
+
+plot_time_dumbell(food_grad_wide)+
+  scale_y_continuous(expand=c(0,0), limits=c(.18, .30), breaks=c(.37,.46), labels=c("Less Food Insecure", "More Food Insecure"), position="right")+
+  scale_x_discrete(expand=c(0.3,0))+
+    #build diff box
+             #spacing of diff bar is determined on y axis
+            geom_rect(data=food_grad_wide, aes(ymin=.28, ymax=.30, xmin=-Inf, xmax=Inf), fill="grey") +
+             geom_text(data=food_grad_wide, aes(label=paste0(diff*100, "%"), y=.29, x=year), fontface="bold", size=3)+
+            geom_text(data=filter(food_grad_wide, year=="2016"),
+                                    aes(y=.29, x=year, label="Difference"),
+                                    color="black", size=3.1, vjust=-2, fontface="bold") +
+   #set psuedo grid which looks better with later formatting than the grid line
+             geom_segment(data=food_grad_wide, aes(x=year, xend=year, y=.2, yend=.28),
+                                  color="#b2b2b2", size=0.15)+
+  labs(title="UC Comparison: Food Insecurity for Graduate Students",
+        caption=caption_grad,
+      subtitle = "Percent of respondents food insecure")
+  
+ ggsave("viz/food_insecure_grad_time.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+
+
+
+
 *Will add additional student groups to mirror following data. 
 
 ```{r}
@@ -539,13 +636,13 @@ direct.label(g_foodsecure_time_grad,list(cex=30,  "first.qp"))
 foodsecure_all_2021_gses<-gses%>%
 filter(q=="Food security"&year=="2021"&comp=="All")%>%
   clean_vibe_foodsecure(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 foodsecure_2021_gses<-gses%>%
   filter(q=="Food security"&year=="2021")%>%
   clean_vibe_foodsecure(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=foodsecure_all_2021_gses$value)%>%
   create_diff_cols(.)
 
@@ -562,6 +659,26 @@ plot_lollipop_div(foodsecure_2021_gses)+
 
 
 ```
+
+
+```{r}
+plot_text_div(foodsecure_2021_gses)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.15, .41), breaks=c(.15,.21,.32,.40), labels=c("Less Food Insecure", "Student Average", "More Food Inecure", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=foodsecure_2021_gses, aes(xmin=.39, xmax=.41, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=foodsecure_2021_gses, aes(label=paste0(round(diff*100,0), "%"), x=.40, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="Food Insecurity 2021",
+       subtitle ="UCSD Graduate Students who were Food Insecure",
+       caption=caption_grad)
+
+ggsave("viz/food_insecure_grad.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+
 
 ### Financial hardship has impeded my success in my program.
 
@@ -580,13 +697,13 @@ While about 64% of students disagreed that financial hardship had impeded their 
 hardship_all_2021_gses<-gses%>%
 filter(grepl('hardship', q)&year=="2021"&comp=="All")%>%
   clean_vibe_agree_neg(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 hardship_2021_gses<-gses%>%
   filter(q=="Financial hardship has impeded my success in my program."&year=="2021")%>%
   clean_vibe_agree_neg(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=hardship_all_2021_gses$value)%>%
   create_diff_cols(.)%>%
   drop_na(value)
@@ -602,9 +719,24 @@ plot_lollipop_div(hardship_2021_gses)  +
        y=lab_diff_axis_grad,
        caption=caption_grad)
 
-
 ```
 
+```{r}
+plot_text_div(hardship_2021_gses)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.25, .57), breaks=c(.25,.36,.49,.56), labels=c("Less Hardship", "Student Average", "More Hardship", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=hardship_2021_gses, aes(xmin=.55, xmax=.57, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=hardship_2021_gses, aes(label=paste0(round(diff*100,0), "%"), x=.56, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="Financial hardship has impeded my success in my program.",
+       subtitle ="UCSD Graduate students who somewhat disagree, disagree, strongly disagree",
+       caption=caption_grad)
+
+
+ggsave("viz/hardship_grad.png", width=9, height=5, units="in", dpi=300)
+```
 
 
 ### I've been concerned about money lately.
@@ -619,13 +751,13 @@ This question continues the format of the previous, with similiar patterns of di
 concerned_all_2021_gses<-gses%>%
 filter(grepl('concerned', q)&year=="2021"&comp=="All")%>%
   clean_vibe_agree_neg(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 concerned_2021_gses<-gses%>%
   filter(q=="I've been concerned about money lately."&year=="2021")%>%
   clean_vibe_agree_neg(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=concerned_all_2021_gses$value)%>%
   create_diff_cols(.)%>%
   drop_na(value)
@@ -644,6 +776,26 @@ plot_lollipop_div(concerned_2021_gses)  +
 
 ```
 
+```{r}
+plot_text_div(concerned_2021_gses)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.56, .87), breaks=c(.57,.645,.70,.86), labels=c("Less Concern", "Student Average", "More Concern", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=concerned_2021_gses, aes(xmin=.85, xmax=.87, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=concerned_2021_gses, aes(label=paste0(round(diff*100,0), "%"), x=.86, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="I've been concerned about money lately.",
+       subtitle ="Graduate students who somewhat agree, agree, strongly agree",
+       caption=caption_grad)
+
+
+ggsave("viz/concerned_grad.png", width=9, height=5, units="in", dpi=300) 
+```
+
+
+
+
 ### I'm confident in my financial situation.
 
 For this question, "Strongly Agree," "Agree", and "Somewhat Agree" were considered positive responses. 
@@ -656,13 +808,13 @@ For this question, "Strongly Agree," "Agree", and "Somewhat Agree" were consider
 confident_all_2021_gses<-gses%>%
 filter(grepl('confident', q)&year=="2021"&comp=="All")%>%
   clean_vibe_agree(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 confident_2021_gses<-gses%>%
   filter(q=="I'm confident in my financial situation."&year=="2021")%>%
   clean_vibe_agree(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=confident_all_2021_gses$value)%>%
   create_diff_cols(.)%>%
   drop_na(value)
@@ -682,6 +834,25 @@ plot_lollipop_div(confident_2021_gses)  +
 ```
 
 
+```{r}
+plot_text_div(confident_2021_gses)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.20, .50), breaks=c(.2,.30,.390,.49), labels=c("More Confident", "Student Average", "Less Confident", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=confident_2021_gses, aes(xmin=.48, xmax=.50, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=confident_2021_gses, aes(label=paste0(round(diff*100,0), "%"), x=.49, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="I'm confident in my financial situation.",
+       subtitle ="Graduate students who somewhat disagree, disagree, strongly disagree",
+       caption=caption_grad)
+
+
+ggsave("viz/confident_grad.png", width=9, height=5, units="in", dpi=300) 
+
+
+```
+
 ### I can get by financially without having to cut back on too many of the things that are important to me.
 
 Responses to this question range from just 50% of African American and and Hispanic/Latinx students agreeing,to about 74% of masters students for an almost 25 percentage point difference between student groups. 
@@ -694,13 +865,13 @@ Responses to this question range from just 50% of African American and and Hispa
 getby_all_2021_gses<-gses%>%
 filter(grepl('get by', q)& year=="2021" & comp=="All")%>%
   clean_vibe_agree(.)%>%
-collapse_positive_vibe(.)
+collapse_negative_vibe(.)
 
 getby_2021_gses<-gses%>%
   filter(q=="I can get by financially without having to cut back on too many of the things that are important to me."&year=="2021")%>%
   clean_vibe_agree(.)%>%
   order_comp_group_all(.)%>%
-collapse_positive_vibe(.)%>%
+collapse_negative_vibe(.)%>%
   mutate(all=getby_all_2021_gses$value)%>%
   create_diff_cols(.)%>%
   drop_na(value)
@@ -719,4 +890,20 @@ plot_lollipop_div(getby_2021_gses)  +
 
 ```
 
+```{r}
+plot_text_div(getby_2021_gses)+
+  scale_x_continuous(expand=c(.02,.02), limits=c(.24, .55), breaks=c(.25,.327,.49,.54), labels=c("Less cutting back", "Student Average", "More cutting back", "Difference from \nAverage"), position="top")+
+    #labels=scales::percent_format(accuracy=1), )+
+    scale_y_discrete(expand=c(0,1.2))+
+    #build diff box
+    #spacing of diff bar is determined on y axis
+    geom_rect(data=getby_2021_gses, aes(xmin=.53, xmax=.55, ymin=-Inf, ymax=Inf), fill="grey") +
+    geom_text(data=getby_2021_gses, aes(label=paste0(round(diff*100,0), "%"), x=.54, y=group_label, color=avg_above), fontface="bold", size=3)+
+  labs(title="I can get by financially without having to cut back on too \nmany of the things that are important to me.",
+       subtitle ="Graduate students who somewhat agree, agree, or strongly agree",
+       caption=caption_grad)
+
+
+ggsave("viz/getby_grad.png", width=9, height=5, units="in", dpi=300) 
+```
 
