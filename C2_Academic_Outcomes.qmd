@@ -151,4 +151,24 @@ plot_diff(.,ftfy_ret_2021,.83,1)+
   ggsave("viz/academic/ftfy_ret_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 
+## Graduate Students
+### 10 Year Completion Rates
+```{r}
+grad_comp_2011<-read_excel("data/ucsd_grad_student_outcomes.xlsx")%>%
+  filter(entrycohort=="2009-2011")%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  mutate(group_label=group)%>%
+  filter(group!="All")%>%
+  create_diff_cols(.)
+  
+
+plot_text_div(grad_comp_2011)%>%
+plot_diff(.,grad_comp_2011,.62,.85)+
+ labs(title="Doctoral Student 10 Year Completion Rates",
+       subtitle ="UCSD Doctoral 2009-2011 Entry Cohort",
+       caption="Data Source: UCSD IR")
+  ggsave("viz/academic/doctoral_comp_2011.png", width=9, height=5, units="in", dpi=300)
+
+```
+
 

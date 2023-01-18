@@ -85,10 +85,22 @@ plot_text_div<- function(data){
   
 }
 
-#geom_text(data=filter(data, group_label=="Pell Grant Recipient"),
-#aes(x=.625, y=group_label, label="Difference from '\n'Average"),
-#color="black", size=3.1, vjust=-2, fontface="bold")+
-
+plot_diff<-function(g,data,ll,ul){
+  g+
+  scale_x_continuous(expand=c(.02,.02), 
+                     limits=c(ll, ul), 
+                     breaks=c(data%$% all[1],(ul-.01)), 
+  labels=c("Student Average",  "Difference from \nAverage"), 
+  position="top")+
+  scale_y_discrete(expand=c(0,1.2))+
+  #build diff box
+  #spacing of diff bar is determined on y axis
+  geom_rect(data=data, aes(xmin=ul-.02, xmax=ul, ymin=-Inf, ymax=Inf), fill="grey") +
+  geom_text(data=data, aes(label=paste0(round(diff*100,0), "%"), 
+                           x=ul-.01, 
+                           y=group_label, 
+                           color=avg_above), fontface="bold", size=3)
+}
 
 # plot one dot over time
 plot_time<-function(data){
