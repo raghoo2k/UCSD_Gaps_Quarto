@@ -2,6 +2,7 @@
 title: "Academic Outcomes"
 editor: visual
 ---
+
 This is a chapter about academic outcomes at UCSD
 
 ```{r}
@@ -16,7 +17,6 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 
 ```
 
-
 ```{r}
 #data is from the UCSD IR -datatable with https://tableau.ucsd.edu/#/views/UGGraduationandRetentionRates2022/TransferGraduationRates?:iid=1
 
@@ -28,14 +28,19 @@ cumu_ftfy<-read_excel("data/cumu_grad_rates.xlsx", sheet="FTFY", na=c("0.000",""
 cumu_t<-read_excel("data/cumu_grad_rates.xlsx", sheet="Transfer",na=c("0.000",""))%>%
   label_groups(.)%>%
 mutate(across(perc_2:perc_5, ~na_if(.x,0)))
+
+ret<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="retention")%>%
+  label_groups(.)
     
 ```
 
 Cumulative Graduation Rates
 
-## Undergraduate Overall Graduation Rates
+## Undergraduate
 
-Defined as six years or less for FTFY, defined or four years or less for transfer students. 
+### Graduation Rates
+
+Defined as six years or less for FTFY, defined or four years or less for transfer students.
 
 ```{r}
 
@@ -50,19 +55,16 @@ filter(entrycohort=="2016")%>%
   #flip factor levels to make a better visual - graduate rates are positive
   mutate(avg_above=fct_rev(avg_above))
 
-plot_text_div(ftfy_six_2016)+
-   scale_x_continuous(expand=c(.02,.02), limits=c(.72, .96), breaks=c(.875,.95), labels=c("Student Average",  "Difference from \nAverage"), position="top")+
-    scale_y_discrete(expand=c(0,1.2))+
-    #build diff box
-    #spacing of diff bar is determined on y axis
-    geom_rect(data=ftfy_six_2016, aes(xmin=.94, xmax=.96, ymin=-Inf, ymax=Inf), fill="grey") +
-    geom_text(data=ftfy_six_2016, aes(label=paste0(round(diff*100,0), "%"), x=.95, y=group_label, color=avg_above), fontface="bold", size=3)+
+plot_text_div(ftfy_six_2016)%>%
+  plot_diff(.,ftfy_six_2016,.72,.96)+
   labs(title="FTFY Six Years or Less Graduation Rate",
        subtitle ="UCSD FTFY 2016 Entry Cohort",
        caption="Data Source: UCSD IR")
  
  ggsave("viz/academic/ftfy_six_2016.png", width=9, height=5, units="in", dpi=300)
       
+  
+  
 ```
 
 ```{r}
@@ -77,20 +79,18 @@ filter(entrycohort=="2018")%>%
 
 
 
-plot_text_div(t_four_2018)+
-   scale_x_continuous(expand=c(.02,.02), limits=c(.80, .97), breaks=c(.877,.96), labels=c("Student Average",  "Difference from \nAverage"), position="top")+
-    scale_y_discrete(expand=c(0,1.2))+
-    #build diff box
-    #spacing of diff bar is determined on y axis
-    geom_rect(data=t_four_2018, aes(xmin=.95, xmax=.97, ymin=-Inf, ymax=Inf), fill="grey") +
-    geom_text(data=t_four_2018, aes(label=paste0(round(diff*100,0), "%"), x=.96, y=group_label, color=avg_above), fontface="bold", size=3)+
-  labs(title="Transfer Students Four Years or Less Graduation Rate",
+plot_text_div(t_four_2018)%>%
+plot_diff(.,t_four_2018,.8,.97)+
+   labs(title="Transfer Students Four Years or Less Graduation Rate",
        subtitle ="UCSD Transfer 2018 Entry Cohort",
        caption="Data Source: UCSD IR")
  
+ ggsave("viz/academic/t_four_2018.png", width=9, height=5, units="in", dpi=300)
+      
+  
+ 
 
 ```
-
 
 ```{r}
 ftfy_four_2018<-cumu_ftfy%>%
@@ -104,18 +104,15 @@ filter(entrycohort=="2018")%>%
   #flip factor levels to make a better visual - graduate rates are positive
   mutate(avg_above=fct_rev(avg_above))
 
-plot_text_div(ftfy_four_2018)+
-   scale_x_continuous(expand=c(.02,.02), limits=c(.53, .84), breaks=c(.736,.83), labels=c("Student Average",  "Difference from \nAverage"), position="top")+
-    scale_y_discrete(expand=c(0,1.2))+
-    #build diff box
-    #spacing of diff bar is determined on y axis
-    geom_rect(data=ftfy_four_2018, aes(xmin=.82, xmax=.84, ymin=-Inf, ymax=Inf), fill="grey") +
-    geom_text(data=ftfy_four_2018, aes(label=paste0(round(diff*100,0), "%"), x=.83, y=group_label, color=avg_above), fontface="bold", size=3)+
-  labs(title="FTFY Four Years or Less Graduation Rate",
+plot_text_div(ftfy_four_2018)%>%
+  plot_diff(., ftfy_four_2018,.53,.84)+
+labs(title="FTFY Four Years or Less Graduation Rate",
        subtitle ="UCSD FTFY 2018 Entry Cohort",
        caption="Data Source: UCSD IR")
- 
+
+ ggsave("viz/academic/ftfy_four_2018.png", width=9, height=5, units="in", dpi=300)
 ```
+
 ```{r}
 
 t_two_2020<-cumu_t%>%
@@ -130,16 +127,28 @@ filter(entrycohort=="2020")%>%
 
 
 
-plot_text_div(t_two_2020)+
-   scale_x_continuous(expand=c(.02,.02), limits=c(.43, .68), breaks=c(.566,.67), labels=c("Student Average",  "Difference from \nAverage"), position="top")+
-    scale_y_discrete(expand=c(0,1.2))+
-    #build diff box
-    #spacing of diff bar is determined on y axis
-    geom_rect(data=t_two_2020, aes(xmin=.66, xmax=.68, ymin=-Inf, ymax=Inf), fill="grey") +
-    geom_text(data=t_two_2020, aes(label=paste0(round(diff*100,0), "%"), x=.67, y=group_label, color=avg_above), fontface="bold", size=3)+
+plot_text_div(t_two_2020)%>%
+  plot_diff(., t_two_2020, .43,.68)+
   labs(title="Transfer Students Two Years or Less Graduation Rate",
        subtitle ="UCSD Transfer 2020 Entry Cohort",
        caption="Data Source: UCSD IR")
- 
+  ggsave("viz/academic/t_two_2020.png", width=9, height=5, units="in", dpi=300)
 ```
+### One Year Retention
+
+```{r}
+ftfy_ret_2021<-ret%>%
+filter(entrycohort=="2021"& transfer=="N")%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)
+
+plot_text_div(ftfy_ret_2021)%>%
+plot_diff(.,ftfy_ret_2021,.83,1)+
+  labs(title="FTFY One Year Retention Rate",
+       subtitle ="UCSD FTFY 2021 Entry Cohort",
+       caption="Data Source: UCSD IR")
+  ggsave("viz/academic/ftfy_ret_2021.png", width=9, height=5, units="in", dpi=300)
+```
+
 
