@@ -18,5 +18,6 @@ library(ggcharts)
 library(directlabels)
 library(geomtextpath)
 library(gginnards)
+library(magrittr)
 
 theme_set(theme_bw(base_size = 10))

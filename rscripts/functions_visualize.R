@@ -41,6 +41,8 @@ plot_lollipop_div<-function(data){
 # lollipo format with text labels inline
 
 plot_text_div<- function(data){
+  cols<-c("Above"="#2686A0","Average"="#747678","Below"="#A36B2B")
+   
   ggplot(
     data = data,aes(
       y = group_label,
@@ -60,7 +62,7 @@ plot_text_div<- function(data){
     geom_text(aes(x=value, y=group_label, label=scales::percent(value,accuracy=1)), size=3, nudge_y=-.35)+
     #set the all student average
     geom_vline(aes(xintercept=all))+
-    scale_color_manual(values=c("#A36B2B", "#2686A0"))+
+    scale_color_manual(values=cols)+
     theme(
       plot.title=element_text(size=20),
       plot.subtitle=element_text(size=15),

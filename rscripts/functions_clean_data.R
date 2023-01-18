@@ -19,7 +19,7 @@ order_comp_group_urg<- function(data){
 order_comp_group_all<-function(data){
   data%>%
     #new gen seems wrong? too moderate? and then Domestic unknown is clutter
-    filter(comp!="New Gen"& comp!="All")%>%
+    filter(comp!="New Gen"& comp!="All"& comp!="URG")%>%
     filter(group!="Domestic Unknown")%>%
     mutate(comp=as_factor(comp))%>%
     mutate(comp=fct_relevel(comp, "Pell","First Gen","Race"))%>%
