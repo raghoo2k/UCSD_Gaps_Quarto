@@ -1,0 +1,48 @@
+---
+title: "C3_Academic_Experiences"
+editor: visual
+---
+
+This is a chapter about academic outcomes at UCSD
+
+
+```{r}
+#| label: run_scripts
+#| include: FALSE
+
+source("rscripts/load_packages.R", local = knitr::knit_global())
+
+source("rscripts/functions_clean_data.R" ,local = knitr::knit_global())
+
+source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
+
+```
+
+
+```{r}
+#ucues
+es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+  filter(wg=="Inclusive Instruction and Engagement")%>%
+  label_groups(.)
+
+```
+
+
+## Undergraduates
+
+### Overall Academic Experience
+```{r}
+overallac_2022<-es%>%
+filter(q=="Overall academic experience"&year=="2022")%>%
+ clean_vibe_satisfied(.)%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All"& group_label!="American Indian")
+
+plot_group_comp(overallac_2022, cols_neg)%>%
+  plot_diff_rect(., overallac_2022, .06,.21,"Less Dissatisfied", "More Dissatisfied")+
+  labs(title="")
+```
+

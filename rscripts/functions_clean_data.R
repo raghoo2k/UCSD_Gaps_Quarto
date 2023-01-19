@@ -89,7 +89,7 @@ clean_vibe_satisfied<-function(data){
     mutate(response=fct_relevel(response, "Very Satisfied","Satisfied","Somewhat Satisfied","Very Dissatisfied", "Dissatisfied","Somewhat Dissatisfied"))%>%
     mutate(vibe=fct_collapse(response,
                              negative=c("Very Dissatisfied", "Dissatisfied","Somewhat Dissatisfied"),
-                             positive=c("Very Satisfied","Satisfied","Somewhat Satisfied","Very Dissatisfied")))
+                             positive=c("Very Satisfied","Satisfied","Somewhat Satisfied")))
   
 }
 

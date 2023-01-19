@@ -1,68 +1,35 @@
-
-
-#comparisons between groups
-
-
-plot_lollipop_div<-function(data){
-
-  diverging_lollipop_chart(
-  data = data,
-  x = group_label,
-  y = diff,
-  lollipop_colors = c("#2686A0","#A36B2B"),
-  #text_color = c("#2686A0","#A36B2B"),
-  text_size=15,
-  point_size = 5)+
-  #geom_text_repel(aes(y=diff+.01*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
-    geom_text(aes(y= diff+.02*sign(diff),label=scales::percent(value,accuracy=1)), size=5)+
-    facet_grid(comp~., switch="y")+
-    theme(
-    plot.title=element_text(size=20),
-    plot.subtitle=element_text(size=15),
-    plot.caption=element_text(size=10),
-    axis.title.y = element_blank(),
-    #control factet theme
-    strip.background = element_blank(),
-    #can't get strip text to look good
-    strip.text.y = element_blank(),
-    panel.border = element_rect(colour="gray75", size=.75, fill=NA),
-    panel.spacing = unit(0, "lines"), 
-    plot.background=element_rect(color="white", fill="white"),
-    legend.position="none")
-}
+#This is a list of functions that help make visuals
 
 
 
-#set the the geom text label to be offset slightly from datapoint- lines originate from all student average
-# geom_textsegment(aes(yend=group_label, xend=all, label=paste(group_label)),
-#hjust=-.000075, textcolour="black")+
-#                 hjust=-.00005, textcolour="black")+
+#color vectors
+#use when above average is good
+cols_pos<-c("Above"="#2686A0","Average"="#747678","Below"="#A36B2B")
+#use when above average is bad
+cols_neg<-c("Above"="#A36B2B","Average"="#747678","Below"="#2686A0")
 
-# lollipo format with text labels inline
+# Plots a single data point per group  relative to an "all" line
+#input dataframe, and a vector specifying colors 
 
-plot_text_div<- function(data){
-  cols<-c("Above"="#2686A0","Average"="#747678","Below"="#A36B2B")
+plot_group_comp<- function(data,color_vector){
    
   ggplot(
     data = data,aes(
       y = group_label,
       x = value
     ))+
-    #background line
-    #geom_segment(data=data, aes(y=group_label, yend=group_label, x=.35, xend=.60),
-                # color="#b2b2b2", size=0.15)+
     #set point to mark actual value
-    geom_point(aes(color=avg_above), size=2)+# Make a long line
+    geom_point(aes(color=avg_above), size=2)+
     #facet by comparison group - instead of all jumbled together
     facet_grid(comp~., switch="y", scales="free", space="free_y")+
-    #group name label
+    #group name label - line from "all" to value, and then text
     geom_segment(aes(yend=group_label, xend=all, color=avg_above))+
     geom_text(aes(x=value, y=group_label, label=group_label), size=3, nudge_y=.35)+
-    #data label
+    #data value label
     geom_text(aes(x=value, y=group_label, label=scales::percent(value,accuracy=1)), size=3, nudge_y=-.35)+
     #set the all student average
     geom_vline(aes(xintercept=all))+
-    scale_color_manual(values=cols)+
+    scale_color_manual(values=color_vector)+
     theme(
       plot.title=element_text(size=20),
       plot.subtitle=element_text(size=15),
@@ -85,12 +52,18 @@ plot_text_div<- function(data){
   
 }
 
-plot_diff<-function(g,data,ll,ul){
+#This comes after previous function and adds better axis formatting
+#it offers one way of pre-populating where axis labels and diff rect fall
+#ll is lower limit-generally a little lower than lowest value to show
+#ul is upper limit- generally ~.05 above the highest value
+
+plot_diff_rect<-function(g,data,ll,ul,stringlow,stringhigh){
   g+
   scale_x_continuous(expand=c(.02,.02), 
-                     limits=c(ll, ul), 
-                     breaks=c(data%$% all[1],(ul-.01)), 
-  labels=c("Student Average",  "Difference from \nAverage"), 
+                     limits=c(ll, ul),
+                     #sets labels for average line, and diff in rectangle as if axis labels
+                     breaks=c((ll+.01),data%$% all[1],ul*.85,(ul-.01)), 
+  labels=c(stringlow,"Student Average", stringhigh, "Difference from \nAverage"), 
   position="top")+
   scale_y_discrete(expand=c(0,1.2))+
   #build diff box
@@ -102,27 +75,8 @@ plot_diff<-function(g,data,ll,ul){
                            color=avg_above), fontface="bold", size=3)
 }
 
-# plot one dot over time
-plot_time<-function(data){
-  
-  ggplot(data, aes(x = year, 
-                   y = value,
-                   group=campus,
-                   color=campus)) +
-    geom_textline(aes(label=campus), size= 4,hjust=.07) +
-    scale_color_manual(values=c( "#747678","#00629B"))+
-    geom_label_repel(aes(label= scales::percent(value,accuracy=1)), size=5)+
-    scale_y_continuous(labels=scales::percent_format(accuracy=1))+
-    theme_classic()+
-    theme(
-      plot.title = element_text(size=15),
-      axis.title.x = element_text(size=15),
-      axis.title.y = element_blank(),
-      axis.text = element_text(size=15),
-      panel.grid = element_blank(),
-      legend.position  = "none")
-}
 
+#This makes data comparing UCSD to other campuses wide so it can be dumbelled
 clean_wide_time<-function(data){
   
   data%>%
@@ -136,7 +90,7 @@ clean_wide_time<-function(data){
     mutate(year=fct_relevel(year, "2022","2021","2020","2018","2016"))
 }
 
-    
+#requires wider data see above    
 plot_time_dumbell<-function(data){
    #dumball chart is from package ggcharts
       dumbbell_chart(
@@ -173,77 +127,29 @@ plot_time_dumbell<-function(data){
 
 
   
+# plot one dot over time - deprecated? 
+plot_time<-function(data){
   
-  
-
-
-
-
-### Dividing polots- 
-
-#after manually ordering response levels and assigning negative v positive
-
-make_div<-function(data)
-{
-  data%>%
-    mutate(div=case_when(vibe=="negative"~value*-1,
-                         TRUE~value))%>%
-    mutate(labels=round((value*100),0))%>%
-    #need to add this to keep the responses ordered correctly 
-    arrange(response)}
-
-g_div<-function(data){
-  ggplot(data=data,
-         aes(y=group,
-             x=div,
-             fill=response,
-             label=paste0(labels, "%")))+
-    geom_col()+
-    geom_fit_text(position="stack",show.legend = F)+
-    scale_y_discrete(limits=rev)+
-    guides(fill=guide_legend(nrow=1))+
-    theme_minimal() +
-    theme(axis.text.x = element_blank(),
-          axis.title = element_blank(),
-          panel.grid = element_blank(),
-          legend.title = element_blank(),
-          axis.text=element_text(size=20),
-          legend.position = "top")  
-  
-  
+  ggplot(data, aes(x = year, 
+                   y = value,
+                   group=campus,
+                   color=campus)) +
+    geom_textline(aes(label=campus), size= 4,hjust=.07) +
+    scale_color_manual(values=c( "#747678","#00629B"))+
+    geom_label_repel(aes(label= scales::percent(value,accuracy=1)), size=5)+
+    scale_y_continuous(labels=scales::percent_format(accuracy=1))+
+    theme_classic()+
+    theme(
+      plot.title = element_text(size=15),
+      axis.title.x = element_text(size=15),
+      axis.title.y = element_blank(),
+      axis.text = element_text(size=15),
+      panel.grid = element_blank(),
+      legend.position  = "none")
 }
-# Diverging color palate
-#palette definition
-#earth<-divergingx_hcl("Earth", n=6)
+  
 
 
-#3-is more severe
-#pos3<-earth[6]
-#pos2<-earth[5]
-#pos1<-earth[4]
-#neg3<-earth[1]
-#neg2<-earth[2]
-#neg1<-earth[3]
-
-# Old Dot Plot
-
-g_dotperc<-function(data){
-  ggplot(data,
-         aes(y = reorder(comp,desc(comp)), 
-             x = value,
-             color=comp,
-             label=paste(group," \n ",paste0(perc, "%"))))+ 
-    geom_point(size=2)+
-    geom_line(aes(group = comp, color=comp)) +
-    scale_color_manual(values=met.brewer("Veronese",5))+
-    geom_text(size=7)+
-    theme(axis.title.y = element_blank(),
-          axis.title.x = element_text(size=20),
-          axis.text=element_text(size=20),
-          panel.grid.major = element_line(size=1),
-          plot.caption=element_text(size=10),
-          legend.position="none")
-}
 
 
 

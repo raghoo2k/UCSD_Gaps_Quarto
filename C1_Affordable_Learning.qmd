@@ -53,7 +53,8 @@ caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
 
 ## Undergraduates
- This section covers a few questions prioritized by the Affordable Learning and Financial Support collective impact working group.
+
+This section covers a few questions prioritized by the Affordable Learning and Financial Support collective impact working group.
 
 Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Instiutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/Affordability?:iid=1)
 
@@ -113,7 +114,6 @@ food_secure_time<-es%>%
 
 ```
 
-
 ```{r}
 food_secure_time_wide<-clean_wide_time(food_secure_time)
 
@@ -143,12 +143,9 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
 
 ```
 
-
-
-
 #### Food Security Differences by Group
 
-Focusing on UCSD students in 2022, we find that there are significant differences by student group. Some student groups have higher than the student body average food security rate, including students who are not First Generation (64% food secure), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%).  The international student food security rate is the same as the student body average- 58% food secure.
+Focusing on UCSD students in 2022, we find that there are significant differences by student group. Some student groups have higher than the student body average food security rate, including students who are not First Generation (64% food secure), not Pell Grant Recipients (64%), or are White (63%) or Asian (61%). The international student food security rate is the same as the student body average- 58% food secure.
 
 Conversely some student groups have food security rates below the overall student body rate, including American Indian students (50% food secure), First Generation students (49%), Pell Grant recipients (48%), Hispanic or Latinx students (48%) or African American students(44%), For all these groups, at least half of students are food insecure. The span of the difference is 20 percentage points- between students who don't recieve Pell Grants (64%) and African American students (44%).
 
@@ -198,8 +195,6 @@ plot_lollipop_div(foodsecure_2022)+
 
 ```
 
-
-
 ### Housing Costs
 
 The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions future versions of this document can add to provide historical context.
@@ -244,8 +239,6 @@ plot_lollipop_div(payhousing_2022)+
        caption=caption_ug)
 ```
 
-
-
 ```{r}
 
 plot_text_div(payhousing_2022)+
@@ -263,12 +256,9 @@ plot_text_div(payhousing_2022)+
  ggsave("viz/payhousing_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
+About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. This proportion is slightly higher than the UC average of 77% of students always able to pay (not pictured). Within UCSD, the proportion of students always able to pay on time ranges from 72% for African American students to 89% for American Indian students, a 17 percentage point difference.
 
-
-
-About 80% of students were always able to pay for housing costs on time at UCSD, meaning 20% of students were sometimes or often unable to pay on time. This proportion is slightly higher than the UC average of 77% of students always able to pay (not pictured).  Within UCSD, the proportion of students always able to pay on time ranges from 72% for African American students to 89% for American Indian students, a 17 percentage point difference. 
-
-While most students are always able to pay, the proportion who never worry about paying housing costs is lower. Overall 46% never worry -similar to the UC average of 45%. However, there is a wide range by student groups at UCSD, from 55% of students not received Pell, to only 32% of Pell grant recipients, a difference of over 20 percentage points. This means that almost 70% of Pell Grant Recipients and First Generation students sometimes or often worry about paying for housing.  
+While most students are always able to pay, the proportion who never worry about paying housing costs is lower. Overall 46% never worry -similar to the UC average of 45%. However, there is a wide range by student groups at UCSD, from 55% of students not received Pell, to only 32% of Pell grant recipients, a difference of over 20 percentage points. This means that almost 70% of Pell Grant Recipients and First Generation students sometimes or often worry about paying for housing.
 
 ```{r}
 #| label: worried_pay_house_ug_diff_2022
@@ -303,7 +293,6 @@ plot_lollipop_div(worriedhousing_2022)+
        caption=caption_ug)
 ```
 
-
 ```{r}
 plot_text_div(worriedhousing_2022)+
    scale_x_continuous(expand=c(.02,.02), limits=c(.42, .73), breaks=c(.42,.54,.68,.72), labels=c("Less Worried", "Student Average", "More Worried", "Difference from \nAverage"), position="top")+
@@ -324,7 +313,6 @@ plot_text_div(worriedhousing_2022)+
 UCUES has asked "How often during the past academic year have you: Worried about my debt and financial circumstances?" since 2014.
 
 The question has six possible responses -from negative - Very Often, Often,Somewhat Often, and occasionally, to two coded as positive: rarely and never.
-
 
 Overall, UCSD's students are similiar to the UC average over, with only a quarter or so of students never or rarely worrying about finances and debt. Both groups have seen an uptick in students never or rarely worrying in the last wave, to about a third of students.
 
@@ -358,7 +346,6 @@ direct.label(g_worried_time,list(cex=30,  "first.qp"))
 
 ```
 
-
 ```{r}
 worried_time_wide<-clean_wide_time(worried_time)
 
@@ -386,7 +373,6 @@ g_worried_time<-plot_time_dumbell(worried_time_wide) +
   
    ggsave("viz/worried_time.png", width=9, height=5, units="in", dpi=300)
 ```
-
 
 It's notable that while 2022 saw an increase in students never or rarely worrying, stark differences remain by student group, from half of international students to just 22% of Pell Grant recipients.
 
@@ -421,6 +407,7 @@ plot_lollipop_div(worried_2022)+
        caption=caption_ug)
 
 ```
+
 ```{r}
 plot_text_div(worried_2022)+
   scale_x_continuous(expand=c(.02,.02), limits=c(.25, .62), breaks=c(.25,.42,.55,.61), labels=c("Less Worried", "Student Average", "More Worried", "Difference from \nAverage"), position="top")+
@@ -438,12 +425,7 @@ plot_text_div(worried_2022)+
   
 ```
 
-
-
-
-
 ### Manageable Costs
-
 
 Fifty-eight percent of students somewhat agree, agree, or strongly agree that the total cost of attending UCSD is manageable in 2022, given the the grants and scholarships they receive. Over the past four waves of UCUES, UCSD has had slightly lower proportions of students agree than the UC average.
 
@@ -500,12 +482,7 @@ g_manage_time<-plot_time_dumbell(manage_ug_time_wide)+
    ggsave("viz/manageable_time.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
-
-
-
-Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question. Pell grant recipients have the highest rates of agreement, 70%, an over 22 percentage point difference from students not recieving Pell. American Indian, First Generation and Hispanic /Latinx students also have higher than average rates of agreement. This divergent pattern may reflect the variety of financial supports these students have access to. However, African American students have lower rates of agreement. 
-
+Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question. Pell grant recipients have the highest rates of agreement, 70%, an over 22 percentage point difference from students not recieving Pell. American Indian, First Generation and Hispanic /Latinx students also have higher than average rates of agreement. This divergent pattern may reflect the variety of financial supports these students have access to. However, African American students have lower rates of agreement.
 
 ```{r}
 #| label: manageable_ug_2022
@@ -539,7 +516,6 @@ plot_lollipop_div(manageable_2022)+
 
 ```
 
-
 ```{r}
 plot_text_div(manageable_2022)+
   scale_x_continuous(expand=c(.02,.02), limits=c(.29, .54), breaks=c(.3,.42,.49,.53), labels=c("More Managable",  "Average", "Less Manageable", "Difference from \nAverage"), position="top")+
@@ -555,25 +531,23 @@ plot_text_div(manageable_2022)+
  ggsave("viz/manage_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
-
 ### Additional UCUES Questions related to Affordability.
-These questions are also available on the 2022 UCUES for further exploration. 
+
+These questions are also available on the 2022 UCUES for further exploration.
 
 -   Overall, I feel the education is affordable at my campus
-- How satisfied are you with the following aspect of your campus experiences/education? Value of your education for the price you are paying. 
+-   How satisfied are you with the following aspect of your campus experiences/education? Value of your education for the price you are paying.
 -   How concerned have you been about paying for your undergraduate education up to now?
 -   ...Next Year?
--  How often during the past academic year have you: cut down on personal / recreational spending to help pay for college expenses?
-
+-   How often during the past academic year have you: cut down on personal / recreational spending to help pay for college expenses?
 
 ## Graduate Students
 
-There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. The following draw from the UC Graduate Student Experience Survey in 2021, with the exception of Food Security, which includes data from the 2016 Graduate Student Wellbeing Survey. Please refer to #sec-UCGSES for more on UCGSES. 
+There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. The following draw from the UC Graduate Student Experience Survey in 2021, with the exception of Food Security, which includes data from the 2016 Graduate Student Wellbeing Survey. Please refer to #sec-UCGSES for more on UCGSES.
 
 ### Food Security
 
-For the two waves available, UCSD has similiar rates of food security in comparison with the UC average. 
+For the two waves available, UCSD has similiar rates of food security in comparison with the UC average.
 
 ```{r}
 #| label: food_g_overtime
@@ -622,11 +596,7 @@ plot_time_dumbell(food_grad_wide)+
 
 ```
 
-
-
-
-
-*Will add additional student groups to mirror following data. 
+\*Will add additional student groups to mirror following data.
 
 ```{r}
 #| label: food_g_2021
@@ -660,7 +630,6 @@ plot_lollipop_div(foodsecure_2021_gses)+
 
 ```
 
-
 ```{r}
 plot_text_div(foodsecure_2021_gses)+
   scale_x_continuous(expand=c(.02,.02), limits=c(.15, .41), breaks=c(.15,.21,.32,.40), labels=c("Less Food Insecure", "Student Average", "More Food Inecure", "Difference from \nAverage"), position="top")+
@@ -678,16 +647,13 @@ ggsave("viz/food_insecure_grad.png", width=9, height=5, units="in", dpi=300)
 
 ```
 
-
-
 ### Financial hardship has impeded my success in my program.
 
-* add comparison with all UC
+-   add comparison with all UC
 
-Graduate students were asked indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Disagree," "Disagree" and 
-"Somewhat disagree" were coded as "positive" responses. 
+Graduate students were asked indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Disagree," "Disagree" and "Somewhat disagree" were coded as "positive" responses.
 
-While about 64% of students disagreed that financial hardship had impeded their success, that number drops to 48% for Hispanic/Latinx students - and First Generation, LGBT, African American, Doctoral students, and International students also have lower levels of disagreement than average.  
+While about 64% of students disagreed that financial hardship had impeded their success, that number drops to 48% for Hispanic/Latinx students - and First Generation, LGBT, African American, Doctoral students, and International students also have lower levels of disagreement than average.
 
 ```{r}
 #| label: hardship_g_2021
@@ -738,10 +704,9 @@ plot_text_div(hardship_2021_gses)+
 ggsave("viz/hardship_grad.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
 ### I've been concerned about money lately.
 
-This question continues the format of the previous, with similiar patterns of differences between groups, 
+This question continues the format of the previous, with similiar patterns of differences between groups,
 
 ```{r}
 #| label: concerned_g_2021
@@ -793,12 +758,9 @@ plot_text_div(concerned_2021_gses)+
 ggsave("viz/concerned_grad.png", width=9, height=5, units="in", dpi=300) 
 ```
 
-
-
-
 ### I'm confident in my financial situation.
 
-For this question, "Strongly Agree," "Agree", and "Somewhat Agree" were considered positive responses. 
+For this question, "Strongly Agree," "Agree", and "Somewhat Agree" were considered positive responses.
 
 ```{r}
 #| label: confident_g_2021
@@ -833,7 +795,6 @@ plot_lollipop_div(confident_2021_gses)  +
 
 ```
 
-
 ```{r}
 plot_text_div(confident_2021_gses)+
   scale_x_continuous(expand=c(.02,.02), limits=c(.20, .50), breaks=c(.2,.30,.390,.49), labels=c("More Confident", "Student Average", "Less Confident", "Difference from \nAverage"), position="top")+
@@ -855,7 +816,7 @@ ggsave("viz/confident_grad.png", width=9, height=5, units="in", dpi=300)
 
 ### I can get by financially without having to cut back on too many of the things that are important to me.
 
-Responses to this question range from just 50% of African American and and Hispanic/Latinx students agreeing,to about 74% of masters students for an almost 25 percentage point difference between student groups. 
+Responses to this question range from just 50% of African American and and Hispanic/Latinx students agreeing,to about 74% of masters students for an almost 25 percentage point difference between student groups.
 
 ```{r}
 #| label: getby_g_2021
@@ -906,4 +867,3 @@ plot_text_div(getby_2021_gses)+
 
 ggsave("viz/getby_grad.png", width=9, height=5, units="in", dpi=300) 
 ```
-
