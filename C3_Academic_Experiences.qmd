@@ -18,11 +18,19 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 
 ```
 
+```{r}
+caption_ug<-"Source: UCUES 2022, UC Infocenter"
+caption_grad<-"Source: GSES 2021 UC Infocenter"
+```
+
 
 ```{r}
 #ucues
 es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
   filter(wg=="Inclusive Instruction and Engagement")%>%
+  label_groups(.)
+
+gses<-read_excel("data/UCGSES.xlsx")%>%
   label_groups(.)
 
 ```
@@ -43,6 +51,71 @@ filter(q=="Overall academic experience"&year=="2022")%>%
 
 plot_group_comp(overallac_2022, cols_neg)%>%
   plot_diff_rect(., overallac_2022, .06,.21,"Less Dissatisfied", "More Dissatisfied")+
-  labs(title="")
+  labs(title="Overall Academic Experience",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD students somewhat dissatisfied, dissatisfied, or very dissatisfied")
+
+ ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
+ 
+```
+
+```{r}
+fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+  filter(q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
+  label_groups(.)%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All"& group_label!="American Indian")
+
+plot_group_comp(fac_diff_2022, cols_neg)%>%
+  plot_diff_rect(., fac_diff_2022, .06,.23,"Less Disagreement", "More Disagreement")+
+  labs(title="Faculty are genuinely committed to promoting respect for and understanding of group differences at UCSD",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+
+ ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+## Graduate Students
+```{r}
+
+fac_inc_2021<-gses%>%
+  filter(q=="I feel included by... the faculty")%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+
+
+plot_group_comp(fac_inc_2021, cols_neg)%>%
+  plot_diff_rect(., fac_inc_2021, .08,.21,"Less Disagreement", "More Disagreement")+
+  labs(title="I feel included by the faculty",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+
+ ggsave("viz/acex/fac_inc_2021.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+
+```{r}
+fac_cul_2021<-gses%>%
+  filter(q=="my culture is respected by... the faculty")%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+
+plot_group_comp(fac_cul_2021, cols_neg)%>%
+  plot_diff_rect(., fac_cul_2021, .045,.13,"Less Disagreement", "More Disagreement")+
+  labs(title="My culture is respected by the faculty",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+
+ ggsave("viz/acex/fac_cul_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 

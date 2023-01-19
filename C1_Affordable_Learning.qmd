@@ -40,9 +40,7 @@ ucall_gses<-read_excel("data/gses_alluc.xlsx")
 #| label: viz_captions
 #| include: FALSE
 
-#Diff labels
-lab_diff_axis_ug<-"Difference from all undergraduate average"
-lab_diff_axis_grad<-"Difference from all graduate student average"
+
 
 #subtitle
 subtitle_grad_agree<-"UCSD Graduate Students who somewhat agree, agree, or strongly agree"
