@@ -124,6 +124,19 @@ clean_vibe_freq<- function(data){
                              positive=c("Occasionally","Never","Rarely")))
 }
 
+#Code Factor Levels in response
+clean_vibe_rate<-function(data){
+  data%>%
+    mutate(repsonse=as_factor(response))%>%
+    mutate(vibe=fct_collapse(response,
+                             negative=c("Very Poor", "Poor","Fair"),
+                             positive=c("Excellent","Very Good","Good")))
+  
+}
+
+
+
+
 collapse_positive_vibe<-function(data){
   data%>%
   group_by(comp, group_label, vibe)%>%

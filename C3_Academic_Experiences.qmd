@@ -27,7 +27,6 @@ caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```{r}
 #ucues
 es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
-  filter(wg=="Inclusive Instruction and Engagement")%>%
   label_groups(.)
 
 gses<-read_excel("data/UCGSES.xlsx")%>%
@@ -53,7 +52,7 @@ plot_group_comp(overallac_2022, cols_neg)%>%
   plot_diff_rect(., overallac_2022, .06,.21,"Less Dissatisfied", "More Dissatisfied")+
   labs(title="Overall Academic Experience",
          caption=caption_ug,
-      subtitle = "Percent of UCSD students somewhat dissatisfied, dissatisfied, or very dissatisfied")
+      subtitle = "Percent of UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
 
  ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
@@ -73,12 +72,36 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
   plot_diff_rect(., fac_diff_2022, .06,.23,"Less Disagreement", "More Disagreement")+
   labs(title="Faculty are genuinely committed to promoting respect for and understanding of group differences at UCSD",
          caption=caption_ug,
-      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 ## Graduate Students
+
+### Quality of Teaching in Program
+
+```{r}
+teaching_qual_2021<-gses%>%
+  filter(q=="Quality of teaching in your program")%>%
+  clean_vibe_rate(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+
+
+plot_group_comp(teaching_qual_2021, cols_neg)%>%
+  plot_diff_rect(., teaching_qual_2021, .07,.25,"Less Low Ratings", "More Low Ratings")+
+  labs(title="Quality of teaching in your program",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD students who rate teaching fair, poor, or very poor")
+
+ ggsave("viz/acex/teaching_qual_2021.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+
 ```{r}
 
 fac_inc_2021<-gses%>%
@@ -117,5 +140,21 @@ plot_group_comp(fac_cul_2021, cols_neg)%>%
       subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_cul_2021.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+
+## Response Rates
+#### UCUES
+```{r}
+ug_rr<-es%>%
+  filter(q=="Overall academic experience"|q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
+  filter(year=="2022")%>%
+  group_by(q,comp,group_label)%>%
+  summarise(N=sum(N, na.rm=T))
+
+gt_ug_rr<- gt(ug_rr)
+ 
+gt_ug_rr
 ```
 
