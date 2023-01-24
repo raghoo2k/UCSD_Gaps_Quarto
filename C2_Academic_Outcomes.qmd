@@ -171,6 +171,30 @@ plot_diff_rect(.,t_ret_2021,.75,.98)+
   ggsave("viz/academic/t_ret_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
+### GPA
+
+```{r}
+gpa<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="GPA")%>%
+label_groups(.)%>%
+  mutate(repsonse=as_factor(response))%>%
+    mutate(vibe=fct_collapse(response,
+                             negative=c("2.00-2.49","2.5-2.99"),
+                             positive=c(">3.49","3.00-3.49")))%>%
+collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  filter(comp!="All"& group_label!="American Indian")%>%
+  create_diff_cols(.)
+
+plot_group_comp(gpa,cols_neg)%>%
+plot_diff_rect(.,gpa,.10,.31, "Less low GPAs", "More Low GPAs")+
+  labs(title="GPA at Graduation below 3.00",
+       subtitle ="% of UCSD Undergraduates with GPA below 3.0 at Graduation",
+       caption=ir_cap)
+  ggsave("viz/academic/gpa_2022.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+
 
 ## Graduate Students
 

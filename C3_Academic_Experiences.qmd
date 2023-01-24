@@ -57,7 +57,26 @@ plot_group_comp(overallac_2022, cols_neg)%>%
  ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
 ```
+### Faculty knew your name
+```{r}
+fac_name_2022<- es%>%
+  filter(q=="Had a class in which the professor knew or learned your name")%>%
+  clean_vibe_freq(.)%>%
+  #rarely etc is actually positive
+   collapse_positive_vibe(.)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
 
+plot_group_comp(fac_name_2022, cols_neg)%>%
+  plot_diff_rect(., fac_name_2022, .52,.79,"Fewer professors didn't know name", "More unknown")+
+  labs(title="Had a class in which the professor knew or learned your name",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who occasionally, rarely, or never had a class \nwhere professor knew their name")
+ ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+### Faculty promote respect for and
 ```{r}
 fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
   filter(q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
@@ -70,12 +89,13 @@ fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
 
 plot_group_comp(fac_diff_2022, cols_neg)%>%
   plot_diff_rect(., fac_diff_2022, .06,.23,"Less Disagreement", "More Disagreement")+
-  labs(title="Faculty are genuinely committed to promoting respect for and understanding of group differences at UCSD",
+  labs(title="Faculty are genuinely committed to promoting respect for and \nunderstanding of group differences at UCSD",
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
 ```
+
 
 ## Graduate Students
 
@@ -88,20 +108,40 @@ teaching_qual_2021<-gses%>%
   collapse_negative_vibe(.)%>%
     mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
-  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+  filter(group_label!="All")
 
 
 plot_group_comp(teaching_qual_2021, cols_neg)%>%
-  plot_diff_rect(., teaching_qual_2021, .07,.25,"Less Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., teaching_qual_2021, .07,.29,"Less Low Ratings", "More Low Ratings")+
   labs(title="Quality of teaching in your program",
          caption=caption_grad,
-      subtitle = "Percent of UCSD students who rate teaching fair, poor, or very poor")
+      subtitle = "Percent of UCSD graduate students who rate teaching fair, poor, or very poor")
 
  ggsave("viz/acex/teaching_qual_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
+### Specialization Teaching
+```{r}
+teaching_spec_2021<-gses%>%
+  filter(q=="Quality of teaching in your area of specialization")%>%
+  clean_vibe_rate(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(teaching_spec_2021, cols_neg)%>%
+  plot_diff_rect(., teaching_spec_2021, .08,.24,"Less Low Ratings", "More Low Ratings")+
+  labs(title="Quality of teaching in your area of specialization",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD graduate students who rate teaching fair, poor, or very poor")
+
+ ggsave("viz/acex/teaching_spec_2021.png", width=9, height=5, units="in", dpi=300)
+
+```
 
 
+### I feel included by the faculty
 ```{r}
 
 fac_inc_2021<-gses%>%
@@ -110,14 +150,15 @@ fac_inc_2021<-gses%>%
   collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
-  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+  filter(group_label!="All")
+#& group_label!="Hispanic/Latinx"&group_label!="African American")
 
 
 plot_group_comp(fac_inc_2021, cols_neg)%>%
   plot_diff_rect(., fac_inc_2021, .08,.21,"Less Disagreement", "More Disagreement")+
   labs(title="I feel included by the faculty",
          caption=caption_grad,
-      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+      subtitle = "Percent of UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_inc_2021.png", width=9, height=5, units="in", dpi=300)
 
@@ -131,13 +172,15 @@ fac_cul_2021<-gses%>%
   collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
-  filter(group_label!="All"& group_label!="Hispanic/Latinx"&group_label!="African American")
+  filter(group_label!="All")
+           
+           #group_label!="Hispanic/Latinx"&group_label!="African American")
 
 plot_group_comp(fac_cul_2021, cols_neg)%>%
-  plot_diff_rect(., fac_cul_2021, .045,.13,"Less Disagreement", "More Disagreement")+
+  plot_diff_rect(., fac_cul_2021, .045,.18,"Less Disagreement", "More Disagreement")+
   labs(title="My culture is respected by the faculty",
          caption=caption_grad,
-      subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
+      subtitle = "Percent of UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_cul_2021.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -148,13 +191,67 @@ plot_group_comp(fac_cul_2021, cols_neg)%>%
 #### UCUES
 ```{r}
 ug_rr<-es%>%
-  filter(q=="Overall academic experience"|q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
+  filter(q=="Overall academic experience"|q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"|q=="Had a class in which the professor knew or learned your name")%>%
   filter(year=="2022")%>%
   group_by(q,comp,group_label)%>%
   summarise(N=sum(N, na.rm=T))
+```
 
-gt_ug_rr<- gt(ug_rr)
- 
+
+```{r}
+
+
+gt_ug_rr<- ug_rr%>%
+  pivot_wider(names_from=q, values_from = N)%>%
+  arrange(., "Overall academic experience")%>%
+  gt(., rowname_col="group_label", groupname_col="comp")%>%
+  cols_align(
+    align="left",
+    columns=group_label
+  )%>%
+  tab_header(title="UCSD Student Response Counts",
+             subtitle="UCUES 2022")%>%
+  tab_spanner(
+    label = "UCUES Questions",
+    columns=3:4)%>%
+  cols_label(
+    "Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"="Faculty are ...group differences at UCSD")
+  
 gt_ug_rr
+
+
+gtsave(gt_ug_rr, "acex_rr_ug.png", path = "viz/acex")
+```
+
+
+### GSES  
+```{r}
+grad_rr<-gses%>%
+  filter(q=="Quality of teaching in your program"|q=="Quality of teaching in your area of specialization"| q=="I feel included by... the faculty")%>%
+  filter(year=="2021")%>%
+  group_by(q,comp,group_label)%>%
+  summarise(N=sum(N, na.rm=T))
+```
+
+```{r}
+gt_grad_rr<- grad_rr%>%
+  pivot_wider(names_from=q, values_from = N)%>%
+ 
+  gt(., rowname_col="group_label", groupname_col="comp")%>%
+  cols_align(
+    align="left",
+    columns=group_label
+  )%>%
+  tab_header(title="UCSD Student Response Counts",
+             subtitle="UCGSES 2021")%>%
+  tab_spanner(
+    label = "UCGSES Questions",
+    columns=3:5)
+
+  
+gt_grad_rr
+
+gtsave(gt_grad_rr, "acex_rr_grad.png", path = "viz/acex")
+
 ```
 

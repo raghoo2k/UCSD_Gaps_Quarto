@@ -140,8 +140,8 @@ clean_vibe_rate<-function(data){
 collapse_positive_vibe<-function(data){
   data%>%
   group_by(comp, group_label, vibe)%>%
-    summarize(value=sum(value),
-              N=sum(N))%>%
+    summarize(value=sum(value, na.rm=T),
+              N=sum(N, na.rm=T))%>%
     #just show the positive responses
     filter(vibe=="positive")%>%
     mutate(perc=round(value*100))
@@ -150,8 +150,8 @@ collapse_positive_vibe<-function(data){
 collapse_negative_vibe<-function(data){
   data%>%
     group_by(comp, group_label, vibe)%>%
-    summarize(value=sum(value),
-              N=sum(N))%>%
+    summarize(value=sum(value, na.rm=T),
+              N=sum(N, na.rm=T))%>%
     #just show the negative responses
     filter(vibe=="negative")%>%
     mutate(perc=round(value*100))
