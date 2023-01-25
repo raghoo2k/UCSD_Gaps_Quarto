@@ -5,7 +5,6 @@ editor: visual
 
 This is a chapter about academic outcomes at UCSD
 
-
 ```{r}
 #| label: run_scripts
 #| include: FALSE
@@ -23,7 +22,6 @@ caption_ug<-"Source: UCUES 2022, UC Infocenter"
 caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
 
-
 ```{r}
 #ucues
 es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
@@ -34,10 +32,10 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ```
 
-
 ## Undergraduates
 
 ### Overall Academic Experience
+
 ```{r}
 overallac_2022<-es%>%
 filter(q=="Overall academic experience"&year=="2022")%>%
@@ -57,7 +55,9 @@ plot_group_comp(overallac_2022, cols_neg)%>%
  ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
 ```
+
 ### Faculty knew your name
+
 ```{r}
 fac_name_2022<- es%>%
   filter(q=="Had a class in which the professor knew or learned your name")%>%
@@ -77,6 +77,7 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
 ```
 
 ### Faculty promote respect for and
+
 ```{r}
 fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
   filter(q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
@@ -95,7 +96,6 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
 
  ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
 ```
-
 
 ## Graduate Students
 
@@ -120,7 +120,9 @@ plot_group_comp(teaching_qual_2021, cols_neg)%>%
  ggsave("viz/acex/teaching_qual_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
+
 ### Specialization Teaching
+
 ```{r}
 teaching_spec_2021<-gses%>%
   filter(q=="Quality of teaching in your area of specialization")%>%
@@ -140,8 +142,8 @@ plot_group_comp(teaching_spec_2021, cols_neg)%>%
 
 ```
 
-
 ### I feel included by the faculty
+
 ```{r}
 
 fac_inc_2021<-gses%>%
@@ -164,7 +166,6 @@ plot_group_comp(fac_inc_2021, cols_neg)%>%
 
 ```
 
-
 ```{r}
 fac_cul_2021<-gses%>%
   filter(q=="my culture is respected by... the faculty")%>%
@@ -185,10 +186,10 @@ plot_group_comp(fac_cul_2021, cols_neg)%>%
  ggsave("viz/acex/fac_cul_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
-
 ## Response Rates
+
 #### UCUES
+
 ```{r}
 ug_rr<-es%>%
   filter(q=="Overall academic experience"|q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"|q=="Had a class in which the professor knew or learned your name")%>%
@@ -196,7 +197,6 @@ ug_rr<-es%>%
   group_by(q,comp,group_label)%>%
   summarise(N=sum(N, na.rm=T))
 ```
-
 
 ```{r}
 
@@ -223,8 +223,8 @@ gt_ug_rr
 gtsave(gt_ug_rr, "acex_rr_ug.png", path = "viz/acex")
 ```
 
+### GSES
 
-### GSES  
 ```{r}
 grad_rr<-gses%>%
   filter(q=="Quality of teaching in your program"|q=="Quality of teaching in your area of specialization"| q=="I feel included by... the faculty")%>%
@@ -254,4 +254,3 @@ gt_grad_rr
 gtsave(gt_grad_rr, "acex_rr_grad.png", path = "viz/acex")
 
 ```
-
