@@ -1,0 +1,89 @@
+---
+title: "C_4_Mentoring_Coaching_and_Advising"
+editor: source
+---
+
+
+```{r}
+
+#| label: run_scripts
+#| include: FALSE
+
+source("rscripts/load_packages.R", local = knitr::knit_global())
+
+source("rscripts/functions_clean_data.R" ,local = knitr::knit_global())
+
+source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
+
+```
+
+```{r}
+caption_ug<-"Source: UCUES 2022, UC Infocenter"
+caption_grad<-"Source: GSES 2021 UC Infocenter"
+```
+
+```{r}
+#ucues
+es<- read_excel("data/ucues_2023.xlsx")%>%
+  label_groups(.)
+
+gses<-read_excel("data/UCGSES.xlsx")%>%
+  label_groups(.)
+
+```
+## UCUES
+
+### Faculty know my name
+
+###Reluctance to ask for academic help when I need it
+```{r}
+
+rel_help_2022<-es%>%
+filter(q=="Reluctance to ask for academic help when I need it"&year=="2022")%>%
+ clean_vibe_freq5(.)%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(rel_help_2022, cols_neg)%>%
+  plot_diff_rect(., rel_help_2022,.4,.58, "Less of an obstacle", "More of an obstacle")+
+  labs(title="How often is reluctance to ask for academic help when I need it, an obstacle to your academic success?",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who responded occasionally, frequently, or all the time")
+  
+
+```
+
+
+
+###Sought academic help from instructor or tutor when needed
+
+```{r}
+sought_help_2022<-es%>%
+filter(q=="Sought academic help from instructor or tutor when needed"&year=="2022")%>%
+ clean_vibe_freq(.)%>%
+  #rarely or never is positive
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(sought_help_2022, cols_neg)%>%
+  plot_diff_rect(., sought_help_2022,.12,.34, "More helpseeking", "Less helpseeking")+
+  labs(title="How often have you sought academic help from \nan instructor or tutor when needed?",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who responded rarely or never")
+ ggsave("viz/mca/sought_help_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+

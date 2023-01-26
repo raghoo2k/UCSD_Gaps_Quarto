@@ -120,8 +120,16 @@ clean_vibe_freq<- function(data){
                                 "Often","Somewhat Often"))%>%
     mutate(vibe=fct_collapse(response,
                              negative=c("Very Often",
-                                        "Often","Somewhat Often"),
-                             positive=c("Occasionally","Never","Rarely")))
+                                        "Often","Somewhat Often","Occasionally"),
+                             positive=c("Never","Rarely")))
+}
+
+clean_vibe_freq5<- function(data){
+  data%>%
+    mutate(repsonse=as_factor(response))%>%
+    mutate(vibe=fct_collapse(response,
+                             negative=c("All the Time","Frequently","Occasionally"),
+                             positive=c("Never","Rarely")))
 }
 
 #Code Factor Levels in response

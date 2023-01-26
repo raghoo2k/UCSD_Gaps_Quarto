@@ -1,6 +1,6 @@
 ---
 title: "Academic Outcomes"
-editor: visual
+editor: source
 ---
 
 This is a chapter about academic outcomes at UCSD
@@ -36,7 +36,6 @@ ret<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="retention")%>%
   
 ir_cap<-"Data Source: UCSD IR"
 ```
-
 
 ## Undergraduate
 
@@ -154,8 +153,6 @@ plot_diff_rect(.,ftfy_ret_2021,.83,1)+
   ggsave("viz/academic/ftfy_ret_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
-
 ```{r}
 t_ret_2021<-ret%>%
 filter(entrycohort=="2021"& transfer=="Y")%>%
@@ -171,6 +168,7 @@ plot_diff_rect(.,t_ret_2021,.75,.98)+
   ggsave("viz/academic/t_ret_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
+
 ### GPA
 
 ```{r}
@@ -193,8 +191,6 @@ plot_diff_rect(.,gpa,.10,.31, "Less low GPAs", "More Low GPAs")+
   ggsave("viz/academic/gpa_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
-
-
 
 ## Graduate Students
 

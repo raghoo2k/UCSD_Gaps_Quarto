@@ -52,7 +52,7 @@ plot_group_comp(overallac_2022, cols_neg)%>%
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
 
- ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/aces/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
 ```
 
@@ -69,10 +69,11 @@ fac_name_2022<- es%>%
   filter(group_label!="All")
 
 plot_group_comp(fac_name_2022, cols_neg)%>%
-  plot_diff_rect(., fac_name_2022, .52,.79,"Fewer professors didn't know name", "More unknown")+
-  labs(title="Had a class in which the professor knew or learned your name",
+  plot_diff_rect(., fac_name_2022, .31,.54,"Less unkown", "More unknown")+
+  labs(title="In my classes, the professor rarely or never knows my name",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who occasionally, rarely, or never had a class \nwhere professor knew their name")
+      subtitle = "Percent of UCSD UG who rarely or never had a class \nwhere professor knew their name")
+
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
@@ -165,7 +166,7 @@ plot_group_comp(fac_inc_2021, cols_neg)%>%
  ggsave("viz/acex/fac_inc_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
-
+### My culture is respected by the faculty
 ```{r}
 fac_cul_2021<-gses%>%
   filter(q=="my culture is respected by... the faculty")%>%
