@@ -57,11 +57,11 @@ filter(q=="Reluctance to ask for academic help when I need it"&year=="2022")%>%
 
 plot_group_comp(rel_help_2022, cols_neg)%>%
   plot_diff_rect(., rel_help_2022,.4,.58, "Less of an obstacle", "More of an obstacle")+
-  labs(title="How often is reluctance to ask for academic help when I need it, an obstacle to your academic success?",
+  labs(title="How often is reluctance to ask for academic help \nwhen you need it, an obstacle to your academic success?",
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who responded occasionally, frequently, or all the time")
   
-
+ ggsave("viz/mca/reluctant_help_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
@@ -164,14 +164,58 @@ filter(q=="How many professors do you know well enough to ask for a letter of re
 
 plot_group_comp(num_prof_2022, cols_neg)%>%
   plot_diff_rect(., num_prof_2022,.38,.58, "Fewer know 0", "More know 0")+
-  labs(title="I know no professors well enough to ask for a letter of recommendation",
+  labs(title="I know 0 professors well enough to ask for a letter of recommendation",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who 0 professors")
+      subtitle = "Percent of UCSD UG who know 0 professors well enough")
  ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
+## UCGSES
+### Opportunities to form research/academic mentorship relationships with faculty members
 ```{r}
+#| label: opp_research_ment
+#| echo: FALSE
+#| warning: FALSE
+opp_research_ment_2021<-gses%>%
+  filter(q=="Opportunities to form research/academic mentorship relationships with faculty members")%>%
+  clean_vibe_rate(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
 
+plot_group_comp(opp_research_ment_2021, cols_neg)%>%
+  plot_diff_rect(., opp_research_ment_2021,.18,.38, "Fewer Low Ratings", "More Low Ratings")+
+  labs(title="Please Rate: Opportunities to form research/academic \nmentorship relationships with faculty members",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
+ ggsave("viz/mca/opp_research_ment2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+
+
+### Opportunities to form research/academic mentorship relationships with faculty members
+```{r}
+#| label: opp_ment
+#| echo: FALSE
+#| warning: FALSE
+opp_ment_2021<-gses%>%
+  filter(q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program")%>%
+  clean_vibe_rate(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(opp_ment_2021, cols_neg)%>%
+  plot_diff_rect(., opp_ment_2021,.3,.52, "Fewer Low Ratings", "More Low Ratings")+
+  labs(title="Please Rate: Opportunities to form non-research/academic \nmentorship relationships with faculty members",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
+ ggsave("viz/mca/opp_ment2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
 ```
 
