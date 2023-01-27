@@ -18,11 +18,17 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 ```
 
 ```{r}
+#| label: set_labels
+#| echo: FALSE
+#| warning: FALSE
 caption_ug<-"Source: UCUES 2022, UC Infocenter"
 caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
 
 ```{r}
+#| label: load_data
+#| echo: FALSE
+#| warning: FALSE
 #ucues
 es<- read_excel("data/ucues_2023.xlsx")%>%
   label_groups(.)
@@ -37,7 +43,9 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ###Reluctance to ask for academic help when I need it
 ```{r}
-
+#| label: rel_help
+#| echo: FALSE
+#| warning: FALSE
 rel_help_2022<-es%>%
 filter(q=="Reluctance to ask for academic help when I need it"&year=="2022")%>%
  clean_vibe_freq5(.)%>%
@@ -61,6 +69,9 @@ plot_group_comp(rel_help_2022, cols_neg)%>%
 ###Sought academic help from instructor or tutor when needed
 
 ```{r}
+#| label: sought_help
+#| echo: FALSE
+#| warning: FALSE
 sought_help_2022<-es%>%
 filter(q=="Sought academic help from instructor or tutor when needed"&year=="2022")%>%
  clean_vibe_freq(.)%>%
@@ -81,9 +92,86 @@ plot_group_comp(sought_help_2022, cols_neg)%>%
 
 
 ```{r}
+#| label: study_group
+#| echo: FALSE
+#| warning: FALSE
+
+study_group_2022<-es%>%
+filter(q=="Studied as a group with classmates outside of class"&year=="2022")%>%
+ clean_vibe_freq(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(study_group_2022, cols_neg)%>%
+  plot_diff_rect(., study_group_2022,.22,.42, "More group study", "Less groupstudy")+
+  labs(title="How often have you: studied as a group \nwith classmates outside of class ?",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who responded rarely or never")
+ ggsave("viz/mca/group_study_2022.png", width=9, height=5, units="in", dpi=300)
+
 ```
 
 
 ```{r}
+#| label: help_classmate
+#| echo: FALSE
+#| warning: FALSE
+
+help_class_2022<-es%>%
+filter(q=="Helped a classmate better understand the course material when studying together"&year=="2022")%>%
+ clean_vibe_freq(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(help_class_2022, cols_neg)%>%
+  plot_diff_rect(., help_class_2022,.12,.36, "More helping", "Less helping")+
+  labs(title="How often have you: Helped a classmate \nbetter understand the course material when studying together",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who responded rarely or never")
+ ggsave("viz/mca/help_class_2022.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+
+
+### How many professors do you know well enough to ask for a letter of recommendation?
+```{r}
+#| label: num_prof
+#| echo: FALSE
+#| warning: FALSE
+
+
+
+num_prof_2022<-es%>%
+filter(q=="How many professors do you know well enough to ask for a letter of recommendation?"&year=="2022")%>%
+  mutate(repsonse=as_factor(response))%>%
+    mutate(vibe=fct_collapse(response,
+                        negative=c("0 Professor"),
+                        positive=c("4 Professors","3 Professors", "2 Professors","1 Professor")))%>%
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(num_prof_2022, cols_neg)%>%
+  plot_diff_rect(., num_prof_2022,.38,.58, "Fewer know 0", "More know 0")+
+  labs(title="I know no professors well enough to ask for a letter of recommendation",
+         caption=caption_ug,
+      subtitle = "Percent of UCSD UG who 0 professors")
+ ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+```{r}
+
 ```
 
