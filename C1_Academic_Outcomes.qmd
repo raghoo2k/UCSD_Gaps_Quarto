@@ -1,0 +1,247 @@
+---
+title: "Academic Outcomes"
+editor: source
+---
+
+This is a chapter about academic outcomes at UCSD
+
+```{r}
+#| label: run_scripts
+#| include: FALSE
+
+source("rscripts/load_packages.R", local = knitr::knit_global())
+
+source("rscripts/functions_clean_data.R" ,local = knitr::knit_global())
+
+source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
+
+```
+
+```{r}
+#| label: load_data
+#| echo: FALSE
+#| warning: FALSE
+
+#data is from the UCSD IR -datatable with https://tableau.ucsd.edu/#/views/UGGraduationandRetentionRates2022/TransferGraduationRates?:iid=1
+
+cumu_ftfy<-read_excel("data/cumu_grad_rates.xlsx", sheet="FTFY", na=c("0.000",""))%>%
+  label_groups(.)%>%
+  mutate(across(perc_6:perc_8, ~na_if(.x,0)))
+
+
+cumu_t<-read_excel("data/cumu_grad_rates.xlsx", sheet="Transfer",na=c("0.000",""))%>%
+  label_groups(.)%>%
+mutate(across(perc_2:perc_5, ~na_if(.x,0)))
+
+ret<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="retention")%>%
+  label_groups(.)
+
+#need to build out gpa
+  
+ir_cap<-"Data Source: UCSD IR"
+```
+
+## Undergraduate
+
+### Graduation Rates
+
+Defined as six years or less for FTFY, defined or four years or less for transfer students.
+
+```{r}
+#| label: ftfy_six_2016
+#| echo: FALSE
+#| warning: FALSE
+
+
+ftfy_six_2016<-cumu_ftfy%>%
+filter(entrycohort=="2016")%>%
+  #select the graduate period of interest and make it match the formula's generic column name  - value 
+  mutate(value=perc_6)%>%
+  select(comp, group, group_label, value)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)
+  #flip factor levels to make a better visual - graduate rates are positive
+  #mutate(avg_above=fct_rev(avg_above))
+
+plot_group_comp(ftfy_six_2016, cols_pos)%>%
+  plot_diff_rect(.,ftfy_six_2016,.72,.96, "","")+
+  labs(title="Graduation Rate: First Time First Years, Six Years or Less",
+       subtitle ="UCSD FTFY 2016 Entry Cohort",
+       caption=ir_cap)
+ 
+ ggsave("viz/academic/ftfy_six_2016.png", width=9, height=5, units="in", dpi=300)
+      
+  
+  
+```
+
+```{r}
+#| label: t_four_2018
+#| echo: FALSE
+#| warning: FALSE
+t_four_2018<-cumu_t%>%
+filter(entrycohort=="2018")%>%
+  #select the graduate period of interest and make it match the formula's generic column name  - value 
+  mutate(value=perc_4)%>%
+  select(comp, group, group_label, value)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)
+
+
+
+plot_group_comp(t_four_2018,cols_pos)%>%
+plot_diff_rect(.,t_four_2018,.81,.97, "","")+
+   labs(title="Graduation Rate: Transfer Students, Four Years or Less",
+       subtitle ="UCSD Transfer 2018 Entry Cohort",
+       caption=ir_cap)
+ 
+ ggsave("viz/academic/t_four_2018.png", width=9, height=5, units="in", dpi=300)
+      
+  
+ 
+
+```
+
+```{r}
+#| label: ftfy_four_2018
+#| echo: FALSE
+#| warning: FALSE
+
+ftfy_four_2018<-cumu_ftfy%>%
+filter(entrycohort=="2018")%>%
+  #select the graduate period of interest and make it match the formula's generic column name  - value 
+  mutate(value=perc_4)%>%
+  select(comp, group, group_label, value)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)%>%
+  #flip factor levels to make a better visual - graduate rates are positive
+  mutate(avg_above=fct_rev(avg_above))
+
+plot_group_comp(ftfy_four_2018,cols_pos)%>%
+  plot_diff_rect(., ftfy_four_2018,.53,.84,"","")+
+labs(title="Graduation Rate First Time First Year, Four Years or Less",
+       subtitle ="UCSD FTFY 2018 Entry Cohort",
+       caption=ir_cap)
+
+ ggsave("viz/academic/ftfy_four_2018.png", width=9, height=5, units="in", dpi=300)
+```
+
+```{r}
+#| label: t_two_2020
+#| echo: FALSE
+#| warning: FALSE
+
+t_two_2020<-cumu_t%>%
+filter(entrycohort=="2020")%>%
+  #select the graduate period of interest and make it match the formula's generic column name  - value 
+  mutate(value=perc_2)%>%
+  select(comp, group, group_label, value)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)%>%
+  filter(group!="American Indian")
+
+
+
+plot_group_comp(t_two_2020, cols_pos)%>%
+  plot_diff_rect(., t_two_2020, .43,.68,"","")+
+  labs(title="Graduation Rate Transfer Students, Two Years or Less",
+       subtitle ="UCSD Transfer 2020 Entry Cohort",
+       caption=ir_cap)
+  ggsave("viz/academic/t_two_2020.png", width=9, height=5, units="in", dpi=300)
+```
+
+### One Year Retention
+
+```{r}
+#| label: ftfy_ret_2021
+#| echo: FALSE
+#| warning: FALSE
+ftfy_ret_2021<-ret%>%
+filter(entrycohort=="2021"& transfer=="N")%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)
+
+plot_group_comp(ftfy_ret_2021,cols_pos)%>%
+plot_diff_rect(.,ftfy_ret_2021,.83,1,"","")+
+  labs(title="Retention One Year, First Time First Year Students",
+       subtitle ="UCSD FTFY 2021 Entry Cohort",
+       caption=ir_cap)
+  ggsave("viz/academic/ftfy_ret_2021.png", width=9, height=5, units="in", dpi=300)
+```
+
+```{r}
+#| label: t_ret_2021
+#| echo: FALSE
+#| warning: FALSE
+t_ret_2021<-ret%>%
+filter(entrycohort=="2021"& transfer=="Y")%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)
+
+plot_group_comp(t_ret_2021,cols_pos)%>%
+plot_diff_rect(.,t_ret_2021,.75,.98,"","")+
+  labs(title="Retention One Year, Transfer Students",
+       subtitle ="UCSD Transfers, 2021 Entry Cohort",
+       caption=ir_cap)
+  ggsave("viz/academic/t_ret_2021.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+### GPA
+
+```{r}
+#| label: gpa_2022
+#| echo: FALSE
+#| warning: FALSE
+
+gpa<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="GPA")%>%
+label_groups(.)%>%
+  mutate(repsonse=as_factor(response))%>%
+    mutate(vibe=fct_collapse(response,
+                             negative=c("2.00-2.49","2.5-2.99"),
+                             positive=c(">3.49","3.00-3.49")))%>%
+collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  filter(comp!="All"& group_label!="American Indian")%>%
+  create_diff_cols(.)
+
+plot_group_comp(gpa,cols_neg)%>%
+plot_diff_rect(.,gpa,.10,.31, "Less low GPAs", "More Low GPAs")+
+  labs(title="GPA at Graduation below 3.00",
+       subtitle ="% of UCSD Undergraduates with GPA below 3.0 at Graduation",
+       caption=ir_cap)
+  ggsave("viz/academic/gpa_2022.png", width=9, height=5, units="in", dpi=300)
+
+```
+
+## Graduate Students
+
+### 10 Year Completion Rates
+
+```{r}
+#| label: grad_10
+#| echo: FALSE
+#| warning: FALSE
+
+grad_comp_2011<-read_excel("data/ucsd_grad_student_outcomes.xlsx")%>%
+  filter(entrycohort=="2009-2011")%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  mutate(group_label=group)%>%
+  filter(group!="All")%>%
+  create_diff_cols(.)
+  
+
+plot_group_comp(grad_comp_2011, cols_pos)%>%
+plot_diff_rect(.,grad_comp_2011,.62,.85)+
+ labs(title="Doctoral Student 10 Year Completion Rates",
+       subtitle ="UCSD Doctoral 2009-2011 Entry Cohort",
+       caption="Data Source: UCSD IR")
+  ggsave("viz/academic/doctoral_comp_2011.png", width=9, height=5, units="in", dpi=300)
+
+```
