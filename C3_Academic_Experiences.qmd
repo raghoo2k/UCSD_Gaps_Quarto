@@ -24,7 +24,7 @@ caption_grad<-"Source: GSES 2021 UC Infocenter"
 
 ```{r}
 #ucues
-es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+es<- read_excel("data/ucues_2023.xlsx")%>%
   label_groups(.)
 
 gses<-read_excel("data/UCGSES.xlsx")%>%

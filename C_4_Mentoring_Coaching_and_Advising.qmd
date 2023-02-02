@@ -107,7 +107,7 @@ filter(q=="Studied as a group with classmates outside of class"&year=="2022")%>%
   filter(group_label!="All")
 
 plot_group_comp(study_group_2022, cols_neg)%>%
-  plot_diff_rect(., study_group_2022,.22,.42, "More group study", "Less groupstudy")+
+  plot_diff_rect(., study_group_2022,.22,.42, "More group study", "Less group study")+
   labs(title="How often have you: studied as a group \nwith classmates outside of class ?",
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who responded rarely or never")
@@ -163,7 +163,7 @@ filter(q=="How many professors do you know well enough to ask for a letter of re
   filter(group_label!="All")
 
 plot_group_comp(num_prof_2022, cols_neg)%>%
-  plot_diff_rect(., num_prof_2022,.38,.58, "Fewer know 0", "More know 0")+
+  plot_diff_rect(., num_prof_2022,.38,.60, "Fewer know 0", "More know 0")+
   labs(title="I know 0 professors well enough to ask for a letter of recommendation",
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who know 0 professors well enough")
@@ -185,7 +185,7 @@ opp_research_ment_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(opp_research_ment_2021, cols_neg)%>%
-  plot_diff_rect(., opp_research_ment_2021,.18,.38, "Fewer Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., opp_research_ment_2021,.18,.4, "Fewer Low Ratings", "More Low Ratings")+
   labs(title="Please Rate: Opportunities to form research/academic \nmentorship relationships with faculty members",
          caption=caption_grad,
       subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
@@ -217,5 +217,116 @@ plot_group_comp(opp_ment_2021, cols_neg)%>%
 
 
 ```
+
+### The career support I receive in my program
+```{r}
+#| label: career_supp
+#| echo: FALSE
+#| warning: FALSE
+
+career_sup_2021<-gses%>%
+  filter(q=="the career support I receive in my program")%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(career_sup_2021, cols_neg)%>%
+  plot_diff_rect(., career_sup_2021,.15,.35, "Fewer Dissatisfied", "More Dissatisfied")+
+  labs(title="I'm satisfied with the career support I recieve in my program",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
+ ggsave("viz/mca/career_supp2021.png", width=9, height=5, units="in", dpi=300)
+
+
 ```
+
+### the mentorship and advising I receive in my program
+
+```{r}
+#| label: grad_mentorship
+#| echo: FALSE
+#| warning: FALSE
+
+mentor_gen_2021<-gses%>%
+  filter(q=="the mentorship and advising I receive in my program")%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(mentor_gen_2021, cols_neg)%>%
+  plot_diff_rect(., mentor_gen_2021,.12,.3, "Fewer Dissatisfied", "More Dissatisfied")+
+  labs(title="I'm satisfied with the mentorship and advising I receive in my program",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
+ ggsave("viz/mca/ment_gen2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+
+### the support I received regarding my thesis/dissertation research
+
+```{r}
+
+#| label: grad_mentorship
+#| echo: FALSE
+#| warning: FALSE
+
+diss_supp_2021<-gses%>%
+  filter(q=="the support I received regarding my thesis/dissertation research")%>%
+  clean_vibe_agree(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(diss_supp_2021, cols_neg)%>%
+  plot_diff_rect(., diss_supp_2021,.09,.28, "Fewer Dissatisfied", "More Dissatisfied")+
+  labs(title="I'm satisfied with the support I received regarding \nmy thesis/dissertation research",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
+ ggsave("viz/mca/diss_supp_20212021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+## Response Rates
+
+#### UCUES
+
+```{r}
+ug_rr<-es%>%
+  filter(q=="Had a class in which the professor knew or learned your name"|q=="Reluctance to ask for academic help when I need it"|q=="Sought academic help from instructor or tutor when needed"|q=="How many professors do you know well enough to ask for a letter of recommendation?")%>%
+  filter(year=="2022")%>%
+  group_by(q,comp,group_label)%>%
+  summarise(N=sum(N, na.rm=T))
+```
+
+```{r}
+gt_ug_rr<- ug_rr%>%
+  pivot_wider(names_from=q, values_from = N)%>%
+
+  gt(., rowname_col="group_label", groupname_col="comp")%>%
+  cols_align(
+    align="left",
+    columns=group_label
+  )%>%
+  tab_header(title="UCSD Student Response Counts",
+             subtitle="UCUES 2022")
+
+
+
+%>%
+  tab_spanner(
+    label = "UCUES Questions",
+    columns=3:4)%>%
+  cols_label(
+    "Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"="Faculty are ...group differences at UCSD")
+  
+gt_ug_rr
+```
+
+
 
