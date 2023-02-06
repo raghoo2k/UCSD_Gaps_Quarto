@@ -1,11 +1,10 @@
 ---
-title: "C_4_Mentoring_Coaching_and_Advising"
+title: "Mentoring Coaching and Advising"
 editor: source
 ---
 
 
 ```{r}
-
 #| label: run_scripts
 #| include: FALSE
 
@@ -21,6 +20,7 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 #| label: set_labels
 #| echo: FALSE
 #| warning: FALSE
+
 caption_ug<-"Source: UCUES 2022, UC Infocenter"
 caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
@@ -41,7 +41,9 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ### Faculty know my name
 
-###Reluctance to ask for academic help when I need it
+Need to input visual from previous chapter
+
+### Reluctance to ask for academic help when I need it
 ```{r}
 #| label: rel_help
 #| echo: FALSE
@@ -66,7 +68,7 @@ plot_group_comp(rel_help_2022, cols_neg)%>%
 
 
 
-###Sought academic help from instructor or tutor when needed
+### Sought academic help from instructor or tutor when needed
 
 ```{r}
 #| label: sought_help
@@ -90,6 +92,7 @@ plot_group_comp(sought_help_2022, cols_neg)%>%
  ggsave("viz/mca/sought_help_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
+### Studied as a group with classmates outside of class
 
 ```{r}
 #| label: study_group
@@ -115,6 +118,7 @@ plot_group_comp(study_group_2022, cols_neg)%>%
 
 ```
 
+### Helped a classmate better understand the course material when studying together
 
 ```{r}
 #| label: help_classmate
@@ -171,6 +175,7 @@ plot_group_comp(num_prof_2022, cols_neg)%>%
 ```
 
 ## UCGSES
+
 ### Opportunities to form research/academic mentorship relationships with faculty members
 ```{r}
 #| label: opp_research_ment
@@ -219,6 +224,7 @@ plot_group_comp(opp_ment_2021, cols_neg)%>%
 ```
 
 ### The career support I receive in my program
+
 ```{r}
 #| label: career_supp
 #| echo: FALSE
@@ -242,7 +248,7 @@ plot_group_comp(career_sup_2021, cols_neg)%>%
 
 ```
 
-### the mentorship and advising I receive in my program
+### The mentorship and advising I receive in my program
 
 ```{r}
 #| label: grad_mentorship
@@ -267,11 +273,10 @@ plot_group_comp(mentor_gen_2021, cols_neg)%>%
 
 ```
 
-### the support I received regarding my thesis/dissertation research
+### The support I received regarding my thesis/dissertation research
 
 ```{r}
-
-#| label: grad_mentorship
+#| label: support_thesis
 #| echo: FALSE
 #| warning: FALSE
 
@@ -297,6 +302,9 @@ plot_group_comp(diss_supp_2021, cols_neg)%>%
 #### UCUES
 
 ```{r}
+#| label: rr_ug_data
+#| echo: FALSE
+#| warning: FALSE
 ug_rr<-es%>%
   filter(q=="Had a class in which the professor knew or learned your name"|q=="Reluctance to ask for academic help when I need it"|q=="Sought academic help from instructor or tutor when needed"|q=="How many professors do you know well enough to ask for a letter of recommendation?")%>%
   filter(year=="2022")%>%
@@ -305,28 +313,66 @@ ug_rr<-es%>%
 ```
 
 ```{r}
+#| label: rr_ug_gt
+#| echo: FALSE
+#| warning: FALSE
 gt_ug_rr<- ug_rr%>%
   pivot_wider(names_from=q, values_from = N)%>%
-
   gt(., rowname_col="group_label", groupname_col="comp")%>%
   cols_align(
     align="left",
     columns=group_label
   )%>%
   tab_header(title="UCSD Student Response Counts",
-             subtitle="UCUES 2022")
-
-
-
-%>%
+             subtitle="UCUES 2022")%>%
   tab_spanner(
     label = "UCUES Questions",
-    columns=3:4)%>%
-  cols_label(
-    "Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"="Faculty are ...group differences at UCSD")
+    columns=3:6)
   
-gt_ug_rr
+
+gtsave(gt_ug_rr, "mca_rr_ug.png", path = "viz/mca")
 ```
 
+### UCGSES
+```{r}
+#| label: rr_grad_data
+#| echo: FALSE
+#| warning: FALSE
+grad_rr<-gses%>%
+  filter(q=="Opportunities to form research/academic mentorship relationships with faculty members"|
+           q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program"| 
+           q=="the career support I receive in my program"|
+           q=="the career support I receive in my program"|
+           q=="the mentorship and advising I receive in my program"|
+           q=="the support I received regarding my thesis/dissertation research")%>%
+  filter(year=="2021")%>%
+  group_by(q,comp,group_label)%>%
+  summarise(N=sum(N, na.rm=T))
+```
+
+```{r}
+#| label: rr_grad_gt
+#| echo: FALSE
+#| warning: FALSE
+gt_grad_rr<- grad_rr%>%
+  pivot_wider(names_from=q, values_from = N)%>%
+ 
+  gt(., rowname_col="group_label", groupname_col="comp")%>%
+  cols_align(
+    align="left",
+    columns=group_label
+  )%>%
+  tab_header(title="UCSD Student Response Counts",
+             subtitle="UCGSES 2021")%>%
+  tab_spanner(
+    label = "UCGSES Questions",
+    columns=3:7)
+
+  
+
+
+gtsave(gt_grad_rr, "mca_rr_grad.png", path = "viz/mca")
+
+```
 
 

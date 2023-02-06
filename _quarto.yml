@@ -2,13 +2,16 @@ project:
   type: book
 
 book:
-  title: "UCSD Gaps"
+  title: "UCSD Equity Gaps"
   author: "Sarah Nolan"
-  date: "01/03/2023"
+  date: "02/02/2023"
   chapters:
     - index.qmd
     - intro.qmd
-    - C1_Affordable_Learning.qmd
+    - C1_Academic_Outcomes.qmd
+    - C2_Affordable_Learning.qmd
+    - C3_Academic_Experiences.qmd
+    - C4_Mentoring_Coaching_and_Advising.qmd
     - summary.qmd
     - references.qmd
 

@@ -238,7 +238,7 @@ grad_comp_2011<-read_excel("data/ucsd_grad_student_outcomes.xlsx")%>%
   
 
 plot_group_comp(grad_comp_2011, cols_pos)%>%
-plot_diff_rect(.,grad_comp_2011,.62,.85)+
+plot_diff_rect(.,grad_comp_2011,.62,.85, "","")+
  labs(title="Doctoral Student 10 Year Completion Rates",
        subtitle ="UCSD Doctoral 2009-2011 Entry Cohort",
        caption="Data Source: UCSD IR")

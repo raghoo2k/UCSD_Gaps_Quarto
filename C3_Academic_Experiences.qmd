@@ -1,12 +1,13 @@
 ---
-title: "C3_Academic_Experiences"
-editor: visual
+title: "Academic Experiences"
+editor: source
 ---
 
 This is a chapter about academic outcomes at UCSD
 
 ```{r}
 #| label: run_scripts
+#| echo: FALSE
 #| include: FALSE
 
 source("rscripts/load_packages.R", local = knitr::knit_global())
@@ -18,11 +19,18 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 ```
 
 ```{r}
+#| label: captions
+#| echo: FALSE
+
 caption_ug<-"Source: UCUES 2022, UC Infocenter"
 caption_grad<-"Source: GSES 2021 UC Infocenter"
 ```
 
 ```{r}
+#| label: load_data
+#| echo: FALSE
+#| warning: FALSE
+
 #ucues
 es<- read_excel("data/ucues_2023.xlsx")%>%
   label_groups(.)
@@ -37,6 +45,10 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 ### Overall Academic Experience
 
 ```{r}
+#| label: overall_ac
+#| echo: FALSE
+#| warning: FALSE
+
 overallac_2022<-es%>%
 filter(q=="Overall academic experience"&year=="2022")%>%
  clean_vibe_satisfied(.)%>%
@@ -52,13 +64,16 @@ plot_group_comp(overallac_2022, cols_neg)%>%
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
 
- ggsave("viz/aces/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
 ```
 
 ### Faculty knew your name
 
 ```{r}
+#| label: fac_name
+#| echo: FALSE
+#| warning: FALSE
 fac_name_2022<- es%>%
   filter(q=="Had a class in which the professor knew or learned your name")%>%
   clean_vibe_freq(.)%>%
@@ -77,9 +92,13 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-### Faculty promote respect for and
+### Faculty are genuinely committed to promoting respect for and understanding of group differences at UC
 
 ```{r}
+#| label: fac_respect
+#| echo: FALSE
+#| warning: FALSE
+
 fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
   filter(q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
   label_groups(.)%>%
@@ -103,6 +122,10 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
 ### Quality of Teaching in Program
 
 ```{r}
+#| label: qual_teach
+#| echo: FALSE
+#| warning: FALSE
+
 teaching_qual_2021<-gses%>%
   filter(q=="Quality of teaching in your program")%>%
   clean_vibe_rate(.)%>%
@@ -125,6 +148,9 @@ plot_group_comp(teaching_qual_2021, cols_neg)%>%
 ### Specialization Teaching
 
 ```{r}
+#| label: qual_teach_spec
+#| echo: FALSE
+#| warning: FALSE
 teaching_spec_2021<-gses%>%
   filter(q=="Quality of teaching in your area of specialization")%>%
   clean_vibe_rate(.)%>%
@@ -143,9 +169,12 @@ plot_group_comp(teaching_spec_2021, cols_neg)%>%
 
 ```
 
-### I feel included by the faculty
+### I feel echod by the faculty
 
 ```{r}
+#| label: inlcuded_fac
+#| echo: FALSE
+#| warning: FALSE
 
 fac_inc_2021<-gses%>%
   filter(q=="I feel included by... the faculty")%>%
@@ -166,8 +195,13 @@ plot_group_comp(fac_inc_2021, cols_neg)%>%
  ggsave("viz/acex/fac_inc_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
+
 ### My culture is respected by the faculty
+
 ```{r}
+#| label: fac_cul
+#| echo: FALSE
+#| warning: FALSE
 fac_cul_2021<-gses%>%
   filter(q=="my culture is respected by... the faculty")%>%
   clean_vibe_agree(.)%>%
@@ -192,6 +226,9 @@ plot_group_comp(fac_cul_2021, cols_neg)%>%
 #### UCUES
 
 ```{r}
+#| label: ucues_rr
+#| echo: FALSE
+#| warning: FALSE
 ug_rr<-es%>%
   filter(q=="Overall academic experience"|q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"|q=="Had a class in which the professor knew or learned your name")%>%
   filter(year=="2022")%>%
@@ -200,7 +237,9 @@ ug_rr<-es%>%
 ```
 
 ```{r}
-
+#| label: ucues_rr_gt
+#| echo: FALSE
+#| warning: FALSE
 
 gt_ug_rr<- ug_rr%>%
   pivot_wider(names_from=q, values_from = N)%>%
@@ -227,6 +266,9 @@ gtsave(gt_ug_rr, "acex_rr_ug.png", path = "viz/acex")
 ### GSES
 
 ```{r}
+#| label: ucgses_rr
+#| echo: FALSE
+#| warning: FALSE
 grad_rr<-gses%>%
   filter(q=="Quality of teaching in your program"|q=="Quality of teaching in your area of specialization"| q=="I feel included by... the faculty")%>%
   filter(year=="2021")%>%
@@ -235,6 +277,9 @@ grad_rr<-gses%>%
 ```
 
 ```{r}
+#| label: ucgses_rr_gt
+#| echo: FALSE
+#| warning: FALSE
 gt_grad_rr<- grad_rr%>%
   pivot_wider(names_from=q, values_from = N)%>%
  
