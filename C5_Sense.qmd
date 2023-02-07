@@ -291,7 +291,7 @@ gt_ug_rr<- ug_rr%>%
              subtitle="UCUES 2022")%>%
   tab_spanner(
     label = "UCUES Questions",
-    columns=3:7)
+    columns=3:6)
   
 
 gtsave(gt_ug_rr, "sob_rr_ug.png", path = "viz/sob")
