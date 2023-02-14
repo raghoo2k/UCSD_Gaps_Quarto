@@ -3,7 +3,16 @@ title: "Academic Outcomes"
 editor: source
 ---
 
-This is a chapter about academic outcomes at UCSD
+This chapter explores equity gaps in graduation rates, retention, and GPA at graduation. 
+
+These visuals draw from a wealth of data - readers interested in a deeper exploration can turn to UCSD's Institutional Research Website. For more on these trends in the UC system as a whole, please see the University of California Office of the President's Accountability Report, Chapter 3 for Undergraduate Success
+
+ * [UCSD IR Undergraduate Graduation and Retention Rates](https://ir.ucsd.edu/undergrad/stats-data/ug-retention.html)
+ 
+ * [UCSD IR Undergraduate GPA](https://ir.ucsd.edu/undergrad/stats-data/ug-degree.html)
+ 
+ * [All UC Accountability , Undergraduate Success, 2022](https://accountability.universityofcalifornia.edu/2022/chapters/chapter-3.html)
+ 
 
 ```{r}
 #| label: run_scripts
@@ -41,11 +50,15 @@ ret<-read_excel("data/grad_outcomes_ucsd.xlsx", sheet="retention")%>%
 ir_cap<-"Data Source: UCSD IR"
 ```
 
-## Undergraduate
+## Undergraduates
 
 ### Graduation Rates
 
-Defined as six years or less for FTFY, defined or four years or less for transfer students.
+#### First-Time-First-Years
+
+First, we examine the percentage of First-Time-First-Year (FTFY) students who graduate within six years or less of starting at UCSD. The below visual shows six year graduation rates for the entering cohort of 2016. Overall, 85% of FTFY students entering in 2016 graduated in six years or less. The proportion of students who recieve Pell Grants, and First Generation students, have slightly lower graduation rates of 83% and 84% respectively. 
+
+The largest equity gaps emerge when considering Race and Ethnicity. Hispanic / Latinx, African American, and American Indian students each have lower than average graduation rates, of 81%, 78%, and 74% respectively. 
 
 ```{r}
 #| label: ftfy_six_2016
@@ -66,7 +79,7 @@ filter(entrycohort=="2016")%>%
 
 plot_group_comp(ftfy_six_2016, cols_pos)%>%
   plot_diff_rect(.,ftfy_six_2016,.72,.96, "","")+
-  labs(title="Graduation Rate: First Time First Years, Six Years or Less",
+  labs(title="Graduation Rate: First Time First Years, \nSix Years or Less",
        subtitle ="UCSD FTFY 2016 Entry Cohort",
        caption=ir_cap)
  
@@ -75,6 +88,41 @@ plot_group_comp(ftfy_six_2016, cols_pos)%>%
   
   
 ```
+
+Examining the proportion of students who graduate within four years or less shows a similar pattern of equity gaps, however the divergence between student groups grows larger. For the most recent entry cohort available, 2018, about 73% of students graduate in four years or less. However, that proportion drops to 55%, just over half, for African American students in that entering cohort, and 12% for Hispanic/Latinx.
+
+ **Need to document change over time- there's a small number of American Indian students and proportions are more variable year over year** 
+
+```{r}
+#| label: ftfy_four_2018
+#| echo: FALSE
+#| warning: FALSE
+
+ftfy_four_2018<-cumu_ftfy%>%
+filter(entrycohort=="2018")%>%
+  #select the graduate period of interest and make it match the formula's generic column name  - value 
+  mutate(value=perc_4)%>%
+  select(comp, group, group_label, value)%>%
+  mutate(all=filter(., comp=="All")%$% value)%>%
+  order_comp_group_all(.)%>%
+  create_diff_cols(.)%>%
+  #flip factor levels to make a better visual - graduate rates are positive
+  mutate(avg_above=fct_rev(avg_above))
+
+plot_group_comp(ftfy_four_2018,cols_pos)%>%
+  plot_diff_rect(., ftfy_four_2018,.53,.84,"","")+
+labs(title="Graduation Rate First Time First Year, \nFour Years or Less",
+       subtitle ="UCSD FTFY 2018 Entry Cohort",
+       caption=ir_cap)
+
+ ggsave("viz/academic/ftfy_four_2018.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+#### Transfer Students
+
+Overall, the size of equity gaps between transfer students is smaller, 
+Transfer student graduation rates within four years or fewer is about 87% for all Transfer students.  
 
 ```{r}
 #| label: t_four_2018
@@ -104,30 +152,7 @@ plot_diff_rect(.,t_four_2018,.81,.97, "","")+
 
 ```
 
-```{r}
-#| label: ftfy_four_2018
-#| echo: FALSE
-#| warning: FALSE
-
-ftfy_four_2018<-cumu_ftfy%>%
-filter(entrycohort=="2018")%>%
-  #select the graduate period of interest and make it match the formula's generic column name  - value 
-  mutate(value=perc_4)%>%
-  select(comp, group, group_label, value)%>%
-  mutate(all=filter(., comp=="All")%$% value)%>%
-  order_comp_group_all(.)%>%
-  create_diff_cols(.)%>%
-  #flip factor levels to make a better visual - graduate rates are positive
-  mutate(avg_above=fct_rev(avg_above))
-
-plot_group_comp(ftfy_four_2018,cols_pos)%>%
-  plot_diff_rect(., ftfy_four_2018,.53,.84,"","")+
-labs(title="Graduation Rate First Time First Year, Four Years or Less",
-       subtitle ="UCSD FTFY 2018 Entry Cohort",
-       caption=ir_cap)
-
- ggsave("viz/academic/ftfy_four_2018.png", width=9, height=5, units="in", dpi=300)
-```
+When considering equity gaps in "on-time" graduation -two years or less- the overall average falls to about 57%. However, the difference between student groups relative to this average is relatively small, with the exception of African American transfer students, 46% of whom entering in 2020 graduated within two years or less. 
 
 ```{r}
 #| label: t_two_2020
@@ -155,6 +180,10 @@ plot_group_comp(t_two_2020, cols_pos)%>%
 ```
 
 ### One Year Retention
+
+Retention rates over the first year are on average very high, with 93% of FTFY students remaining enrolled after the first year, and 92-93% of Transfer students. African American students have lower retention rates, at 83% for FTFY students. 
+
+** Change over Time is Important and needs to be considered- especially for American Indian students ** 
 
 ```{r}
 #| label: ftfy_ret_2021
@@ -195,6 +224,14 @@ plot_diff_rect(.,t_ret_2021,.75,.98,"","")+
 
 ### GPA
 
+The below visual provides just one view of GPA, the GPA of students at graduation, specifically the percent of students graduating with less than a 3.0 GPA (2.0-2.99) 
+
+Department/ Major is one unmeasured component in these comparisons, where internal analyses like Academic Program Review offer more sophisticated analyses. However, the following visual shows what is possible with publicly available data. 
+
+This visual also does not include students who drop or stop out prior to graduating. 
+
+About 15% of all graduating undergraduates in 2022 had a GPA below 3.0 at graduation. However, a higher proportion of Transfer students, African American, and Hispanic/Latinx students graduate with a GPA below 3.0, 19%, 26%, and 25% respectively. 
+
 ```{r}
 #| label: gpa_2022
 #| echo: FALSE
@@ -214,13 +251,15 @@ collapse_negative_vibe(.)%>%
 plot_group_comp(gpa,cols_neg)%>%
 plot_diff_rect(.,gpa,.10,.31, "Less low GPAs", "More Low GPAs")+
   labs(title="GPA at Graduation below 3.00",
-       subtitle ="% of UCSD Undergraduates with GPA below 3.0 at Graduation",
+       subtitle ="% of UCSD Undergraduates with GPA below 3.0 at Graduation, 2022 exit cohort",
        caption=ir_cap)
   ggsave("viz/academic/gpa_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
 
 ## Graduate Students
+
+A wealth of department level data can be found at the [UCSD Graduate Data website](https://grad.ucsd.edu/about/grad-data/completion-rates.html). The below visual offers a high level comparison of completion rates for doctoral students, making a comparison between members of Underrepresented Groups (African American, Hispanic/Latinx, and/or American Indian, domestic), members of represented groups, domestic, and International students. Completion rates within 10 years for entry cohorts between 2009-2011 range from just 64% of URG students to 81% of international students. 
 
 ### 10 Year Completion Rates
 
