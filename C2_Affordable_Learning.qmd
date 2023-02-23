@@ -22,7 +22,7 @@ source("rscripts/functions_visualize.R" ,local = knitr::knit_global())
 #| include: FALSE
 
 #ucues
-es<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+es<- read_excel("data/ucues_2023.xlsx")%>%
   filter(wg=="Affordable")%>%
   label_groups(.)
 
@@ -39,7 +39,6 @@ ucall_gses<-read_excel("data/gses_alluc.xlsx")
 ```{r}
 #| label: viz_captions
 #| include: FALSE
-
 
 
 #subtitle
@@ -156,7 +155,7 @@ collapse_negative_vibe(.)%>%
        caption=caption_ug)
 
 
- ggsave("viz/food_insecure_2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/food_insecure_2022.png", width=9, height=6, units="in", dpi=300)
 
 
 

@@ -18,13 +18,23 @@ A summary of UCUES at UCSD can be found on UCSD IR website [here](https://ir.ucs
 
 -   For an interactive view of response rates and sample size see [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/student-survey-completion-and-response-rates)
 
-### UCGSES University of California Graduate Student Experience Survey {#sec-UCGSES}
+### University of California Graduate Student Experience Survey (UCGSES) {#sec-UCGSES}
 
 This UC-wide has been conducted once, in 2021. The data table for all UC campuses is available at the [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-data-tables)
 
--   More on response rates and sample sizes
+UC San Diego had a lower than average response rate for graduate students in comparison with the other UC campuses. 
 
--   More on group definitions
+[![UCGSES 2021](viz/UCGSES_rr_table.png)](https://www.ucop.edu/institutional-research-academic-planning/_files/survey-documents-graduate/ucgses-2021-administration-report.pdf)
+
+#### Graduate Student Category Definitions, Response Rates
+
+This section currently features screenshots from the UCOP Info Center [UCGSES 2021 Survey Dashboard](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-survey) under the "Student Profile" tab and filtered to Campus: UC San Diego and the respective student characteristics.
+
+##### First Generation
+
+Future versions of this document will include population figures f
+![First Generation Graduate Students](viz/intro/ucgses_first_gen.png)
+
 
 ### Additional Surveys
 

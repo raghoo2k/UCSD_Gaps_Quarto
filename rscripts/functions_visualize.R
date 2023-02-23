@@ -8,7 +8,7 @@ cols_pos<-c("Above"="#2686A0","Average"="#747678","Below"="#A36B2B")
 #use when above average is bad
 cols_neg<-c("Above"="#A36B2B","Average"="#747678","Below"="#2686A0")
 
-# Plots a single data point per group  relative to an "all" line
+# Plots a single data point per group  relative to an "all" line -just one year
 #input dataframe, and a vector specifying colors 
 
 plot_group_comp<- function(data,color_vector){
@@ -31,8 +31,8 @@ plot_group_comp<- function(data,color_vector){
     geom_vline(aes(xintercept=all))+
     scale_color_manual(values=color_vector)+
     theme(
-      plot.title=element_text(size=20),
-      plot.subtitle=element_text(size=15),
+      plot.title=element_text(size=17),
+      plot.subtitle=element_text(size=13),
       plot.caption=element_text(size=10),
       axis.text.x=element_text(size=8, face="bold"),
       axis.title.x=element_blank(),
