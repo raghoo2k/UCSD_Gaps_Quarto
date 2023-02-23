@@ -1,6 +1,10 @@
 ---
 title: "Affordable Learning and Financial Support"
 editor: source
+format:
+  html:
+    fig-width: 8
+    fig-height: 5.75
 ---
 
 This is a chapter about affordable learning and financial support at University of California San Diego.
@@ -119,7 +123,7 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
         x="Year")
     
 
-   ggsave("viz/food_insecure_time.png", width=9, height=5, units="in", dpi=300)
+   ggsave("viz/food_insecure_time.png", width=9, height=5.5, units="in", dpi=300)
   
 
 ```
@@ -155,7 +159,7 @@ collapse_negative_vibe(.)%>%
        caption=caption_ug)
 
 
- ggsave("viz/food_insecure_2022.png", width=9, height=6, units="in", dpi=300)
+ ggsave("viz/food_insecure_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 
 
@@ -199,7 +203,7 @@ plot_group_comp(payhousing_2022, cols_neg)%>%
        subtitle ="UCSD Undergrads who were unable to pay housing costs on time, sometimes or often",
        caption=caption_ug)
 
- ggsave("viz/payhousing_2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/payhousing_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -235,7 +239,7 @@ collapse_negative_vibe(.)%>%
        subtitle ="UCSD Undergrads who were worried, sometimes or often",
        caption=caption_ug)
 
- ggsave("viz/worried_housing_2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/worried_housing_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -356,7 +360,7 @@ plot_group_comp(worried_debt_2022, cols_neg)%>%
          caption=caption_ug,
       subtitle = "Percent of respondents worried, somewhat often, often, or very often")
 
- ggsave("viz/worried_debt_2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/worried_debt_2022.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### Manageable Costs
@@ -398,7 +402,7 @@ group_by(campus,year, vibe)%>%
   
   move_layers(g_manage_time,"GeomSegment", position="bottom")
   
-   ggsave("viz/manageable_time.png", width=9, height=5, units="in", dpi=300)
+   ggsave("viz/manageable_time.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question.
@@ -430,7 +434,7 @@ plot_group_comp(manageable_2022, cols_neg)%>%
         caption=caption_ug,
       subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
 
- ggsave("viz/manage_2022.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/manage_2022.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### Additional UCUES Questions related to Affordability.
@@ -483,7 +487,7 @@ plot_time_dumbell(food_grad_wide)+
         caption=caption_grad,
       subtitle = "Percent of respondents food insecure")
   
- ggsave("viz/food_insecure_grad_time.png", width=9, height=5, units="in", dpi=300)
+ ggsave("viz/food_insecure_grad_time.png", width=9, height=5.5, units="in", dpi=300)
  
 ```
 
@@ -513,7 +517,7 @@ plot_group_comp(foodsecure_2021_gses, cols_neg)%>%
        subtitle ="UCSD Graduate Students who were Food Insecure",
        caption=caption_grad)
 
-ggsave("viz/food_insecure_grad.png", width=9, height=5, units="in", dpi=300)
+ggsave("viz/food_insecure_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -551,7 +555,7 @@ labs(title="Financial hardship has impeded \nmy success in my program.",
        caption=caption_grad)
 
 
-ggsave("viz/hardship_grad.png", width=9, height=5, units="in", dpi=300)
+ggsave("viz/hardship_grad.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### I've been concerned about money lately.
@@ -584,7 +588,7 @@ plot_group_comp(concerned_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/concerned_grad.png", width=9, height=5, units="in", dpi=300) 
+ggsave("viz/concerned_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
 
@@ -618,7 +622,7 @@ plot_group_comp(confident_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/confident_grad.png", width=9, height=5, units="in", dpi=300) 
+ggsave("viz/confident_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
 
@@ -654,6 +658,7 @@ plot_group_comp(getby_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/getby_grad.png", width=9, height=5, units="in", dpi=300) 
+ggsave("viz/getby_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
+## 
