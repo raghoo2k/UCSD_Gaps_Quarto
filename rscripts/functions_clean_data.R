@@ -35,8 +35,8 @@ label_groups<-function(data){
                                 "Not Pell Grant Recipient"="Non-Pell",
                                 "Asian"="Asian/Pac Isl",
                                 "Pell Grant Recipient"="Pell",
-                                "First Generation"="First Gen",
-                                "Not First Generation"="Not First Gen"))
+                                "First-Generation"="First Gen",
+                                "Not First-Generation"="Not First Gen"))
 }
 
 
