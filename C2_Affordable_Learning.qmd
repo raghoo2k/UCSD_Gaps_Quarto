@@ -7,7 +7,7 @@ format:
     fig-height: 5.75
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego. The first two sections focus on undergraduate and graduate student survey responses, respectively. The third section explores results from a one-time survey of undergraduate students on their experiences with buying course materials. 
+This is a chapter about affordable learning and financial support at University of California San Diego. The first two sections focus on undergraduate and graduate student survey responses. The third section explores results from a one-time survey of undergraduate students on their experiences with buying course materials. Finally, an appendix provide the number of respondents for each survey question by student group. 
 
 ```{r}
 #| label: run_scripts
@@ -50,7 +50,7 @@ subtitle_grad_agree<-"UCSD Graduate Students who somewhat agree, agree, or stron
 
 #caption
 caption_ug<-"Source: UCUES 2022, UC Infocenter"
-caption_grad<-"Source: GSES 2021 UC Infocenter"
+caption_grad<-"Source: UCGSES 2021 UC Infocenter"
 ```
 
 ## Undergraduates
@@ -67,7 +67,7 @@ For more information on this measure, please visit [UCOP Measuring Food Insecuri
 
 #### Food Security over Time
 
-These visuals display the percentage of respondents who are "food insecure" or "very food insecure". For example, in 2022, 42% of UCSD undergraduate respondents were classified as food insecure or very food insecure. This means the remaining 58% of respondents were food secure.
+These visuals display the combined percentage of respondents who are "food insecure" or "very food insecure". For example, in 2022, 42% of UCSD undergraduate respondents were classified as food insecure or very food insecure. This means the remaining 58% of respondents were food secure.
 
 The percent of undergraduates who are food insecure has remained relatively stable over time. UCSD's food insecurity rates are slightly lower or equal to the overall UC system rate for this time period.
 
@@ -104,7 +104,7 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
 
   
  plot_time_dumbell(food_secure_time_wide)+
-     scale_y_continuous(expand=c(0,0), limits=c(.25, .56), breaks=c(.28,.5), labels=c("Less Food Insecure", "More Food Insecure"), position="right")+
+     scale_y_continuous(expand=c(0,0), limits=c(.32, .56), breaks=c(.33,.5), labels=c("Less Food Insecure", "More Food Insecure"), position="right")+
                #labels=scales::percent_format(accuracy=1), )+
              scale_x_discrete(expand=c(0.2,0))+
              #set psuedo grid which looks better with later formatting than the grid line
@@ -130,9 +130,9 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
 
 #### Food Security Differences by Group
 
-Focusing on UCSD students in 2022, we find that there are significant differences by student group. In comparison to the all undergraduate proportion of 42% food insecure, the proportion is higher for Pell Grant Recipients (51%), First Generation students (52%),  African American students (55%), Hispanic/Latinx students (52%) and American Indian students (50%).
+Focusing on UCSD students in 2022, we find that there are significant differences by student group. In comparison to the all-undergraduate proportion of 42% food insecure, the proportion is higher for Pell Grant Recipients (51%), First Generation students (52%),  African American students (55%), Hispanic/Latinx students (52%) and American Indian students (50%).
 
-Overall, there is ~18 percentage point difference between the group with the lowest food insecurity - domestic, White students (37%) and that with the highest, African American students (55%).
+Overall, there is ~18 percentage point difference between the group with the lowest food insecurity - domestic, White students (37%) and that with the highest, domestic, African American students (55%).
 
 ```{r}
 #| label: food_secure_ug_differences_2022
@@ -167,7 +167,7 @@ collapse_negative_vibe(.)%>%
 
 ### Housing Costs
 
-The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions future versions of this document can add to provide historical context.
+The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions that future versions of this document can add to provide historical context.
 
 The question block prompts: "For the following statements, please indicate whether the statement was never true, sometimes true, or often true for you during the current academic year:"
 
@@ -175,7 +175,7 @@ The question block prompts: "For the following statements, please indicate wheth
 
 "I was worried I would not have enough money to cover the cost of my housing"
 
-Respondents could select "Never True", "Sometime True" or "Often True." For consistency in selecting negative responses - we focus on "Sometimes True" and "Often True" responses- meaning that respondents were unable to pay and worried about their housing costs.
+Respondents could select "Never True", "Sometimes True" or "Often True." For consistency in selecting negative responses - we focus on "Sometimes True" and "Often True" responses- meaning that respondents were unable to pay and worried about their housing costs.
 
 ```{r}
 #| label: unable_pay_house_ug_diff_2022
@@ -247,7 +247,7 @@ collapse_negative_vibe(.)%>%
 
 UCUES has asked "How often during the past academic year have you: Worried about debt and financial circumstances?" since 2014.
 
-The question has six possible responses -three coded negative: Very Often, Often,Somewhat Often, and three as more positive: Occasionally, Rarely, Never. We focus here on the negative responses. 
+The question has six possible responses -three coded negative: Very Often, Often, Somewhat Often, and three as more positive: Occasionally, Rarely, Never. We focus here on the negative responses. 
 
 Overall, UCSD's students are similar to or slightly less worried than the UC average, with the percent of students worried falling for both in 2022.
 
@@ -449,7 +449,7 @@ These questions are also available on the 2022 UCUES for further exploration.
 
 ## Graduate Students
 
-There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available. See data descriptions for more detail. The following draw from the UC Graduate Student Experience Survey in 2021, with the exception of Food Security, which includes data from the 2016 Graduate Student Wellbeing Survey. Please refer to @sec-UCGSES for more on UCGSES.
+There have been fewer consistent questions asked to graduate students over time, and slightly different student groups are available in publicly available data. See data descriptions for more detail. The following draw from the UC Graduate Student Experience Survey in 2021, with the exception of Food Security, which includes data from the 2016 Graduate Student Wellbeing Survey. Please refer to @sec-UCGSES for more on UCGSES.
 
 ### Food Security
 
@@ -491,7 +491,7 @@ plot_time_dumbell(food_grad_wide)+
  
 ```
 
-\*Will add additional student groups to mirror following data.
+
 
 ```{r}
 #| label: food_g_2021
@@ -523,11 +523,10 @@ ggsave("viz/alfs/food_insecure_grad.png", width=9, height=5.5, units="in", dpi=3
 
 ### Financial hardship has impeded my success in my program.
 
--   add comparison with all UC
 
-Graduate students were asked indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Agree" "Agree" and "Somewhat Agree" were coded as "negative" responses.
+Graduate students were asked to indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Agree" "Agree" and "Somewhat Agree" were coded as "negative" responses.
 
-While about 36% of students agreed that financial hardship had impeded their success, that number rises to 52% for Hispanic/Latinx students - and First Generation, LGBT, African American, Doctoral students, and International students also have higher levels of agreement than average.
+While about 36% of students agreed that financial hardship had impeded their success, similar to the all-UC rate of 35% (not pictured), that number rises to 52% for Hispanic/Latinx students - and First Generation, LGBT, African American, Doctoral students, and International students also have higher levels of agreement than average.
 
 ```{r}
 #| label: hardship_g_2021
@@ -560,7 +559,7 @@ ggsave("viz/alfs/hardship_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ### I've been concerned about money lately.
 
-This question continues the format of the previous, with similiar patterns of differences between groups,
+This question continues the format of the previous, with similar patterns of differences between groups. The UCSD proportion of students who agree they are concerned about money lately is about 66%, similar the all-UC proportion of 67%. 
 
 ```{r}
 #| label: concerned_g_2021
@@ -594,7 +593,7 @@ ggsave("viz/alfs/concerned_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ### I'm confident in my financial situation.
 
-For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses.
+For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses. There is a divergence between UCSDand the all UC rate, with a lower proportion of UCSD students disagreeing - 31% vs 34% of all UC respondents. 
 
 ```{r}
 #| label: confident_g_2021
@@ -629,7 +628,7 @@ ggsave("viz/alfs/confident_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ### I can get by financially without having to cut back on too many of the things that are important to me.
 
-For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses.
+For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses. Again, the proportion for all UCSD students (32%) is relatively similiar to the all UC proportion (34%)
 
 
 ```{r}
@@ -687,12 +686,13 @@ Latinx students were slightly more likely to spend in the higher price bands tha
 
 By a significant margin, most students reported that they paid for their course materials through money provided by family, friends, or caregivers (43.3%), followed by money they had earned themselves (29.9%) and grants (12.7%).  The chart below demonstrates differences across racial categories:
 
-![Student Source of Payment for Course Materials](viz/alfs/AOCM_student_spending.png)
+![Student Source of Payment for Course Materials: Race/Ethnicity](viz/alfs/AOCM_student_spending.png)
+
 White and Asian/Asian American students are much more likely to report having family, friend, or caregiver support for purchasing course materials.
 
 Similar disparate impacts were demonstrated due to first-generation status:
 
-![Student Source of Payment for Course Materials](viz/alfs/AOCM_student_spending_1g.png)
+![Student Source of Payment for Course Materials: First Generation Status](viz/alfs/AOCM_student_spending_1g.png)
 
 80% of students reported having to purchase access codes (one-time-use codes to access homework sets, quizzes, or other ancillary materials) during their time at UC San Diego. There does not appear to be a relationship between student major and access code purchasing, indicating that this is a broadly utilized type of course material across disciplines. It is also unclear from our data if access codes are more often used in major courses or in general education.
 
@@ -719,6 +719,7 @@ In comparison, 20.3% of non-Pell-eligible students who answered this question re
 The most commonly reported basic need impacted was access to food, followed by mental health/well-being and utilities.
 
 ![](viz/alfs/AOCM_basic_needs.png)
+
 ### Academic and Social Impacts
 
 The survey also asked questions about how access to course materials impacted their academic and social lives at UC San Diego. 
@@ -775,8 +776,6 @@ gt_ug_rr<- ug_rr%>%
     label = "UCUES Questions",
     columns=3:7)%>%
   cols_move_to_end(columns = "...Total cost of attending is manageable")
-  
-gt_ug_rr
 
 
 gtsave(gt_ug_rr, "alfs_rr_ug.png", path = "viz/alfs")
@@ -823,16 +822,8 @@ gt_grad_rr<- grad_rr%>%
   cols_move( columns="I'm confident in my financial situation.", after="I've been concerned about money lately.")
   
 
-  
-gt_grad_rr
-
 gtsave(gt_grad_rr, "alfs_rr_grad.png", path = "viz/alfs")
 
 ```
 
-```
-
-```{r}
-
-```
 
