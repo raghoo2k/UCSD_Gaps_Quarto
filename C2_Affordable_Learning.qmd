@@ -733,8 +733,11 @@ Overall, 10.9% of students reported that a lack of access to course materials ha
 Students were queried for their format preferences for course materials. There is a strong belief that students prefer electronic sources; however, our survey results indicate that may not be an accurate belief. While students preferred PDFs or other digital documents, this was closely followed by professional printed textbooks. The below chart demonstrates the rank-ordered student preferences.
 
 ![Student Format Preferences](viz/alfs/AOCM_format_pref.png)
+This concludes the excerpt on the report on the Course Material Survey in this document. For more information, contact Dani Cook, Associate University Librarian. 
 
 ## Appendix: Response Rates by Question
+
+
 
 ### Undergraduates: UCUES
 
@@ -779,6 +782,7 @@ gt_ug_rr<- ug_rr%>%
 
 
 gtsave(gt_ug_rr, "alfs_rr_ug.png", path = "viz/alfs")
+
 ```
 
 ### Graduate Students (UCGSES)
@@ -803,6 +807,7 @@ grad_rr<-gses%>%
 #| label: ucgses_rr_gt
 #| echo: FALSE
 #| warning: FALSE
+
 gt_grad_rr<- grad_rr%>%
   pivot_wider(names_from=q, values_from = N)%>%
  
@@ -821,6 +826,7 @@ gt_grad_rr<- grad_rr%>%
    cols_move_to_start(columns = "Food security")%>%
   cols_move( columns="I'm confident in my financial situation.", after="I've been concerned about money lately.")
   
+
 
 gtsave(gt_grad_rr, "alfs_rr_grad.png", path = "viz/alfs")
 
