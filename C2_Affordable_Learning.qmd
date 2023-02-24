@@ -7,7 +7,7 @@ format:
     fig-height: 5.75
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego. The first two sections focus on undergraduate and graduate student survey responses, respectively. The third section explores results from a one-time survye of undergraduate students on their experiences with buying course materials. 
+This is a chapter about affordable learning and financial support at University of California San Diego. The first two sections focus on undergraduate and graduate student survey responses, respectively. The third section explores results from a one-time survey of undergraduate students on their experiences with buying course materials. 
 
 ```{r}
 #| label: run_scripts
@@ -123,7 +123,7 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
         x="Year")
     
 
-   ggsave("viz/afls/food_insecure_time.png", width=9, height=5.5, units="in", dpi=300)
+   ggsave("viz/alfs/food_insecure_time.png", width=9, height=5.5, units="in", dpi=300)
   
 
 ```
@@ -159,7 +159,7 @@ collapse_negative_vibe(.)%>%
        caption=caption_ug)
 
 
- ggsave("viz/afls/food_insecure_2022.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/food_insecure_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 
 
@@ -203,7 +203,7 @@ plot_group_comp(payhousing_2022, cols_neg)%>%
        subtitle ="UCSD Undergrads who were unable to pay housing costs on time, sometimes or often",
        caption=caption_ug)
 
- ggsave("viz/afls/payhousing_2022.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/payhousing_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -239,7 +239,7 @@ collapse_negative_vibe(.)%>%
        subtitle ="UCSD Undergrads who were worried, sometimes or often",
        caption=caption_ug)
 
- ggsave("viz/afls/worried_housing_2022.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/worried_housing_2022.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -326,7 +326,7 @@ g_worried_time <- plot_time_dumbell(worried_time_wide) +
 move_layers(g_worried_time, "GeomSegment", position = "bottom")
 
 ggsave(
-  "viz/afls/worried_time.png",
+  "viz/alfs/worried_time.png",
   width = 9,
   height = 5,
   units = "in",
@@ -360,7 +360,7 @@ plot_group_comp(worried_debt_2022, cols_neg)%>%
          caption=caption_ug,
       subtitle = "Percent of respondents worried, somewhat often, often, or very often")
 
- ggsave("viz/afls/worried_debt_2022.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/worried_debt_2022.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### Manageable Costs
@@ -402,7 +402,7 @@ group_by(campus,year, vibe)%>%
   
   move_layers(g_manage_time,"GeomSegment", position="bottom")
   
-   ggsave("viz/afls/manageable_time.png", width=9, height=5.5, units="in", dpi=300)
+   ggsave("viz/alfs/manageable_time.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question.
@@ -434,7 +434,7 @@ plot_group_comp(manageable_2022, cols_neg)%>%
         caption=caption_ug,
       subtitle = "Percent of UCSD students somewhat disagree, disagree, or strongly disagree")
 
- ggsave("viz/afls/manage_2022.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/manage_2022.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### Additional UCUES Questions related to Affordability.
@@ -487,7 +487,7 @@ plot_time_dumbell(food_grad_wide)+
         caption=caption_grad,
       subtitle = "Percent of respondents food insecure")
   
- ggsave("viz/afls/food_insecure_grad_time.png", width=9, height=5.5, units="in", dpi=300)
+ ggsave("viz/alfs/food_insecure_grad_time.png", width=9, height=5.5, units="in", dpi=300)
  
 ```
 
@@ -517,7 +517,7 @@ plot_group_comp(foodsecure_2021_gses, cols_neg)%>%
        subtitle ="UCSD Graduate Students who were Food Insecure",
        caption=caption_grad)
 
-ggsave("viz/afls/food_insecure_grad.png", width=9, height=5.5, units="in", dpi=300)
+ggsave("viz/alfs/food_insecure_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ```
 
@@ -555,7 +555,7 @@ labs(title="Financial hardship has impeded \nmy success in my program.",
        caption=caption_grad)
 
 
-ggsave("viz/afls/hardship_grad.png", width=9, height=5.5, units="in", dpi=300)
+ggsave("viz/alfs/hardship_grad.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
 ### I've been concerned about money lately.
@@ -588,7 +588,7 @@ plot_group_comp(concerned_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/afls/concerned_grad.png", width=9, height=5.5, units="in", dpi=300) 
+ggsave("viz/alfs/concerned_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
 
@@ -622,7 +622,7 @@ plot_group_comp(confident_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/afls/confident_grad.png", width=9, height=5.5, units="in", dpi=300) 
+ggsave("viz/alfs/confident_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
 
@@ -658,16 +658,80 @@ plot_group_comp(getby_2021_gses, cols_neg)%>%
        caption=caption_grad)
 
 
-ggsave("viz/afls/getby_grad.png", width=9, height=5.5, units="in", dpi=300) 
+ggsave("viz/alfs/getby_grad.png", width=9, height=5.5, units="in", dpi=300) 
 
 ```
 ## Affordable and Open Course Materials
+
+The following paragraphs are quoted verbatim from the Affordable / Open course Materials Report - May 2022. 
 
 In November 2021, a team from the Library and the Teaching + Learning Commons (April Cha, Dani Cook, Leah Klement, Lisa Martin, and Allegra Swift) fielded a population-level survey about student experiences with obtaining and using course materials. 
 
 With help from William Armstrong in Institutional Research, we sent 32,827 survey invitations to UC San Diego undergraduate students. 2,153 students consented and participated in the survey, for a response rate of 6.6%. Demographic characteristics of both the full population and responding population fell within 2 percentage points of each other for college, major department, race, first-generation status, and Pell eligibility. Female students were overrepresented in the responding population, and transfer students were slightly underrepresented in respondents.
 
 Questions on the survey related to student spending on course materials in fall 2021; how students pay for course materials; student strategies when they don’t own course materials; student interest in an inclusive access program; academic, social, and basic needs impacts of course materials cost and access; and format preference. 
+
+### Student Spending
+
+The largest number of students reported spending under \$100 (38%) on course materials in fall 2021. However, a similar number of students reported spending between \$100 and \$199 dollars (33.4%), and the remaining 29% reported spending over \$200 on course materials. A small number of students (.7%) reported spending more than \$600. One representative statement was, “I think it’s expected to spend money on courses and textbooks, it just hits lower-income students harder for obvious reasons.”
+
+Some free-text responses mention departments that already keep material costs low, including CSE and political science. These may be areas to reach out to for more information.
+
+We also investigated if there was a relationship between how much students spent on course materials and their usage. There does appear to be a correlation between cost and usage (p<.001). In general, students reported using most (above 80%) of their required course materials across categories (31.2% of respondents). However, there were numerous students who reported that they used below 50% of their assigned course materials in a quarter, and the qualitative data represented that some students felt frustrated that they were assigned materials that they did not use in the course. Student comments related to this topics included: “I do not mind buying course materials if it is used for at least 50% of the course. Otherwise it feels like a waste” and “It would be great if professors specified beforehand if we will actually be using the textbook. Sometimes it’s listed as required but never used.” This was the second-most commented-on topic in the qualitative data.
+
+Of students who spent below \$100, 10% of them reported never using any of their course materials. However, the preponderance of students in this category (31.4%) reported using 80% or more of their assigned course materials.
+
+For the top spenders (students who spend \$600 or more), most (56.25%) reported using most of their materials, and all reported using at least some.
+
+Latinx students were slightly more likely to spend in the higher price bands than other groups.
+
+By a significant margin, most students reported that they paid for their course materials through money provided by family, friends, or caregivers (43.3%), followed by money they had earned themselves (29.9%) and grants (12.7%).  The chart below demonstrates differences across racial categories:
+
+![Student Source of Payment for Course Materials](viz/alfs/AOCM_student_spending.png)
+White and Asian/Asian American students are much more likely to report having family, friend, or caregiver support for purchasing course materials.
+
+Similar disparate impacts were demonstrated due to first-generation status:
+
+![Student Source of Payment for Course Materials](viz/alfs/AOCM_student_spending_1g.png)
+
+80% of students reported having to purchase access codes (one-time-use codes to access homework sets, quizzes, or other ancillary materials) during their time at UC San Diego. There does not appear to be a relationship between student major and access code purchasing, indicating that this is a broadly utilized type of course material across disciplines. It is also unclear from our data if access codes are more often used in major courses or in general education.
+
+By far, access codes was the area that students shared the most about in the qualitative data. “Frustration” was the most commonly used adjective. One student shared, “Purchasing access codes to complete homework for a grade is ridiculous. We already pay tuition, we shouldn’t have to pay hundreds for our grades too.”
+
+### Strategies for Obtaining Course Materials
+
+96% of students who answered the survey indicated that they had attempted to reduce course material costs during their UC San Diego career. 64% of students shared that they had downloaded a “free” textbook from the Internet (we did not ask about the legal status of the copy) and almost half of students (49%) relying on materials that course instructors provided through Canvas or other means.
+
+The most common reason given for seeking alternative methods to buying a course material was because of the cost of the book, followed by because only a small portion of the material was used in class. Only a small number of students (1.8%) indicated familiarity with library course reserves.
+
+### Inclusive Access Program Interest
+
+66% of students said they would be interested in a standardized fee for materials from the Bookstore (though many indicated they wanted to know more about the cost). Without having additional details, 95% of respondents believed that a reasonable cost for such a program would be under $150 per quarter.
+
+### Basic Needs Impacts
+
+27% of students who responded to the survey indicated that they had to make a choice between purchasing course materials and basic needs.
+
+41.6% of Pell-eligible students who answered the question about basic needs reported having to make a decision between course materials and basic needs.
+
+In comparison, 20.3% of non-Pell-eligible students who answered this question reported having to make a decision between course materials and basic needs.
+
+The most commonly reported basic need impacted was access to food, followed by mental health/well-being and utilities.
+
+![](viz/alfs/AOCM_basic_needs.png)
+### Academic and Social Impacts
+
+The survey also asked questions about how access to course materials impacted their academic and social lives at UC San Diego. 
+
+14.2% of students overall reported that lack of access to course materials strongly impacted their understanding of key course concepts. This impact was felt variably across demographic categories. Notably, 20.9% of Latinx students reported a strong impact on their understanding of course concepts, while only 9.6% of white students reported a strong impact.
+
+Overall, 10.9% of students reported that a lack of access to course materials has affected their feeling of belonging in their course or major. Again, this impact was felt variably across demographic categories. 28.1% of black students reported a strong impact, while only 7.7% of white students reported the same. This was also true across low-income students (as identified by Pell-grant eligibility), where 41.6% of Pell-eligible students reported an impact on feelings of belonging, in contrast to 29% of non-Pell-eligible students.
+
+### Format Preferences
+
+Students were queried for their format preferences for course materials. There is a strong belief that students prefer electronic sources; however, our survey results indicate that may not be an accurate belief. While students preferred PDFs or other digital documents, this was closely followed by professional printed textbooks. The below chart demonstrates the rank-ordered student preferences.
+
+![Student Format Preferences](viz/alfs/AOCM_format_pref.png)
 
 ## Appendix: Response Rates by Question
 
