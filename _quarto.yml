@@ -8,11 +8,11 @@ book:
   chapters:
     - index.qmd
     - intro.qmd
-    - C1_Academic_Outcomes.qmd
+    #- C1_Academic_Outcomes.qmd
     - C2_Affordable_Learning.qmd
-    - C3_Academic_Experiences.qmd
-    - C4_Mentoring_Coaching_and_Advising.qmd
-    - C5_Sense.qmd
+    #- C3_Academic_Experiences.qmd
+    #- C4_Mentoring_Coaching_and_Advising.qmd
+    #- C5_Sense.qmd
     - summary.qmd
     - references.qmd
 
