@@ -8,7 +8,7 @@ format:
     
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego. @sec-alfs-undergrads details undergraduates experiences, using information from the UCUES survey. @sec-alfs-grads explores graduate student experiences using the UCGSES survey. @#sec-course-material explores results from a one-time survey of undergraduate students on their experiences with buying course materials. Finally, an appendix @sec-alfs-rr provides the number of respondents for each survey question by student group. 
+This is a chapter about affordable learning and financial support at University of California San Diego. @sec-alfs-undergrads details undergraduates experiences, using information from the UCUES survey. @sec-alfs-grads explores graduate student experiences using the UCGSES survey. @sec-course-material explores results from a one-time survey of undergraduate students on their experiences with buying course materials. Finally, an appendix @sec-alfs-rr provides the number of respondents for each survey question by student group. 
 
 ```{r}
 #| label: run_scripts
@@ -61,8 +61,6 @@ This section covers a few questions prioritized by the Affordable Learning and F
 ### Food Security
 
 The UC food security measure is defined by a student's responses to a set of six questions. Each student is assigned a status of "very low food security", "low food security", or "food secure" For more information on this measure, please visit [UCOP Measuring Food Insecurity](https://www.universityofcalifornia.edu/sites/default/files/measuring-food-insecurity.pdf)
-
-#### Food Security over Time
 
 These visuals display the combined percentage of respondents who are "food insecure" or "very food insecure". For example, in 2022, 42% of UCSD undergraduate respondents were classified as food insecure or very food insecure, and the remaining 58% of respondents were classified as food secure. The percent of undergraduates who are food insecure has remained relatively stable over time. UCSD's food insecurity rates are slightly lower or equal to the overall UC system rate for this time period.
 
@@ -123,11 +121,7 @@ food_secure_time_wide<-clean_wide_time(food_secure_time)
 
 ```
 
-#### Food Security Differences by Group
-
-Focusing on UCSD students in 2022, we find that there are significant differences by student group. In comparison to the all undergraduate proportion of 42% food insecure, the proportion is higher for Pell Grant Recipients (51%), first-generation students (52%),  African American students (55%), Hispanic/Latinx students (52%) and American Indian students (50%).
-
-Overall, there is ~18 percentage point difference between the group with the lowest food insecurity - domestic, White students (37%) and that with the highest, domestic, African American students (55%).
+Focusing on UCSD students in 2022, we find that there are substantial differences by student group. In comparison to the all undergraduate proportion of 42% food insecure, the proportion is higher for Pell Grant recipients (51%), first-generation students (52%),  African American students (55%), Hispanic/Latinx students (52%) and American Indian students (50%) and Transfer students (50%). Overall, there is ~18 percentage point difference between the group with the lowest food insecurity - domestic, White students (37%) and that with the highest, domestic, African American students (55%).
 
 ```{r}
 #| label: food_secure_ug_differences_2022
@@ -162,7 +156,7 @@ collapse_negative_vibe(.)%>%
 
 ### Housing Costs
 
-The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked previously. There are other housing related questions that future versions of this document can add to provide historical context.
+The prioritization poll selected two housing questions from the most recent UCUES 2022 wave- these questions had not been asked on earlier waves. There are other housing related questions that future versions of this document can add to provide historical context.
 
 The question block prompts: "For the following statements, please indicate whether the statement was never true, sometimes true, or often true for you during the current academic year:"
 
@@ -202,11 +196,11 @@ plot_group_comp(payhousing_2022, cols_neg)%>%
 
 ```
 
-About 20% of students were sometimes or often unable to pay on time. This proportion is slightly lower than the UC average of 23% of students unable to pay (not pictured).
+About 20% of UCSD students were sometimes or often unable to pay on time. This proportion is slightly lower than the UC average of 23% of students unable to pay (not pictured).
 
 Within UCSD, the proportion of students unable to pay on time ranges from 28% for African American students to 11% for American Indian students, a 17 percentage point difference.
 
-The proportion of students who worry about paying housing costs is higher. Overall 46% worry -similar to the UC average of 45%. However, there is a wide range by student groups at UCSD, from 68% of Pell Grant students worrying, to only 44% of those who don't receive Pell, a difference of over 20 percentage points. The proportions for Hispanic/Latinx and African American students who worry is also high, around 62%.
+The proportion of students who worry about paying housing costs is higher than that of student who are unable to pay. Overall 46% of UCSD students worry -inline with the UC proportion of 45% (not pictured). However, there is a wide range by student groups at UCSD, from 68% of Pell Grant students worrying, to only 44% of those who don't receive Pell, a difference of over 20 percentage points. The proportions for Hispanic/Latinx and African American students who worry is also high, around 62%.
 
 ```{r}
 #| label: worried_pay_house_ug_diff_2022
@@ -333,7 +327,7 @@ ggsave(
 
 ```
 
-It's notable that while 2022 saw a decrease in students worried, stark differences remain by student group,
+It's notable that while 2022 saw a decrease in students worried, stark differences remain by student group.
 
 
 ```{r}
@@ -360,7 +354,7 @@ plot_group_comp(worried_debt_2022, cols_neg)%>%
 
 ### Manageable Costs
 
-Forty-two percent of students somewhat disagree, disagree, or strongly disagree that the total cost of attending UCSD is manageable, given the the grants and scholarships they receive. Over the past four waves of UCUES, UCSD has had slightly higher proportions of students disagree that it is manageable than the UC average.
+Forty-two percent of students somewhat disagree, disagree, or strongly disagree that the total cost of attending UCSD is manageable, given the the grants and scholarships they receive. Over the past four waves of UCUES, UCSD has had slightly higher proportions of students disagree that the cost is manageable than the UC average.
 
 ```{r}
 #| label: manageable_ug_overtime
@@ -377,7 +371,35 @@ group_by(campus,year, vibe)%>%
   filter(vibe=="negative")
 
  manage_ug_time_wide<-clean_wide_time(manage_ug_time)
- g_manage_time<-plot_time_dumbell(manage_ug_time_wide)+
+ 
+     g_manage_time<- dumbbell_chart(
+          data=manage_ug_time_wide,
+           x=year,
+           y2=All_UC,
+           y1=UCSD,
+           point_colors=c("#747678","#00629B"),
+           legend=FALSE,
+           sort=FALSE)+
+             #set axis dimensions 
+            
+             #topline labels
+         geom_text(data=filter(manage_ug_time_wide, year=="2018"), aes(x=year, y=UCSD, label="UCSD"),
+                                  color="#00629B", size=3, vjust=-1.5)+
+          geom_text(data=filter(manage_ug_time_wide, year=="2018"), aes(x=year, y=All_UC, label="All UC"),
+                                    color="#747678", size=3, vjust=-1.5)+
+            #Data % Labels
+            geom_text(aes(y=UCSD,label= scales::percent(UCSD,accuracy=1)), size=3, nudge_x =-.25)+
+          #doesn't show UC all % if there is no difference- prevent label overlap
+        geom_text(data=filter(manage_ug_time_wide, diff!=0),aes(y=All_UC,label= scales::percent(All_UC,accuracy=1)), size=3, nudge_x =-.25)+
+               theme(
+                 plot.title = element_text(size=15),
+                 axis.title.y  = element_text(size=10),
+                  axis.title.x = element_blank(),
+                  axis.text.y = element_text(size=10),
+                  panel.grid.major.x = element_blank(),
+                 panel.grid.major.y = element_blank(),
+                  plot.background=element_rect(color="white", fill="white"))+
+    
   scale_y_continuous(expand=c(0,0), limits=c(.37, .52), breaks=c(.37,.46), labels=c("More Manageable", "Less Manageable"), position="right")+
   scale_x_discrete(expand=c(0.2,0))+
     #build diff box
@@ -400,9 +422,7 @@ group_by(campus,year, vibe)%>%
    ggsave("viz/alfs/manageable_time.png", width=9, height=5.5, units="in", dpi=300)
 ```
 
-Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question.
-
-Those who do not receive Pell Grants, and not first-generation students have a higher proportion of negative responses. 49% of students not receiving Pell Grants disagree that the cost of UCSD is manageable, compared to 30% of Pell Grant recipients. 
+Interestingly, the consistent gaps by student group observed for other affordability questions partially reverse in this question. Those who do not receive Pell Grants, and not first-generation students have a higher proportion of negative responses. 49% of students not receiving Pell Grants disagree that the cost of UCSD is manageable, compared to 30% of Pell Grant recipients. The direction also reverses for Transfer students who have lower proporitons of negative responses than first-time-first-year students. 
 
 ```{r}
 #| label: manageable_ug_2022
@@ -519,9 +539,9 @@ ggsave("viz/alfs/food_insecure_grad.png", width=9, height=5.5, units="in", dpi=3
 ### Financial hardship has impeded my success in my program.
 
 
-Graduate students were asked to indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Agree" "Agree" and "Somewhat Agree" were coded as "negative" responses.
+Graduate students were asked to indicate their agreement with this statement "Financial Hardship has impeded my success in my program." Students who selected "Strongly Agree", "Agree", and "Somewhat Agree" were coded as "negative" responses.
 
-While about 36% of students agreed that financial hardship had impeded their success, similar to the all-UC rate of 35% (not pictured), that number rises to 52% for Hispanic/Latinx students - and first-generation, LGBT, African American, Doctoral students, and International students also have higher levels of agreement than average.
+While about 36% of students agreed that financial hardship had impeded their success, similar to the all-UC rate of 35% (not pictured), that number rises to 52% for Hispanic/Latinx students.  First-generation, LGBT, African American, Doctoral students, and International students also have higher levels of agreement than average.
 
 ```{r}
 #| label: hardship_g_2021
@@ -588,7 +608,7 @@ ggsave("viz/alfs/concerned_grad.png", width=9, height=5.5, units="in", dpi=300)
 
 ### I'm confident in my financial situation.
 
-For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses. There is a divergence between UCSDand the all UC rate, with a lower proportion of UCSD students disagreeing - 31% vs 34% of all UC respondents. 
+For this question, "Strongly Disagree," "Disagree", and "Somewhat Disagree" were considered negative responses. There is a divergence between UCSD and the all UC rate, with a lower proportion of UCSD students disagreeing - 31% vs 34% of all UC respondents. 
 
 ```{r}
 #| label: confident_g_2021
