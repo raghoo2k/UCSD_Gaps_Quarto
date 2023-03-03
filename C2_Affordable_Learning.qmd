@@ -8,7 +8,7 @@ format:
     
 ---
 
-This is a chapter about affordable learning and financial support at University of California San Diego. @sec-alfs-undergrads details undergraduates experiences, using information from the UCUES survey. @sec-alfs-grads explores graduate student experiences using the UCGSES survey. @sec-course-material explores results from a one-time survey of undergraduate students on their experiences with buying course materials. Finally, an appendix @sec-alfs-rr provides the number of respondents for each survey question by student group. 
+This is a chapter about affordable learning and financial support at University of California San Diego. @sec-alfs-undergrads details undergraduates' experiences, using information from the UCUES survey. @sec-alfs-grads explores graduate student experiences using the UCGSES survey. @sec-course-material explores results from a one-time survey of undergraduate students on their experiences with buying course materials. Finally, an appendix @sec-alfs-rr provides the number of respondents for each survey question by student group. Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
 ```{r}
 #| label: run_scripts
@@ -200,7 +200,7 @@ About 20% of UCSD students were sometimes or often unable to pay on time. This p
 
 Within UCSD, the proportion of students unable to pay on time ranges from 28% for African American students to 11% for American Indian students, a 17 percentage point difference.
 
-The proportion of students who worry about paying housing costs is higher than that of student who are unable to pay. Overall 46% of UCSD students worry -inline with the UC proportion of 45% (not pictured). However, there is a wide range by student groups at UCSD, from 68% of Pell Grant students worrying, to only 44% of those who don't receive Pell, a difference of over 20 percentage points. The proportions for Hispanic/Latinx and African American students who worry is also high, around 62%.
+The proportion of students who worry about paying housing costs is higher than that of student who are unable to pay. Overall 46% of UCSD students worry -inline with the UC proportion of 45% (not pictured). However, there is a wide range by student groups at UCSD, from 68% of Pell Grant students being worried to only 44% of those who don't receive Pell grant, a difference of over 20 percentage points. The proportions for Hispanic/Latinx and African American students who are more worried is also high, around 62%.
 
 ```{r}
 #| label: worried_pay_house_ug_diff_2022

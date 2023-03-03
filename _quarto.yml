@@ -4,7 +4,7 @@ project:
 book:
   title: "UCSD Equity Gaps"
   author: "Sarah Nolan"
-  date: "02/02/2023"
+  date: "03/2/2023"
   chapters:
     - index.qmd
     - intro.qmd
