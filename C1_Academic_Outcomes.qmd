@@ -54,9 +54,10 @@ ir_cap<-"Data Source: UCSD IR"
 
 ### Graduation Rates
 
+
 #### First-Time-First-Years
 
-First, we examine the percentage of First-Time-First-Year (FTFY) students who graduate within six years or less of starting at UCSD. The below visual shows six year graduation rates for the entering cohort of 2016. Overall, 85% of FTFY students entering in 2016 graduated in six years or less. The proportion of students who recieve Pell Grants, and First Generation students, have slightly lower graduation rates of 83% and 84% respectively. 
+First, we examine the percentage of First-Time-First-Year (FTFY) students who graduate within six years or less of starting at UCSD. The below visual shows six year graduation rates for the entering cohort of 2016. Overall, 85% of FTFY students entering in 2016 graduated in six years or less. The proportion of students who receive Pell Grants, and First Generation students, have slightly lower graduation rates of 83% and 84% respectively. 
 
 The largest equity gaps emerge when considering Race and Ethnicity. Hispanic / Latinx, African American, and American Indian students each have lower than average graduation rates, of 81%, 78%, and 74% respectively. 
 
@@ -88,6 +89,45 @@ plot_group_comp(ftfy_six_2016, cols_pos)%>%
   
   
 ```
+
+```{r}
+#| label: ftfy_six_years
+#| echo: FALSE
+#| warning: FALSE
+
+
+ftfy_six_time<-cumu_ftfy%>%
+ filter(entrycohort<2017 & entrycohort>2013)%>%
+    select(comp,group,entrycohort,perc_6, group_label)%>%
+filter(group=="All"|group=="First Gen"|group=="URG"|group=="Pell")%>%
+    mutate(entrycohort=as.factor(entrycohort))%>%
+    mutate(entrycohort=fct_relevel(entrycohort, "2014","2015","2016"))
+    
+    
+ggplot(data=ftfy_six_time, aes( x=entrycohort, y=perc_6, group=group_label, color=group_label, label=group_label))+
+  geom_point()+geom_path()+
+   geom_textpath(hjust=.25, vjust=.025)+ 
+  geom_text(aes(x=entrycohort, y=perc_6, label=scales::percent(perc_6,accuracy=1)), size=3, nudge_y=.005)+
+  scale_y_continuous(limits = c(.78,.90),labels=scales::percent_format(accuracy=1))+
+  scale_x_discrete(expand = c(.05,0))+
+labs(title="Six Year or Less Graduation Rate",subtitle="UCSD FTFY Students", caption=ir_cap, x="Entry Cohort Year")+
+theme(
+      plot.title=element_text(size=17),
+      plot.subtitle=element_text(size=13),
+      plot.caption=element_text(size=10),
+      axis.text.x=element_text(size=8, face="bold"),
+      axis.title.x=element_text(size=8, face="bold"),
+      axis.title.y = element_blank(),
+      axis.text.y=element_text(size=8, face="bold"),
+      axis.ticks.y= element_blank(),
+      legend.position="none")
+    
+   
+
+```
+
+
+
 
 Examining the proportion of students who graduate within four years or less shows a similar pattern of equity gaps, however the divergence between student groups grows larger. For the most recent entry cohort available, 2018, about 73% of students graduate in four years or less. However, that proportion drops to 55%, just over half, for African American students in that entering cohort, and 12% for Hispanic/Latinx.
 
