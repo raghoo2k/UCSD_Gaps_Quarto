@@ -55,6 +55,7 @@ Please refer to @sec-UCUES for more information on UCUES. For readers affiliated
 
 
 
+
 ### Reluctance to ask for academic help when I need it
 ```{r}
 #| label: rel_help
@@ -188,6 +189,98 @@ plot_group_comp(num_prof_2022, cols_neg)%>%
  ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
+
+### Academic advising by school or college staff
+The following three questions are from the 2020 UCUES as these questions were not continued into 2022
+
+```{r}
+#| label: adv_college
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_coll_2020<-es%>%
+filter(q=="Academic advising by school or college staff"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_coll_2020, cols_neg)%>%
+  plot_diff_rect(., adv_coll_2020,.16,.36, "Less Dissatisfied", "More Dissatisfied")+
+  labs(title="How satisfied are you with: Academic advising by school or college staff",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
+ ggsave("viz/mca/adv_coll_2020.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+### Academic advising by Departmental Staff
+```{r}
+#| label: adv_dep
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_coll_2020<-es%>%
+filter(q=="Academic advising by departmental staff"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_coll_2020, cols_neg)%>%
+  plot_diff_rect(., adv_coll_2020,.13,.32, "Less Dissatisfied", "More Dissatisfied")+
+  labs(title="How satisfied are you with: Academic advising by departmental staff",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
+ ggsave("viz/mca/adv_dep_2020.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+
+### Academic advising by faculty
+
+```{r}
+#| label: adv_fac
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_fac_2020<-es%>%
+filter(q=="Academic advising by faculty"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_negative_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_fac_2020, cols_neg)%>%
+  plot_diff_rect(., adv_coll_2020,.12,.26, "Less Dissatisfied", "More Dissatisfied")+
+  labs(title="How satisfied are you with: Academic advising by faculty",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
+ ggsave("viz/mca/adv_fac_2020.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+
+
+
 ## Graduate Students {#sec-mca-grads}
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~35) on these questions, which skew more positive than the graduate student body average. Interpret these trends with additional caution. 
 
@@ -312,17 +405,23 @@ plot_group_comp(diss_supp_2021, cols_neg)%>%
 
 
 ```
-## Response Rates {#sec-mca-rr}
+## Appendix:Response Rates {#sec-mca-rr}
 
-#### UCUES
+### Undergraduates:UCUES
 
 ```{r}
 #| label: rr_ug_data
 #| echo: FALSE
 #| warning: FALSE
 ug_rr<-es%>%
-  filter(q=="Had a class in which the professor knew or learned your name"|q=="Reluctance to ask for academic help when I need it"|q=="Sought academic help from instructor or tutor when needed"|q=="How many professors do you know well enough to ask for a letter of recommendation?")%>%
+  filter(q=="Had a class in which the professor knew or learned your name"|q=="Reluctance to ask for academic help when I need it"|q=="Sought academic help from instructor or tutor when needed"|q=="How many professors do you know well enough to ask for a letter of recommendation?"|q=="Studied as a group with classmates outside of class"|q=="Helped a classmate better understand the course material when studying together")%>%
   filter(year=="2022")%>%
+  group_by(q,comp,group_label)%>%
+  summarise(N=sum(N, na.rm=T))
+
+ug_rr_2020<-es%>%
+  filter(q=="Academic advising by school or college staff"|q=="Academic advising by departmental staff"|q=="Academic advising by faculty")%>%
+  filter(year=="2020")%>%
   group_by(q,comp,group_label)%>%
   summarise(N=sum(N, na.rm=T))
 ```
@@ -342,13 +441,40 @@ gt_ug_rr<- ug_rr%>%
              subtitle="UCUES 2022")%>%
   tab_spanner(
     label = "UCUES Questions",
-    columns=3:6)
-  
+    columns=3:8)%>%
+cols_move_to_end(columns = c("Helped a classmate better understand the course material when studying together","Had a class in which the professor knew or learned your name","How many professors do you know well enough to ask for a letter of recommendation?"))%>%
+   cols_label(
+     "Had a class in which the professor knew or learned your name"="Professor knew my name",
+     "Reluctance to ask for academic help when I need it"="Reluctance to ask for academic help",
+     "How many professors do you know well enough to ask for a letter of recommendation?"="...letter of recommendation",
+     "Sought academic help from instructor or tutor when needed"="Sought academic help..")
 
 gtsave(gt_ug_rr, "mca_rr_ug.png", path = "viz/mca")
 ```
 
-### UCGSES
+The final three questions draw from the 2020 survey wave and are shown below. 
+```{r}
+#| label: rr_ug_gt_2020
+#| echo: FALSE
+#| warning: FALSE
+gt_ug_rr_2020<- ug_rr_2020%>%
+  pivot_wider(names_from=q, values_from = N)%>%
+  gt(., rowname_col="group_label", groupname_col="comp")%>%
+  cols_align(
+    align="left",
+    columns=group_label
+  )%>%
+  tab_header(title="UCSD Student Response Counts",
+             subtitle="UCUES 2020")%>%
+  tab_spanner(
+    label = "UCUES Questions",
+    columns=3:5)
+
+gtsave(gt_ug_rr_2020, "mca_rr_ug_2020.png", path = "viz/mca")
+
+```
+
+### Graduate Students:UCGSES
 ```{r}
 #| label: rr_grad_data
 #| echo: FALSE
