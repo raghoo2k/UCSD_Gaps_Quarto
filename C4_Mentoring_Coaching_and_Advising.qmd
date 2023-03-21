@@ -1,8 +1,19 @@
 ---
 title: "Mentoring Coaching and Advising"
 editor: source
+format:
+  html:
+    fig-width: 8
+    fig-height: 5.75
 ---
+This is a chapter about mentoring, coaching, and advising at University of California San Diego. 
 
+@sec-mca-undergrads details undergraduates' experiences, using information from the UCUES survey. @sec-mca-grads explores graduate student experiences using the UCGSES survey.  Finally, an appendix @sec-mca-rr provides the number of respondents for each survey question by student group. 
+
+Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
+
+
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/22. 
 
 ```{r}
 #| label: run_scripts
@@ -37,11 +48,12 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
   label_groups(.)
 
 ```
-## UCUES
+## Undergraduates {#sec-mca-undergrads}
+This section draws from recent waves of the University of California Undergraduate Experience Survey. 
+Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
 
-### Faculty know my name
 
-Need to input visual from previous chapter
+
 
 ### Reluctance to ask for academic help when I need it
 ```{r}
@@ -85,7 +97,7 @@ filter(q=="Sought academic help from instructor or tutor when needed"&year=="202
   filter(group_label!="All")
 
 plot_group_comp(sought_help_2022, cols_neg)%>%
-  plot_diff_rect(., sought_help_2022,.12,.34, "More helpseeking", "Less helpseeking")+
+  plot_diff_rect(., sought_help_2022,.12,.36, "More helpseeking", "Less helpseeking")+
   labs(title="How often have you sought academic help from \nan instructor or tutor when needed?",
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who responded rarely or never")
@@ -144,7 +156,9 @@ plot_group_comp(help_class_2022, cols_neg)%>%
 
 
 ```
+### Faculty know my name
 
+![](viz/acex/fac_name_2022.png)
 
 ### How many professors do you know well enough to ask for a letter of recommendation?
 ```{r}
@@ -174,7 +188,8 @@ plot_group_comp(num_prof_2022, cols_neg)%>%
  ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-## UCGSES
+## Graduate Students {#sec-mca-grads}
+The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~35) on these questions, which skew more positive than the graduate student body average. Interpret these trends with additional caution. 
 
 ### Opportunities to form research/academic mentorship relationships with faculty members
 ```{r}
@@ -190,7 +205,7 @@ opp_research_ment_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(opp_research_ment_2021, cols_neg)%>%
-  plot_diff_rect(., opp_research_ment_2021,.18,.4, "Fewer Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., opp_research_ment_2021,.13,.4, "Fewer Low Ratings", "More Low Ratings")+
   labs(title="Please Rate: Opportunities to form research/academic \nmentorship relationships with faculty members",
          caption=caption_grad,
       subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
@@ -200,7 +215,7 @@ plot_group_comp(opp_research_ment_2021, cols_neg)%>%
 ```
 
 
-### Opportunities to form research/academic mentorship relationships with faculty members
+### Opportunities to form non-research/academic mentorship relationships with faculty members
 ```{r}
 #| label: opp_ment
 #| echo: FALSE
@@ -214,7 +229,7 @@ opp_ment_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(opp_ment_2021, cols_neg)%>%
-  plot_diff_rect(., opp_ment_2021,.3,.52, "Fewer Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., opp_ment_2021,.19,.52, "Fewer Low Ratings", "More Low Ratings")+
   labs(title="Please Rate: Opportunities to form non-research/academic \nmentorship relationships with faculty members",
     caption=caption_grad,
       subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
@@ -239,7 +254,7 @@ career_sup_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(career_sup_2021, cols_neg)%>%
-  plot_diff_rect(., career_sup_2021,.15,.35, "Fewer Dissatisfied", "More Dissatisfied")+
+  plot_diff_rect(., career_sup_2021,.08,.35, "Fewer Dissatisfied", "More Dissatisfied")+
   labs(title="I'm satisfied with the career support I recieve in my program",
     caption=caption_grad,
       subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
@@ -297,7 +312,7 @@ plot_group_comp(diss_supp_2021, cols_neg)%>%
 
 
 ```
-## Response Rates
+## Response Rates {#sec-mca-rr}
 
 #### UCUES
 

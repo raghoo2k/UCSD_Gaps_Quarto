@@ -6,7 +6,7 @@ This book explores data on equity gaps at University of California San Diego (UC
 
 ### University of California Undergraduate Experience Survey (UCUES) {#sec-UCUES}
 
-The University of California Undergraduate Experience Survey (UCUES) is a biennial survey conducted at the UC's nine undergraduate campuses. Student responses are collected in the spring quarter of the survey year. 
+The University of California Undergraduate Experience Survey (UCUES) is a biennial survey conducted at the UC's nine undergraduate campuses. Student responses are collected in the spring quarter of the survey year.
 
 For more about UCUES across the UC, and data tables from 2006 onwards, please see [this page on UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/ucues-data-tables-main).
 
@@ -16,20 +16,19 @@ A summary of UCUES at UCSD can be found on UCSD IR website [here](https://ir.ucs
 
 In this book, all student group are reported separately, considered one at a time. It does not consider identities jointly, e.g. whether that same student is a transfer student and also Asian American. Joint analysis is not possible using publicly available data. If a student's identity is unknown or "other", it is currently removed from the analysis for that specific comparison.
 
-The following text is quoted directly from the [UC Infocenter UCUES website](https://www.universityofcalifornia.edu/about-us/information-center/ucues-data-tables-main) under the "Notes" Section. 
+The following text is quoted directly from the [UC Infocenter UCUES website](https://www.universityofcalifornia.edu/about-us/information-center/ucues-data-tables-main) under the "Notes" Section.
 
-* First-Generation: Indicates that neither parent of a student has a four-year college degree
+-   First-Generation: Indicates that neither parent of a student has a four-year college degree
 
-* Race/Ethnicity: Identifies a student’s race/ethnicity in one of seven categories (i.e., African American, American Indian, Hispanic/Latino(a), Asian, White, International, or Unknown) based on UC’s spring term enrollment data. Winter or fall term data is used if spring data is not available. In this book, we have removed "unknown" responses for clarity of presentation. For more on how UC aggregates student's race and ethnicity identities please see this [document](https://www.universityofcalifornia.edu/sites/default/files/Race-Eth%20Data%20Collection.pdf) 
+-   Race/Ethnicity: Identifies a student's race/ethnicity in one of seven categories (i.e., African American, American Indian, Hispanic/Latino(a), Asian, White, International, or Unknown) based on UC's spring term enrollment data. Winter or fall term data is used if spring data is not available. In this book, we have removed "unknown" responses for clarity of presentation. For more on how UC aggregates student's race and ethnicity identities please see this [document](https://www.universityofcalifornia.edu/sites/default/files/Race-Eth%20Data%20Collection.pdf)
 
-* Pell Grant: An indicator showing whether a student received a Pell Grant during the academic year in which the student took the survey.
+-   Pell Grant: An indicator showing whether a student received a Pell Grant during the academic year in which the student took the survey.
 
-* Applicant Type: an indicator showing whether a student is a first-time first-year / freshman applicant -meaning they have not enrolled in a regular session at a college or university prior to matriculating,  or Transfer Students, with prior regular session experience at a college or university.
+-   Applicant Type: an indicator showing whether a student is a first-time first-year / freshman applicant -meaning they have not enrolled in a regular session at a college or university prior to matriculating, or Transfer Students, with prior regular session experience at a college or university.
 
 #### Demographics of UCSD Undergraduates
 
-As of Fall 2022, the following visual describes the percentage of UCSD students in each group, including groups whose UCUES responses are not publicly available (sexual orientation) and not included in this analysis at this time (CA residency). 
-This visual is available for more interactive exploration at the [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/fall-enrollment-glance). Up to date UCSD specific student counts can be found at UCSD IR [3rd Week Enrollment Dashboard](https://ir.ucsd.edu/third-week/index.html)
+As of Fall 2022, the following visual describes the percentage of UCSD students in each group, including groups whose UCUES responses are not publicly available (sexual orientation) and not included in this analysis at this time (CA residency). This visual is available for more interactive exploration at the [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/fall-enrollment-glance). Up to date UCSD specific student counts can be found at UCSD IR [3rd Week Enrollment Dashboard](https://ir.ucsd.edu/third-week/index.html)
 
 [![UCSD Undergraduate Population 2022](viz/intro/UCSD_UG_demo.png)](https://www.universityofcalifornia.edu/about-us/information-center/fall-enrollment-glance)
 
@@ -37,36 +36,33 @@ About 33% of enrolled undergraduates are Transfer students, according to [UCSD A
 
 #### Completion Rates on UCUES Survey
 
-About 26% of all UCSD undergraduate students completed the 2022 UCUES survey - defined as opening the survey, responding to at least one question, and submitting responses. Within each student group, the completion rate is within 2-3 percentage points of this overall average,  with the exception of International students who have a lower completion rate -just 18% of UCSD international students completed the survey.
+About 26% of all UCSD undergraduate students completed the 2022 UCUES survey - defined as opening the survey, responding to at least one question, and submitting responses. Within each student group, the completion rate is within 2-3 percentage points of this overall average, with the exception of International students who have a lower completion rate -just 18% of UCSD international students completed the survey.
 
-For the number of respondents to each UCUES question examined, please see the appendix of each chater. 
+For the number of respondents to each UCUES question examined, please see the appendix of each chater.
 
 -   For an interactive view of UCUES survey completion and response rates, please see [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/student-survey-completion-and-response-rates)
-
 
 ### University of California Graduate Student Experience Survey (UCGSES) {#sec-UCGSES}
 
 This UC-wide has been conducted once, in 2021. The data table for all UC campuses is available at the [UC Infocenter](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-data-tables)
 
-
 #### Student Group Definition (UCGSES)
 
-* First-Generation: Indicates that neither parent of a student has a four-year college degree
+-   First-Generation: Indicates that neither parent of a student has a four-year college degree
 
-* Race/Ethnicity: Identifies a student’s race/ethnicity in one of seven categories (i.e., African American, American Indian, Hispanic/Latino(a), Asian, White, International, or Unknown) based on UC’s spring term enrollment data. Winter or fall term data is used if spring data is not available. In this book, we have removed "unknown" responses for clarity of presentation. Given the low number of respondents for UCGSES at UCSD, not all of these categories are available for every question in this group. For more on how UC aggregates student's race and ethnicity identities please see this [document](https://www.universityofcalifornia.edu/sites/default/files/Race-Eth%20Data%20Collection.pdf) 
+-   Race/Ethnicity: Identifies a student's race/ethnicity in one of seven categories (i.e., African American, American Indian, Hispanic/Latino(a), Asian, White, International, or Unknown) based on UC's spring term enrollment data. Winter or fall term data is used if spring data is not available. In this book, we have removed "unknown" responses for clarity of presentation. Given the low number of respondents for UCGSES at UCSD, not all of these categories are available for every question in this group. For more on how UC aggregates student's race and ethnicity identities please see this [document](https://www.universityofcalifornia.edu/sites/default/files/Race-Eth%20Data%20Collection.pdf)
 
-* Sexual Orientation: UC began collecting sexual orientation data on the undergraduate application in Fall 2016, and over a phased in timeline on the graduate application since 2016. As a result, this data may not be comprehensive  as some enrolled students (particularly those who entered prior to 2016) may not have faced this question on the application. Unknown sexual orientation includes a mix of students who chose not to indicate a category and those who never had the opportunity to provide the information. Data should be interpreted with caution in the early years of the collection as it is not comprehensive.
+-   Sexual Orientation: UC began collecting sexual orientation data on the undergraduate application in Fall 2016, and over a phased in timeline on the graduate application since 2016. As a result, this data may not be comprehensive as some enrolled students (particularly those who entered prior to 2016) may not have faced this question on the application. Unknown sexual orientation includes a mix of students who chose not to indicate a category and those who never had the opportunity to provide the information. Data should be interpreted with caution in the early years of the collection as it is not comprehensive.
 
-* Student Level: The UCGSES reports student level in the following categories: Academic Masters, who are students pursuing MS, MA, or MFA degrees, Professional Masters: MBA, MF, MCEP, and MAS programs, Doctoral PhDs, and Professional Practice: MD, Pharm.D. 
-
+-   Student Level: The UCGSES reports student level in the following categories: Academic Masters, who are students pursuing MS, MA, or MFA degrees, Professional Masters: MBA, MF, MCEP, and MAS programs, Doctoral PhDs, and Professional Practice: MD, Pharm.D.
 
 #### Demographics of UCSD Graduate Students
 
-The following visual provides a view of UCSD graduate student demographics. 
+The following visual provides a view of UCSD graduate student demographics.
 
 [![UCSD Graduate Population 2022](viz/intro/UCSD_grad_demo.png)](https://www.universityofcalifornia.edu/about-us/information-center/fall-enrollment-glance)
 
-Academic Masters students comprise 26% of UCSD graduate students,Professional Masters as 13%, Academic Doctors as 50% and Professional Practice as 11%. Future versions will include a visual of this breakdown. 
+Academic Masters students comprise 26% of UCSD graduate students,Professional Masters as 13%, Academic Doctors as 50% and Professional Practice as 11%. Future versions will include a visual of this breakdown.
 
 #### Completion Rates of UCGSES 2022
 
@@ -74,11 +70,9 @@ UC San Diego had a lower than average response rate for graduate students in com
 
 [![UCGSES 2021](viz/intro/UCGSES_rr_table.png)](https://www.ucop.edu/institutional-research-academic-planning/_files/survey-documents-graduate/ucgses-2021-administration-report.pdf)
 
-The overall completion rate of UCGSES 2021 at UCSD was 12%.  A few groups have notable lower completion rates: Professional practice: 4%, African American: 9%, and American Indian: 7%. 
+The overall completion rate of UCGSES 2021 at UCSD was 12%. A few groups have notable lower completion rates: Professional practice: 4%, African American: 9%, and American Indian: 7%.
 
-For a more interactive view of survey completion and response rates please see: [UC Infocenter Survey Completion](https://www.universityofcalifornia.edu/about-us/information-center/student-survey-completion-and-response-rates) -be sure to use filters to select UCGSES 2021 at UCSD or the [Student Profile tab](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-survey) on UCGSES Dashboard. 
-
-
+For a more interactive view of survey completion and response rates please see: [UC Infocenter Survey Completion](https://www.universityofcalifornia.edu/about-us/information-center/student-survey-completion-and-response-rates) -be sure to use filters to select UCGSES 2021 at UCSD or the [Student Profile tab](https://www.universityofcalifornia.edu/about-us/information-center/UCGSES-survey) on UCGSES Dashboard.
 
 ### Additional Surveys
 

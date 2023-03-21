@@ -87,7 +87,7 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
   plot_diff_rect(., fac_name_2022, .31,.54,"Less unkown", "More unknown")+
   labs(title="In my classes, the professor rarely or never knows my name",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who rarely or never had a class \nwhere professor knew their name")
+      subtitle = "Percent of UCSD UG who rarely or never had a class where professor knew their name")
 
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
