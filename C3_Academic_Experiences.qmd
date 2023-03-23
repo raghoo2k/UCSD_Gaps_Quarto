@@ -1,9 +1,20 @@
 ---
 title: "Academic Experiences"
 editor: source
+format:
+  html:
+    fig-width: 8
+    fig-height: 5.75
 ---
 
-This is a chapter about academic outcomes at UCSD
+This is a chapter about academic experiences at University of California San Diego. 
+
+@sec-iie-undergrads details undergraduates' experiences, using information from the UCUES survey. @sec-iie-grads explores graduate student experiences using the UCGSES survey.  Finally, an appendix @sec-iie-rr provides the number of respondents for each survey question by student group. 
+
+Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
+
+
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/23.
 
 ```{r}
 #| label: run_scripts
@@ -40,7 +51,11 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ```
 
-## Undergraduates
+## Undergraduates {#sec-iie-undergrads}
+
+This section draws from recent waves of the University of California Undergraduate Experience Survey. 
+Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
+
 
 ### Overall Academic Experience
 
@@ -56,13 +71,13 @@ filter(q=="Overall academic experience"&year=="2022")%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
-  filter(group_label!="All"& group_label!="American Indian")
+  filter(group_label!="All")
 
 plot_group_comp(overallac_2022, cols_neg)%>%
   plot_diff_rect(., overallac_2022, .06,.21,"Less Dissatisfied", "More Dissatisfied")+
   labs(title="Overall Academic Experience",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
+      subtitle = "UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
 
  ggsave("viz/acex/overall_ac_ex2022.png", width=9, height=5, units="in", dpi=300)
  
@@ -87,7 +102,7 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
   plot_diff_rect(., fac_name_2022, .31,.54,"Less unkown", "More unknown")+
   labs(title="In my classes, the professor rarely or never knows my name",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who rarely or never had a class where professor knew their name")
+      subtitle = "UCSD UG who rarely or never had a class where professor knew their name")
 
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -106,18 +121,18 @@ fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
   collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
-  filter(group_label!="All"& group_label!="American Indian")
+  filter(group_label!="All")
 
 plot_group_comp(fac_diff_2022, cols_neg)%>%
   plot_diff_rect(., fac_diff_2022, .06,.23,"Less Disagreement", "More Disagreement")+
   labs(title="Faculty are genuinely committed to promoting respect for and \nunderstanding of group differences at UCSD",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-## Graduate Students
+## Graduate Students {#sec-iie-grads}
 
 ### Quality of Teaching in Program
 
@@ -136,10 +151,10 @@ teaching_qual_2021<-gses%>%
 
 
 plot_group_comp(teaching_qual_2021, cols_neg)%>%
-  plot_diff_rect(., teaching_qual_2021, .07,.29,"Less Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., teaching_qual_2021, .05,.29,"Less Low Ratings", "More Low Ratings")+
   labs(title="Quality of teaching in your program",
          caption=caption_grad,
-      subtitle = "Percent of UCSD graduate students who rate teaching fair, poor, or very poor")
+      subtitle = "UCSD graduate students who rate teaching fair, poor, or very poor")
 
  ggsave("viz/acex/teaching_qual_2021.png", width=9, height=5, units="in", dpi=300)
 
@@ -160,16 +175,16 @@ teaching_spec_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(teaching_spec_2021, cols_neg)%>%
-  plot_diff_rect(., teaching_spec_2021, .08,.24,"Less Low Ratings", "More Low Ratings")+
+  plot_diff_rect(., teaching_spec_2021, .05,.24,"Less Low Ratings", "More Low Ratings")+
   labs(title="Quality of teaching in your area of specialization",
          caption=caption_grad,
-      subtitle = "Percent of UCSD graduate students who rate teaching fair, poor, or very poor")
+      subtitle = "UCSD graduate students who rate teaching fair, poor, or very poor")
 
  ggsave("viz/acex/teaching_spec_2021.png", width=9, height=5, units="in", dpi=300)
 
 ```
 
-### I feel echod by the faculty
+### I feel included by the faculty
 
 ```{r}
 #| label: inlcuded_fac
@@ -183,14 +198,14 @@ fac_inc_2021<-gses%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
-#& group_label!="Hispanic/Latinx"&group_label!="African American")
+
 
 
 plot_group_comp(fac_inc_2021, cols_neg)%>%
-  plot_diff_rect(., fac_inc_2021, .08,.21,"Less Disagreement", "More Disagreement")+
+  plot_diff_rect(., fac_inc_2021, .08,.25,"Less Disagreement", "More Disagreement")+
   labs(title="I feel included by the faculty",
          caption=caption_grad,
-      subtitle = "Percent of UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_inc_2021.png", width=9, height=5, units="in", dpi=300)
 
@@ -210,20 +225,20 @@ fac_cul_2021<-gses%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
            
-           #group_label!="Hispanic/Latinx"&group_label!="African American")
+           
 
 plot_group_comp(fac_cul_2021, cols_neg)%>%
-  plot_diff_rect(., fac_cul_2021, .045,.18,"Less Disagreement", "More Disagreement")+
+  plot_diff_rect(., fac_cul_2021, 0,.22,"Less Disagreement", "More Disagreement")+
   labs(title="My culture is respected by the faculty",
          caption=caption_grad,
-      subtitle = "Percent of UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD graduate students who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_cul_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 
-## Response Rates
+## Response Rates {#sec-iie-rr}
 
-#### UCUES
+### Undergraduates (UCUES)
 
 ```{r}
 #| label: ucues_rr
@@ -257,13 +272,12 @@ gt_ug_rr<- ug_rr%>%
   cols_label(
     "Faculty are genuinely committed to promoting respect for and understanding of group differences at UC"="Faculty are ...group differences at UCSD")
   
-gt_ug_rr
 
 
 gtsave(gt_ug_rr, "acex_rr_ug.png", path = "viz/acex")
 ```
 
-### GSES
+### Graduate Students (UCGSES)
 
 ```{r}
 #| label: ucgses_rr
@@ -295,7 +309,6 @@ gt_grad_rr<- grad_rr%>%
     columns=3:5)
 
   
-gt_grad_rr
 
 gtsave(gt_grad_rr, "acex_rr_grad.png", path = "viz/acex")
 
