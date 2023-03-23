@@ -47,6 +47,9 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ## Undergraduates (UCUES 2022) {#sec-sob-undergrads}
 
+This section draws from recent waves of the University of California Undergraduate Experience Survey. 
+Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
+
 ### I feel I belong at this University
 
 ```{r}
@@ -120,7 +123,7 @@ plot_group_comp(overall_soc_2022, cols_neg)%>%
   
  ggsave("viz/sob/overall_soc_2022.png", width=9, height=5, units="in", dpi=300)
 ```
-### UC campus is Welcoming
+### UCSD is a welcoming campus
 ```{r}
 #| label: welcome_2022
 #| echo: FALSE
@@ -202,6 +205,8 @@ plot_group_comp(channel_diss_2022, cols_neg)%>%
 
 ## Graduate Students (UCGSES) {#sec-sob-grads}
 
+The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~31) on these questions, which skew more positive than the graduate student body average. The response count for African American graduate students is also small (18).  Interpret these trends with additional caution. 
+
 ### I feel included by my peers
 ```{r}
 #| label: include_peers
@@ -218,7 +223,7 @@ include_peers_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(include_peers_2021, cols_neg)%>%
-  plot_diff_rect(., include_peers_2021,.05,.17, "Fewer Disagree", "More Disagree")+
+  plot_diff_rect(., include_peers_2021,.0,.17, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by my peers",
          caption=caption_grad,
       subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
@@ -241,7 +246,7 @@ include_admin_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(include_admin_2021, cols_neg)%>%
-  plot_diff_rect(., include_admin_2021,.11,.24, "Fewer Disagree", "More Disagree")+
+  plot_diff_rect(., include_admin_2021,0,.24, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by the administration and staff",
          caption=caption_grad,
       subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
@@ -263,7 +268,7 @@ include_fac_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(include_fac_2021, cols_neg)%>%
-  plot_diff_rect(., include_fac_2021,.10,.24, "Fewer Disagree", "More Disagree")+
+  plot_diff_rect(., include_fac_2021,.08,.24, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by the faculty",
          caption=caption_grad,
       subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
