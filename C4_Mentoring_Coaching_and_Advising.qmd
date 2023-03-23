@@ -13,7 +13,7 @@ This is a chapter about mentoring, coaching, and advising at University of Calif
 Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
 
-This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/22. 
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/23. 
 
 ```{r}
 #| label: run_scripts

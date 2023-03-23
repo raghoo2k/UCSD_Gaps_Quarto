@@ -1,8 +1,16 @@
 ---
 title: "Sense of Belonging"
 editor: source
+ html:
+    fig-width: 8
+    fig-height: 5.75
+    
 ---
+This is a chapter about Sense of Belonging at University of California San Diego. @sec-sob-undergrads details undergraduates' experiences, using information from the UCUES survey. @sec-sob-grads explores graduate student experiences using the UCGSES survey. Finally, an appendix @sec-sob-rr provides the number of respondents for each survey question by student group. 
 
+Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
+
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/23/23. 
 ```{r}
 #| label: run_scripts
 #| include: FALSE
@@ -36,7 +44,7 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 
 ```
 
-## Undergraduates (UCUES 2022)
+## Undergraduates (UCUES 2022) {#sec-sob-undergrads}
 
 ### I feel I belong at this University
 
@@ -54,10 +62,10 @@ filter(q=="I feel that I belong at this university"&year=="2022")%>%
   filter(group_label!="All")
 
 plot_group_comp(belong_2022, cols_neg)%>%
-  plot_diff_rect(., belong_2022,.14,.35, "Less Feeling Don't Belong", "More Feeling Don't Belong")+
+  plot_diff_rect(., belong_2022,.14,.36, "Fewer Feeling \nDon't Belong", "More Feeling \nDon't Belong")+
   labs(title="I feel that I belong at this university",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
   
  ggsave("viz/sob/belong_2022.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -80,16 +88,16 @@ filter(q=="I feel valued as an individual at this institution"&year=="2022")%>%
   filter(group_label!="All")
 
 plot_group_comp(valued_2022, cols_neg)%>%
-  plot_diff_rect(., valued_2022,.13,.42, "Less Feeling Not Valued", "More Feeling Not Valued")+
+  plot_diff_rect(., valued_2022,.13,.44, "Less Feeling \nNot Valued", "More Feeling \nNot Valued")+
   labs(title="I feel valued as an individual at this institution",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
   
  ggsave("viz/sob/valued_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
-### Rate your Overall Social Experience  
+### Overall Social Experience  
 ```{r}
 #| label: social_ex
 #| echo: FALSE
@@ -104,10 +112,10 @@ filter(q=="Overall social experience"&year=="2022")%>%
   filter(group_label!="All")
 
 plot_group_comp(overall_soc_2022, cols_neg)%>%
-  plot_diff_rect(., overall_soc_2022,.28,.47, "Less Dissatisfied", "More Feeling Dissatisfied")+
+  plot_diff_rect(., overall_soc_2022,.28,.47, "Less Dissatisfied", "More Dissatisfied")+
   labs(title="Please Rate: Overall Social Experience",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who arer somewhat dissatisfied, dissatisfied, or very dissatisfied")
+      subtitle = "UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
   
  ggsave("viz/sob/overall_soc_2022.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -129,7 +137,7 @@ plot_group_comp(welcome_2022, cols_neg)%>%
   plot_diff_rect(., welcome_2022,.06,.31, "Less Disagree", "More Disagree")+
   labs(title="UCSD is a welcoming campus",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
   
  ggsave("viz/sob/welcome_2022.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -139,6 +147,7 @@ plot_group_comp(welcome_2022, cols_neg)%>%
 #| label: climate_edi_2022
 #| echo: FALSE
 #| warning: FALSE
+#| 
 climate_edi_2022<-es%>%
 filter(q=="Overall, I feel comfortable with the climate for diversity and inclusiveness at this university"&year=="2022")%>%
  clean_vibe_agree(.)%>%
@@ -150,9 +159,9 @@ filter(q=="Overall, I feel comfortable with the climate for diversity and inclus
 
 plot_group_comp(climate_edi_2022, cols_neg)%>%
   plot_diff_rect(., climate_edi_2022,.06,.45, "Less Disagree", "More Disagree")+
-  labs(title="Overall, I feel comfortable with the climate for diversity and inclusiveness at this university",
+  labs(title="Overall, I feel comfortable with the climate for \ndiversity and inclusiveness at this university",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
   
  ggsave("viz/sob/climate_edi_2022.png", width=9, height=5, units="in", dpi=300)
 
@@ -180,7 +189,7 @@ plot_group_comp(channel_diss_2022, cols_neg)%>%
   plot_diff_rect(., channel_diss_2022,.11,.47, "Less Disagree", "More Disagree")+
   labs(title="Channels for expressing discrimination or harassment complaints are readily available to students at UC",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
   
  ggsave("viz/sob/channel_diss_2022.png", width=9, height=5, units="in", dpi=300)
 
@@ -188,9 +197,11 @@ plot_group_comp(channel_diss_2022, cols_neg)%>%
 
 
 ```
-## Graduate Students (UCGSES)
 
-### "I feel included by my peers"
+
+## Graduate Students (UCGSES) {#sec-sob-grads}
+
+### I feel included by my peers
 ```{r}
 #| label: include_peers
 #| echo: FALSE
@@ -209,7 +220,7 @@ plot_group_comp(include_peers_2021, cols_neg)%>%
   plot_diff_rect(., include_peers_2021,.05,.17, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by my peers",
          caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
  ggsave("viz/sob/included_2021.png", width=9, height=5, units="in", dpi=300)
 ```
 
@@ -232,10 +243,10 @@ plot_group_comp(include_admin_2021, cols_neg)%>%
   plot_diff_rect(., include_admin_2021,.11,.24, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by the administration and staff",
          caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
  ggsave("viz/sob/included_admin_2021.png", width=9, height=5, units="in", dpi=300)
 ```
-###I feel included by the faculty
+ ###I feel included by the faculty
 
 ```{r}
 #| label: include_fac
@@ -254,12 +265,13 @@ plot_group_comp(include_fac_2021, cols_neg)%>%
   plot_diff_rect(., include_fac_2021,.10,.24, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by the faculty",
          caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
  ggsave("viz/sob/included_fac_2021.png", width=9, height=5, units="in", dpi=300)
 ```
-## Response Rates
 
-#### UCUES
+## Response Rates {#sec-sob-rr}
+
+### Undergraduates(UCUES)
 
 ```{r}
 #| label: rr_ug_data
@@ -297,7 +309,8 @@ gt_ug_rr<- ug_rr%>%
 gtsave(gt_ug_rr, "sob_rr_ug.png", path = "viz/sob")
 ```
 
-### UCGSES
+### Graduates Students(UCGSES)
+
 ```{r}
 #| label: rr_grad_data
 #| echo: FALSE
