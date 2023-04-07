@@ -114,7 +114,8 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
 #| echo: FALSE
 #| warning: FALSE
 
-fac_diff_2022<- read_excel("data/ucues_2022_rebuild.xlsx")%>%
+fac_diff_2022<- es%>%
+  #read_excel("data/ucues_2022_rebuild.xlsx")%>%
   filter(q=="Faculty are genuinely committed to promoting respect for and understanding of group differences at UC")%>%
   label_groups(.)%>%
   clean_vibe_agree(.)%>%

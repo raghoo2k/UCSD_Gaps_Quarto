@@ -223,7 +223,7 @@ include_peers_2021<-gses%>%
   filter(group_label!="All")
 
 plot_group_comp(include_peers_2021, cols_neg)%>%
-  plot_diff_rect(., include_peers_2021,.0,.17, "Fewer Disagree", "More Disagree")+
+  plot_diff_rect(., include_peers_2021,.0,.18, "Fewer Disagree", "More Disagree")+
   labs(title="I feel included by my peers",
          caption=caption_grad,
       subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
