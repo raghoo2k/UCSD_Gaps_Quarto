@@ -1,5 +1,5 @@
 ---
-title: "Academic Experiences"
+title: "Academic and Learning Experiences"
 editor: source
 format:
   html:
@@ -7,7 +7,7 @@ format:
     fig-height: 5.75
 ---
 
-This is a chapter about academic experiences at University of California San Diego. 
+This is a chapter about academic and learning experiences at University of California San Diego. 
 
 @sec-iie-undergrads details undergraduates' experiences, using information from the UCUES survey. @sec-iie-grads explores graduate student experiences using the UCGSES survey.  Finally, an appendix @sec-iie-rr provides the number of respondents for each survey question by student group. 
 
@@ -48,6 +48,7 @@ es<- read_excel("data/ucues_2023.xlsx")%>%
 
 gses<-read_excel("data/UCGSES.xlsx")%>%
   label_groups(.)
+ucall<-read_excel("data/ucues_alluc.xlsx")
 
 ```
 
@@ -58,6 +59,95 @@ Please refer to @sec-UCUES for more information on UCUES. For readers affiliated
 
 
 ### Overall Academic Experience
+
+Students rate their overall academic experience by choosing one of six responses, from very satisfied to very dissatisfied. We combine students responding to "somewhat dissatisfied", "dissatisfied", and "very dissatisfied" together to show patterns of negative student responses.
+
+From 2016-2020, the overall student body at UCSD reported higher rates of dissatisfaction than the all UC average. However, the 2022 survey wave found rates of dissatisfaction much lower at both UCSD and all across the UC, a positive trend. 
+
+```{r}
+#| label: overall_ac_overtime
+#| echo: FALSE
+#| warning: FALSE
+
+overall_ac_time<-ucall%>%
+  #select question and comparison group - leave all years
+  filter(q=="Overall academic experience"&comp=="All")%>%
+  clean_vibe_satisfied(.)%>%
+group_by(campus,year, vibe)%>%
+  summarize(value=sum(value),
+            N=sum(N))%>%
+  filter(vibe=="negative")
+ 
+
+overall_ac_time_wide<-clean_wide_time(overall_ac_time)
+
+g_overall_ac_time <- plot_time_dumbell(overall_ac_time_wide) +
+  scale_y_continuous(
+    expand = c(0, 0),
+    limits = c(.1, .3),
+    breaks = c(.12, .24),
+    labels = c("Less Dissatisfied", "More Dissatisfied"),
+    position = "right"
+  ) +
+  scale_x_discrete(expand = c(0.2, 0)) +
+  
+  #build diff box
+  #spacing of diff bar is determined on y axis
+  geom_rect(data = overall_ac_time_wide,
+            aes(
+              ymin = .27,
+              ymax = .29,
+              xmin = -Inf,
+              xmax = Inf
+            ),
+            fill = "grey") +
+  geom_text(
+    data = overall_ac_time_wide,
+    aes(
+      label = paste0(diff * 100, "%"),
+      y = .28,
+      x = year
+    ),
+    fontface = "bold",
+    size = 3
+  ) +
+  geom_text(
+    data = filter(overall_ac_time_wide, year == "2016"),
+    aes(y = .28, x = year, label = "Difference"),
+    color = "black",
+    size = 3.1,
+    vjust = -2,
+    fontface = "bold"
+  ) +
+  #set psuedo grid which looks better with later formatting than the grid line
+  geom_segment(
+    data = overall_ac_time_wide,
+    aes(
+      x = year,
+      xend = year,
+      y = .4,
+      yend = .6
+    ),
+    color = "#b2b2b2",
+    size = 0.15
+  ) +
+  labs(title = "UC Comparison: Satisfaction with Overall Academic Experience",
+       caption = caption_ug,
+       subtitle = "Percent of respondents somewhat dissatisfied, dissatisfied,  often, very dissatisfied")
+
+
+move_layers(g_overall_ac_time, "GeomSegment", position = "bottom")
+
+ggsave(
+  "viz/acex/overall_ac_time.png",
+  width = 9,
+  height = 5,
+  units = "in",
+  dpi = 300
+)
+```
+
+Comparing within the UCSD for the 2022 wave, rates of dissatisfaction are slightly higher for Transfer students, First Generation students, students receiving Pell Grants, African American, Hispanic/Latinx and American Indian students than the study body average of 12% at least somewhat dissatisfied. 
 
 ```{r}
 #| label: overall_ac
@@ -83,7 +173,12 @@ plot_group_comp(overallac_2022, cols_neg)%>%
  
 ```
 
-### Faculty knew your name
+### Interactions with Faculty Members
+
+
+####How often have you: increased your academic effort due to the high standards of a faculty member
+
+#### Faculty knew your name
 
 ```{r}
 #| label: fac_name
@@ -107,7 +202,7 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-### Faculty are genuinely committed to promoting respect for and understanding of group differences at UC
+#### Faculty are genuinely committed to promoting respect for and understanding of group differences at UC
 
 ```{r}
 #| label: fac_respect
@@ -131,6 +226,127 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
       subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
 
  ggsave("viz/acex/fac_diff_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+### Engagement in High Impact Practices
+
+The following data points are drawn from a [special dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. These response show only respondents who graduated in the survey year- to focus on students who had time to connect with these opportunities. 
+
+```{r}
+#| label: any_hip
+#| echo: FALSE
+#| warning: FALSE
+
+any_hip_2022<- es%>%
+ 
+  filter(q=="Have participated or are participating in a research activity, a creative project, an internship or an academic service learning")%>%
+  label_groups(.)%>%
+  mutate(vibe="negative")%>%
+  mutate(value=1-value)%>%
+ 
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(any_hip_2022, cols_neg)%>%
+  plot_diff_rect(.,any_hip_2022, .20,.38,"Less non-participation", "More non-participation")+
+  labs(title="Never participated in a research activity, a creative project, an internship or\nacademic service learning at UCSD",
+         caption=caption_ug,
+      subtitle = "UCSD UG never participated, near graduation")
+
+ ggsave("viz/acex/any_hip_2022.png", width=9, height=5, units="in", dpi=300)
+
+```
+```{r}
+#| label: research_2022
+#| echo: FALSE
+#| warning: FALSE
+
+
+research_2022<- es%>%
+ filter(q=="Have participated or are participating in a research activity or a creative project")%>%
+  label_groups(.)%>%
+  mutate(vibe="negative")%>%
+  mutate(value=1-value)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(research_2022, cols_neg)%>%
+  plot_diff_rect(.,research_2022, .34,.62,"Less non-participation", "More non-participation")+
+  labs(title="Never participated in a research activity or a creative project at UCSD",
+         caption=caption_ug,
+      subtitle = "UCSD UG never participated, near graduation")
+
+ ggsave("viz/acex/research_2022.png", width=9, height=5, units="in", dpi=300)
+```
+```{r}
+research_2022<- es%>%
+ filter(q=="Have participated or are participating in a research activity or a creative project")%>%
+  label_groups(.)%>%
+  mutate(vibe="negative")%>%
+  mutate(value=1-value)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(research_2022, cols_neg)%>%
+  plot_diff_rect(.,research_2022, .34,.62,"Less non-participation", "More non-participation")+
+  labs(title="Never participated in a research activity or a creative project at UCSD",
+         caption=caption_ug,
+      subtitle = "UCSD UG never participated, near graduation")
+
+ ggsave("viz/acex/research_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+
+
+
+```{r}
+#| label: service_2022
+#| echo: FALSE
+#| warning: FALSE
+
+service_2022<- es%>%
+ filter(q=="Have done or are doing an academic service learning or community-based learning experiencing")%>%
+  label_groups(.)%>%
+  mutate(vibe="negative")%>%
+  mutate(value=1-value)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(service_2022, cols_neg)%>%
+  plot_diff_rect(.,service_2022, .68,.89,"Less non-participation", "More non-participation")+
+  labs(title="Never participated in an academic service or community-based learning experience ",
+         caption=caption_ug,
+      subtitle = "UCSD UG never participated, near graduation")
+
+ ggsave("viz/acex/service_2022.png", width=9, height=5, units="in", dpi=300)
+
+```
+```{r}
+#| label: intership_2022
+#| echo: FALSE
+#| warning: FALSE
+
+internship_2022<- es%>%
+ filter(q=="Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience")%>%
+  label_groups(.)%>%
+  mutate(vibe="negative")%>%
+  mutate(value=1-value)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(internship_2022, cols_neg)%>%
+  plot_diff_rect(.,internship_2022, .33,.6,"Less non-participation", "More non-participation")+
+  labs(title="Never participated in an ainternship, practicum, or field experience ",
+         caption=caption_ug,
+      subtitle = "UCSD UG never participated, near graduation")
+
+ ggsave("viz/acex/internship_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 ## Graduate Students {#sec-iie-grads}
