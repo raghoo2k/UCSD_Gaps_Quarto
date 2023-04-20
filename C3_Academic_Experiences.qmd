@@ -173,12 +173,12 @@ plot_group_comp(overallac_2022, cols_neg)%>%
  
 ```
 
-### Interactions with Faculty Members
+### Interactions with Faculty
 
 
-####How often have you: increased your academic effort due to the high standards of a faculty member
+#### Having faculty who know your name, and can write letters of recommendations
 
-#### Faculty knew your name
+About 40% of UCSD undergraduates report faculty not knowing their names and about half report not being known by any faculty well enough to ask for a letter of recommendation. However, the difference between students are not all that large, with the exception of Asian American students, of who 47% report faculty rarely or never know their name and 53% don't know faculty well enough to ask for a letter of recommendation. 
 
 ```{r}
 #| label: fac_name
@@ -201,6 +201,15 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
 
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
+##### Don't know Professors well enough to ask for a letter of recommendation
+
+![](viz/mca/num_prof_2022.png)
+####Faculty providing prompt and useful feedback on student work
+Open channels of communication between faculty and students regarding student needs, concerns, and suggestions
+Opportunities for active participation in lecture and discussion classes
+Students treated fairly by the faculty
+ 
+
 
 #### Faculty are genuinely committed to promoting respect for and understanding of group differences at UC
 
@@ -231,7 +240,12 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
 
 ### Engagement in High Impact Practices
 
-The following data points are drawn from a [special dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. These response show only respondents who graduated in the survey year- to focus on students who had time to connect with these opportunities. 
+The following data points are drawn from a [special dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. These response show only respondents who graduated in the survey year- to focus on students who had time to connect with these opportunities. Please also note that these visuals show participation proportions - generally speaking higher rates of participation are a positive - the color scheme is reversed from other visualizations to reflect this change. 
+
+Most students participate in some form of high impact practices while at UCSD. Across the UC, about 75% of students near graduation in 2022 had  participated in a research activity, creative project, an internship, nor academic service learning. The proportion at UCSD is 74%, a near match. 
+
+The largest equity gap in participation is between Transfer students and FTFY students-about 14 percentage points, perhaps partially reflecting the compressed time on campus for Transfer students. The equity gap between First-Generation and not First-Generation, as well as Pell Grant and Not-Pell Grant recipients is similar, with about a 11-12 percentage point gap. 
+
 
 ```{r}
 #| label: any_hip
@@ -242,22 +256,29 @@ any_hip_2022<- es%>%
  
   filter(q=="Have participated or are participating in a research activity, a creative project, an internship or an academic service learning")%>%
   label_groups(.)%>%
-  mutate(vibe="negative")%>%
-  mutate(value=1-value)%>%
- 
+  mutate(vibe="positive")%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(any_hip_2022, cols_neg)%>%
-  plot_diff_rect(.,any_hip_2022, .20,.38,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in a research activity, a creative project, an internship or\nacademic service learning at UCSD",
+plot_group_comp(any_hip_2022, cols_pos)%>%
+  plot_diff_rect(.,any_hip_2022, .62,.85,"Less participation", "")+
+  labs(title="Have participated in a research activity, a creative project, an internship and/or\nacademic service learning at UCSD",
          caption=caption_ug,
-      subtitle = "UCSD UG never participated, near graduation")
+      subtitle = "UCSD UG have participated, near graduation")
 
  ggsave("viz/acex/any_hip_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
+
+
+#### Research and/or Creative Projects
+
+About half (52%) of students nearing graduation in 2022 had participated in a research activity or creative project at UCSD. This is slightly lower than the all UC average of 54% of students having participated by graduation. 
+
+For more on what undergraduate research looks like on campus - see the Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html)
+
+
 ```{r}
 #| label: research_2022
 #| echo: FALSE
@@ -267,41 +288,23 @@ plot_group_comp(any_hip_2022, cols_neg)%>%
 research_2022<- es%>%
  filter(q=="Have participated or are participating in a research activity or a creative project")%>%
   label_groups(.)%>%
-  mutate(vibe="negative")%>%
-  mutate(value=1-value)%>%
+  mutate(vibe="positive")%>%
+  mutate(value=value)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(research_2022, cols_neg)%>%
-  plot_diff_rect(.,research_2022, .34,.62,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in a research activity or a creative project at UCSD",
+plot_group_comp(research_2022, cols_pos)%>%
+  plot_diff_rect(.,research_2022, .45,.70,"Less participation", "More participation")+
+  labs(title="Have participated in a research activity or a creative project at UCSD",
          caption=caption_ug,
-      subtitle = "UCSD UG never participated, near graduation")
-
- ggsave("viz/acex/research_2022.png", width=9, height=5, units="in", dpi=300)
-```
-```{r}
-research_2022<- es%>%
- filter(q=="Have participated or are participating in a research activity or a creative project")%>%
-  label_groups(.)%>%
-  mutate(vibe="negative")%>%
-  mutate(value=1-value)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-plot_group_comp(research_2022, cols_neg)%>%
-  plot_diff_rect(.,research_2022, .34,.62,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in a research activity or a creative project at UCSD",
-         caption=caption_ug,
-      subtitle = "UCSD UG never participated, near graduation")
+      subtitle = "UCSD UG have participated, near graduation")
 
  ggsave("viz/acex/research_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
-
+Participating in academic service or community-based learning experiences is overall much less common than research. Notably, 
 
 ```{r}
 #| label: service_2022
@@ -311,17 +314,16 @@ plot_group_comp(research_2022, cols_neg)%>%
 service_2022<- es%>%
  filter(q=="Have done or are doing an academic service learning or community-based learning experiencing")%>%
   label_groups(.)%>%
-  mutate(vibe="negative")%>%
-  mutate(value=1-value)%>%
+  mutate(vibe="positive")%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(service_2022, cols_neg)%>%
-  plot_diff_rect(.,service_2022, .68,.89,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in an academic service or community-based learning experience ",
+plot_group_comp(service_2022, cols_pos)%>%
+  plot_diff_rect(.,service_2022, .14,.35,"Less participation", "More participation")+
+  labs(title="Have participated in an academic service or community-based learning experience ",
          caption=caption_ug,
-      subtitle = "UCSD UG never participated, near graduation")
+      subtitle = "UCSD UG have participated, near graduation")
 
  ggsave("viz/acex/service_2022.png", width=9, height=5, units="in", dpi=300)
 
@@ -342,7 +344,7 @@ internship_2022<- es%>%
 
 plot_group_comp(internship_2022, cols_neg)%>%
   plot_diff_rect(.,internship_2022, .33,.6,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in an ainternship, practicum, or field experience ",
+  labs(title="Never participated in an internship, practicum, or field experience ",
          caption=caption_ug,
       subtitle = "UCSD UG never participated, near graduation")
 
