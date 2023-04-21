@@ -14,7 +14,7 @@ This is a chapter about academic and learning experiences at University of Calif
 Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
 
-This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/23.
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 4/21/23.
 
 ```{r}
 #| label: run_scripts
@@ -173,7 +173,7 @@ plot_group_comp(overallac_2022, cols_neg)%>%
  
 ```
 
-### Interactions with Faculty
+###Interactions with Faculty
 
 
 #### Having faculty who know your name, and can write letters of recommendations
@@ -203,10 +203,14 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
 ```
 #### Don't know Professors well enough to ask for a letter of recommendation
 
-![](viz/mca/num_prof_2022.png)
-#### Faculty behaviors in class
 
-A battery of questions asks students to consider their experiences with faculty in courses. Responses to these questions were generally positive, and had low variation by student group (within 1 or 2 percentage points of the student body average). Therefore, we only show the student body average for each of the questions.
+![](viz/mca/num_prof_2022.png)
+
+#### Faculty Practices
+
+A series of questions asked students how often they had experienced a list of positive faculty practices, with six response options: "very often, often, somewhat often, occassionally, rarely, and never. Most UCSD students shared they at least somewhat often observed these positive practices, and there was low variation by student group- within 1 or 2 percentage points of the student body average. 
+
+We summarize the response to these questions by combining more negative responses -students who responded that they only occasionally, rarely, or never experienced these faculty practices, and show only the student body average instead of comparing by student groups as in other questions. 
 
 Future versions will work to get information on how these responses differ by division and/or major. 
 
@@ -234,11 +238,12 @@ gt_fac_behav_list_2022<- fac_behav_list_2022%>%
   select(q, value)%>%
   ungroup(.)%>%
   gt(rowname_col = "q")%>%
-  tab_header(title="How often have you experienced the following?",
+  tab_header(title="Faculty Practices from a Student Perspective",
             subtitle="UCUES 2022")%>%
-  cols_align(
-    align="left",
-    columns=q
+   tab_stubhead(label = "How often have you experienced...?")%>%
+  tab_style(
+    cell_text(align="left"),
+    location=cells_stub()
   )%>%
   fmt_percent(
     columns=value,
@@ -248,7 +253,7 @@ gt_fac_behav_list_2022<- fac_behav_list_2022%>%
     value="% of students who occasionally, rarely or never experienced"
   )
   
-
+gtsave(gt_fac_behav_list_2022, "acex_fac_behav_list.png", path = "viz/acex")
 
 ```
 
@@ -284,11 +289,23 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
 
 ### Engagement in High Impact Practices
 
-The following data points are drawn from a [special dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. These response show only respondents who graduated in the survey year- to focus on students who had time to connect with these opportunities. Please also note that these visuals show participation proportions - generally speaking higher rates of participation are a positive - the color scheme is reversed from other visualizations to reflect this change. 
+The following data points are drawn from a [focused dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. The responses in this section show only respondents who are near graduation, removing early year students who may have not yet had time to participate. Please also note that these visuals show participation proportions - generally speaking higher rates of participation are a positive - the color scheme is reversed from other visualizations to reflect this change. To make the most of the available data, we focus on three groupings of student participation:
 
-Most students participate in some form of high impact practices while at UCSD. Across the UC, about 75% of students near graduation in 2022 had  participated in a research activity, creative project, an internship, nor academic service learning. The proportion at UCSD is 74%, a near match. 
+ *Internship+: "Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience"
+ 
+ *Research/Creative Project: Answered yes to at least one of the following:
+ 
+  +"Have assisted or are assisting faculty in conducting research"
+  
+  +"Have assisted or are assisting faculty with their creative project"
+  
+  +"Have conducted or are conducting own research under faculty guidance"
+  
+  +"Have completed or are completing a creative project as part of your coursework"
+  
+* Service Learning+: "Have done or are doing an academic service learning or community-based learning experience" 
 
-The largest equity gap in participation is between Transfer students and FTFY students-about 14 percentage points, perhaps partially reflecting the compressed time on campus for Transfer students. The equity gap between First-Generation and not First-Generation, as well as Pell Grant and Not-Pell Grant recipients is similar, with about a 11-12 percentage point gap. 
+Across the UC, about 75% of students near graduation in 2022 had  participated in at least one of these activities. The proportion at UCSD is 74%, a near match. The largest equity gap in participation in these activities is between Transfer students and FTFY students-about 14 percentage points, perhaps partially reflecting the compressed time on campus for Transfer students. The equity gap between First-Generation and not First-Generation, as well as Pell Grant and Not-Pell Grant recipients is slightly less, with about a 11-12 percentage point gap. 
 
 
 ```{r}
@@ -315,12 +332,35 @@ plot_group_comp(any_hip_2022, cols_pos)%>%
 
 ```
 
+##### Internship+
+We next consider the three subcategories combined in the previous question separately. Of the three, internship+ has the highest overall participation rate with about 57% of UCSD undergraduates participating by graduation. This is very similar to the all UC average of 56%. At uCSD, participation varies by student group, from 45% of transfer students to 64% of First-Time First Year students and not First Generation students. 
+
+```{r}
+#| label: intership_2022
+#| echo: FALSE
+#| warning: FALSE
+
+internship_2022<- es%>%
+ filter(q=="Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience")%>%
+  label_groups(.)%>%
+   mutate(vibe="positive")%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+
+plot_group_comp(internship_2022, cols_pos)%>%
+  plot_diff_rect(.,internship_2022, .44,.7,"Less participation", "")+
+  labs(title="Have participated in an internship, practicum, or field experience ",
+         caption=caption_ug,
+      subtitle = "UCSD UG have participated, near graduation")
+
+ ggsave("viz/acex/internship_2022.png", width=9, height=5, units="in", dpi=300)
+```
 
 #### Research and/or Creative Projects
 
 About half (52%) of students nearing graduation in 2022 had participated in a research activity or creative project at UCSD. This is slightly lower than the all UC average of 54% of students having participated by graduation. 
-
-For more on what undergraduate research looks like on campus - see the Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html), job postings on REAL, and the Design Lab's 
 
 
 ```{r}
@@ -346,9 +386,9 @@ plot_group_comp(research_2022, cols_pos)%>%
 
  ggsave("viz/acex/research_2022.png", width=9, height=5, units="in", dpi=300)
 ```
+##### Service Learning+
 
-
-Participating in academic service or community-based learning experiences is overall much less common than research. Notably, African American students have the highest rate of participation, at 31%.  
+Participating in academic service or community-based learning experiences is overall much less common than research/ creative projects or internships+. Notably, African American students have the highest rate of participation, at 31%.  
 
 ```{r}
 #| label: service_2022
@@ -372,31 +412,13 @@ plot_group_comp(service_2022, cols_pos)%>%
  ggsave("viz/acex/service_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
+For more on what some of these experiences look like on campus, peruse the following resources
 
-Finally, about 57% of undergraduates report having participated in an internship, practicum, or field experience, although that range varies by student group, from 45% of transfer students to 64% of First-Time First Year students and not First Generation students. 
-
-```{r}
-#| label: intership_2022
-#| echo: FALSE
-#| warning: FALSE
-
-internship_2022<- es%>%
- filter(q=="Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience")%>%
-  label_groups(.)%>%
-   mutate(vibe="positive")%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-
-plot_group_comp(internship_2022, cols_pos)%>%
-  plot_diff_rect(.,internship_2022, .44,.7,"Less participation", "More participation")+
-  labs(title="Have participated in an internship, practicum, or field experience ",
-         caption=caption_ug,
-      subtitle = "UCSD UG have participated, near graduation")
-
- ggsave("viz/acex/internship_2022.png", width=9, height=5, units="in", dpi=300)
-```
+*Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html)
+*The Engaged Learning Tool's[Co-Curricular Record](https://elt.ucsd.edu/ccr/index.html) and [REAL (Research Experience and Applied Learning) Portal](https://elt.ucsd.edu/real/index.html)
+*[Center for Student Involvement](https://getinvolved.ucsd.edu/)
+*[Academic Internships](https://aip.ucsd.edu/)
+*[SPUR](https://designlab.ucsd.edu/event/spur-scaling-paid-undergraduate-research/)
 
 ## Graduate Students {#sec-iie-grads}
 
