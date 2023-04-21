@@ -201,17 +201,61 @@ plot_group_comp(fac_name_2022, cols_neg)%>%
 
  ggsave("viz/acex/fac_name_2022.png", width=9, height=5, units="in", dpi=300)
 ```
-##### Don't know Professors well enough to ask for a letter of recommendation
+#### Don't know Professors well enough to ask for a letter of recommendation
 
 ![](viz/mca/num_prof_2022.png)
-####Faculty providing prompt and useful feedback on student work
-Open channels of communication between faculty and students regarding student needs, concerns, and suggestions
-Opportunities for active participation in lecture and discussion classes
-Students treated fairly by the faculty
- 
+#### Faculty behaviors in class
+
+A battery of questions asks students to consider their experiences with faculty in courses. Responses to these questions were generally positive, and had low variation by student group (within 1 or 2 percentage points of the student body average). Therefore, we only show the student body average for each of the questions.
+
+Future versions will work to get information on how these responses differ by division and/or major. 
+
+```{r}
+#| label: fac_behav_list_2022
+#| echo: FALSE
+#| warning: FALSE
+#| 
+fac_behav_list_2022<-es%>%
+  filter(q=="An instructor who increases your enthusiasm for the subject"|
+           q=="Faculty providing prompt and useful feedback on student work"|
+          q=="Open channels of communication between faculty and students regarding student needs, concerns, and suggestions"|
+           q=="Opportunities for active participation in lecture and discussion classes"|
+            q=="Students treated fairly by the faculty")%>%
+  filter(group=="All")%>%
+   clean_vibe_freq_33(.)%>%
+  group_by(q, vibe)%>%
+    summarize(value=sum(value, na.rm=T),
+              N=sum(N, na.rm=T))%>%
+    #just show the positive responses
+    filter(vibe=="positive")%>%
+    mutate(perc=round(value*100))
+
+gt_fac_behav_list_2022<- fac_behav_list_2022%>%
+  select(q, value)%>%
+  ungroup(.)%>%
+  gt(rowname_col = "q")%>%
+  tab_header(title="How often have you experienced the following?",
+            subtitle="UCUES 2022")%>%
+  cols_align(
+    align="left",
+    columns=q
+  )%>%
+  fmt_percent(
+    columns=value,
+    decimals=0
+  )%>%
+  cols_label(
+    value="% of students who occasionally, rarely or never experienced"
+  )
+  
+
+
+```
 
 
 #### Faculty are genuinely committed to promoting respect for and understanding of group differences at UC
+
+Thirteen percent of UCSD undergraduates at least somewhat disagreed with the statement "Faculty are genuinely committed to promoting respect for and understanding of group differences at UC." Rates of disaggreement are slightly higher for African American students (19%), and slightly lower for International students (7%).
 
 ```{r}
 #| label: fac_respect
@@ -263,7 +307,7 @@ any_hip_2022<- es%>%
 
 plot_group_comp(any_hip_2022, cols_pos)%>%
   plot_diff_rect(.,any_hip_2022, .62,.85,"Less participation", "")+
-  labs(title="Have participated in a research activity, a creative project, an internship and/or\nacademic service learning at UCSD",
+  labs(title="Have participated in a research activity, a creative project, \nan internship and/oracademic service learning at UCSD",
          caption=caption_ug,
       subtitle = "UCSD UG have participated, near graduation")
 
@@ -276,7 +320,7 @@ plot_group_comp(any_hip_2022, cols_pos)%>%
 
 About half (52%) of students nearing graduation in 2022 had participated in a research activity or creative project at UCSD. This is slightly lower than the all UC average of 54% of students having participated by graduation. 
 
-For more on what undergraduate research looks like on campus - see the Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html)
+For more on what undergraduate research looks like on campus - see the Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html), job postings on REAL, and the Design Lab's 
 
 
 ```{r}
@@ -304,7 +348,7 @@ plot_group_comp(research_2022, cols_pos)%>%
 ```
 
 
-Participating in academic service or community-based learning experiences is overall much less common than research. Notably, 
+Participating in academic service or community-based learning experiences is overall much less common than research. Notably, African American students have the highest rate of participation, at 31%.  
 
 ```{r}
 #| label: service_2022
@@ -328,6 +372,9 @@ plot_group_comp(service_2022, cols_pos)%>%
  ggsave("viz/acex/service_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
+
+Finally, about 57% of undergraduates report having participated in an internship, practicum, or field experience, although that range varies by student group, from 45% of transfer students to 64% of First-Time First Year students and not First Generation students. 
+
 ```{r}
 #| label: intership_2022
 #| echo: FALSE
@@ -336,17 +383,17 @@ plot_group_comp(service_2022, cols_pos)%>%
 internship_2022<- es%>%
  filter(q=="Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience")%>%
   label_groups(.)%>%
-  mutate(vibe="negative")%>%
-  mutate(value=1-value)%>%
+   mutate(vibe="positive")%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(internship_2022, cols_neg)%>%
-  plot_diff_rect(.,internship_2022, .33,.6,"Less non-participation", "More non-participation")+
-  labs(title="Never participated in an internship, practicum, or field experience ",
+
+plot_group_comp(internship_2022, cols_pos)%>%
+  plot_diff_rect(.,internship_2022, .44,.7,"Less participation", "More participation")+
+  labs(title="Have participated in an internship, practicum, or field experience ",
          caption=caption_ug,
-      subtitle = "UCSD UG never participated, near graduation")
+      subtitle = "UCSD UG have participated, near graduation")
 
  ggsave("viz/acex/internship_2022.png", width=9, height=5, units="in", dpi=300)
 ```

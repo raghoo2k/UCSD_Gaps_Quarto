@@ -132,6 +132,19 @@ clean_vibe_freq5<- function(data){
                              positive=c("Never","Rarely")))
 }
 
+#includes occasionally alongside never and rarely
+clean_vibe_freq_33<- function(data){
+  data%>%
+    mutate(repsonse=as_factor(response))%>%
+    mutate(response=fct_relevel(response, "Never","Rarely","Occasionally","Very Often",
+                                "Often","Somewhat Often"))%>%
+    mutate(vibe=fct_collapse(response,
+                             negative=c("Very Often",
+                                        "Often","Somewhat Often"),
+                             positive=c("Occasionally","Never","Rarely")))
+}
+
+
 #Code Factor Levels in response
 clean_vibe_rate<-function(data){
   data%>%
