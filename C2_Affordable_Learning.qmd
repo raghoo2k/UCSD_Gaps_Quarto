@@ -451,6 +451,9 @@ plot_group_comp(manageable_2022, cols_neg)%>%
 
  ggsave("viz/alfs/manage_2022.png", width=9, height=5.5, units="in", dpi=300)
 ```
+### Participating in High Impact Practices
+
+Some students may be unable to participate in high impact practices like research experiences, internships, and service learning if the direct or indirect cost of participation is too high. For more on patterns in student participation in high impact practices, please see @sec-iie-hip in the Academic and Learning Experiences chapter.
 
 ### Additional UCUES Questions related to Affordability.
 
@@ -750,6 +753,25 @@ Students were queried for their format preferences for course materials. There i
 
 ![Student Format Preferences](viz/alfs/AOCM_format_pref.png)
 This concludes the excerpt on the report on the Course Material Survey in this document. For more information, contact Dani Cook, Associate University Librarian. 
+
+## Understanding Stopout Patterns
+
+
+* The UC Infocenter provides a [dashboard on all stop-outs in the UC between 2001-2015](https://www.universityofcalifornia.edu/about-us/information-center/ug-stop-outs). This dashboard can be filtered to show students who entered UCSD.The following shows results for UCSD students, but the chart titles still reflect the overall UC population (e.g 50,000 undergraduates)
+![UCSD Stopouts](viz\alfs\ucstopout.png)
+* The UC Infocenter also provides the results of a [survey of UC students](https://www.universityofcalifornia.edu/about-us/information-center/uc-stopouts) who had enrolled in the UC from 2000-2018, with a focus on respondents who has not completed a bachelor's degree nor were enrolled in college. Results can be filtered to show just UCSD.
+Many respondents cited financial reasons as barriers to re-enrolling. 
+![Barriers to Reentry](viz\alfs\barriers.png)
+
+* A UCSD-specific working group has been working since Winter 2022 to: 
+
+    + Understand why undergrad students may stop-out
+    + Analyze data to identify patterns and trends causing students to stop-out
+    + Offer resources to guide students to return and feel supported to continue studies
+
+ This work is ongoing but Affordable Learning and Financial Support Working group members can find a summary of their work in their Google Drive folder. 
+
+
 
 ## Appendix: Response Rates by Question {#sec-alfs-rr}
 

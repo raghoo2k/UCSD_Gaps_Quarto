@@ -14,7 +14,7 @@ This is a chapter about academic and learning experiences at University of Calif
 Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
 
-This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 4/21/23.
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 05/09/23.
 
 ```{r}
 #| label: run_scripts
@@ -287,18 +287,16 @@ plot_group_comp(fac_diff_2022, cols_neg)%>%
 ```
 
 
-### Engagement in High Impact Practices
+### Engagement in High Impact Practices{#sec-iie-hip}
 
 The following data points are drawn from a [focused dashboard](https://www.universityofcalifornia.edu/about-us/information-center/ug-research-internships-service-learning) which combines student responses across multiple questions. The responses in this section show only respondents who are near graduation, removing early year students who may have not yet had time to participate. Please also note that these visuals show participation proportions - generally speaking higher rates of participation are a positive - the color scheme is reversed from other visualizations to reflect this change. To make the most of the available data, we focus on three groupings of student participation:
 
 * Internship+: "Have completed or are completing a credit bearing or non-credit bearing internship, practicum, or field experience"
- 
 * Research/Creative Project: Answered yes to at least one of the following:
- + "Have assisted or are assisting faculty in conducting research"
-  + "Have assisted or are assisting faculty with their creative project"
-  + "Have conducted or are conducting own research under faculty guidance"
-  + "Have completed or are completing a creative project as part of your coursework"
-  
+    + "Have assisted or are assisting faculty in conducting research"
+    + "Have assisted or are assisting faculty with their creative project"
+    + "Have conducted or are conducting own research under faculty guidance"
+    + "Have completed or are completing a creative project as part of your coursework"
 * Service Learning+: "Have done or are doing an academic service learning or community-based learning experience" 
 
 Across the UC, about 75% of students near graduation in 2022 had  participated in at least one of these activities. The proportion at UCSD is 74%, a near match. The largest equity gap in participation in these activities is between Transfer students and FTFY students-about 14 percentage points, perhaps partially reflecting the compressed time on campus for Transfer students. The equity gap between First-Generation and not First-Generation, as well as Pell Grant and Not-Pell Grant recipients is slightly less, with about a 11-12 percentage point gap. 
@@ -410,11 +408,11 @@ plot_group_comp(service_2022, cols_pos)%>%
 ```
 For more on what some of these experiences look like on campus, peruse the following resources
 
-*Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html)
-*The Engaged Learning Tool's[Co-Curricular Record](https://elt.ucsd.edu/ccr/index.html) and [REAL (Research Experience and Applied Learning) Portal](https://elt.ucsd.edu/real/index.html)
-*[Center for Student Involvement](https://getinvolved.ucsd.edu/)
-*[Academic Internships](https://aip.ucsd.edu/)
-*[SPUR](https://designlab.ucsd.edu/event/spur-scaling-paid-undergraduate-research/)
+* Undergraduate Research Hub's [Research Directory](https://ugresearch.ucsd.edu/students/research-directory.html)
+* The Engaged Learning Tool's[Co-Curricular Record](https://elt.ucsd.edu/ccr/index.html) and [REAL (Research Experience and Applied Learning) Portal](https://elt.ucsd.edu/real/index.html)
+* [Center for Student Involvement](https://getinvolved.ucsd.edu/)
+* [Academic Internships](https://aip.ucsd.edu/)
+* [SPUR](https://designlab.ucsd.edu/event/spur-scaling-paid-undergraduate-research/)
 
 ## Graduate Students {#sec-iie-grads}
 
