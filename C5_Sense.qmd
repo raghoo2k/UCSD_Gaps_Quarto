@@ -43,6 +43,9 @@ es<- read_excel("data/ucues_2023.xlsx")%>%
 gses<-read_excel("data/UCGSES.xlsx")%>%
   label_groups(.)
 
+#slightly different download pattern - looking at https://www.universityofcalifornia.edu/about-us/information-center/ucues-longitudinal you can download already aggregated negative and positve responses
+ucall_longit<-read_excel("data/ucues_longit_agg.xlsx")
+
 ```
 
 ## Undergraduates (UCUES 2022) {#sec-sob-undergrads}
@@ -50,8 +53,57 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 This section draws from recent waves of the University of California Undergraduate Experience Survey. 
 Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
 
-### I feel I belong at this University
 
+### Sense of Belonging at the University Level
+
+UC San Diego undergraduates have consistently reported feeling a lower sense of belonging at their university than the UC system average. However, 2022 brought an increase to UCSD -with 80% of students at least somewhat agreeing they feel they belong at UCSD and the lowest difference between the UC average. 
+ 
+
+```{r}
+#| label: ug_belong_overtime
+#| echo: FALSE
+#| warning: FALSE
+
+belong_uccomp<-ucall_longit%>%
+  filter(q=="I feel that I belong at this university")%>%
+   filter(vibe=="positive")%>%
+  group_by(campus,year)%>%
+  ungroup(.)
+
+
+  
+  
+belong_uccomp_wide<-clean_wide_time(belong_uccomp)
+
+
+ 
+
+ plot_time_dumbell(belong_uccomp_wide)+
+     scale_y_continuous(expand=c(0,0), limits=c(.70, .89), breaks=c(.72,.79), labels=c("Less Belonging", "More Belonging"), position="right")+
+               #labels=scales::percent_format(accuracy=1), )+
+             scale_x_discrete(expand=c(0.2,0))+
+             #set psuedo grid which looks better with later formatting than the grid line
+             geom_segment(data=belong_uccomp_wide, aes(x=year, xend=year, y=.25, yend=.5),
+                                             color="#b2b2b2", size=0.15)+
+    #build diff box
+             #spacing of diff bar is determined on y axis
+            geom_rect(data=belong_uccomp_wide, aes(ymin=.86, ymax=.88, xmin=-Inf, xmax=Inf), fill="grey") +
+             geom_text(data=belong_uccomp_wide, aes(label=paste0(diff*100, "%"), y=.87, x=year), fontface="bold", size=3)+
+            geom_text(data=filter(belong_uccomp_wide, year=="2006"),
+                                     aes(y=.87, x=year, label="Difference"),
+                                     color="black", size=3.1, vjust=-2, fontface="bold") +
+     labs(title="Positive Sense of Belonging in the UC",
+        x="Year")
+    
+
+   ggsave("viz/sob/belong_time.png", width=9, height=5.5, units="in", dpi=300)
+  
+
+```
+
+
+#### I feel I belong at this University
+Substantial differences exist between student groups within UCSD, with Black undergraduates reporting the lowest rates of feeling like they belong, are valued, and respected on campus. This summary is far from the first to document this disparity. The [Black Academic Excellence Initiative](https://diversity.ucsd.edu/initiatives/black-academic-excellence/index.html) provides a more holistic review and summary of current programmatic efforts to change how the university supports Black students.
 ```{r}
 #| label: belong_2022
 #| echo: FALSE
@@ -59,23 +111,23 @@ Please refer to @sec-UCUES for more information on UCUES. For readers affiliated
 belong_2022<-es%>%
 filter(q=="I feel that I belong at this university"&year=="2022")%>%
  clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(belong_2022, cols_neg)%>%
-  plot_diff_rect(., belong_2022,.14,.36, "Fewer Feeling \nDon't Belong", "More Feeling \nDon't Belong")+
+plot_group_comp(belong_2022, cols_pos)%>%
+  plot_diff_rect(., belong_2022,.67,.92, "Fewer Feel \nBelonging", "")+
   labs(title="I feel that I belong at this university",
          caption=caption_ug,
-      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who at least somewhat agree")
   
  ggsave("viz/sob/belong_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
-### I feel valued as an individual
+#### I feel valued as an individual at this institution
 
 ```{r}
 #| label: valued_2022
@@ -85,23 +137,141 @@ plot_group_comp(belong_2022, cols_neg)%>%
 valued_2022<-es%>%
 filter(q=="I feel valued as an individual at this institution"&year=="2022")%>%
  clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(valued_2022, cols_neg)%>%
-  plot_diff_rect(., valued_2022,.13,.44, "Less Feeling \nNot Valued", "More Feeling \nNot Valued")+
+plot_group_comp(valued_2022, cols_pos)%>%
+  plot_diff_rect(., valued_2022,.61,.90, "Less Feeling \nValued", "More Feeling \nValued")+
   labs(title="I feel valued as an individual at this institution",
          caption=caption_ug,
-      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD UG who at least somewhat agree")
   
  ggsave("viz/sob/valued_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
 
-### Overall Social Experience  
+
+#### UCSD is a welcoming campus
+```{r}
+#| label: welcome_2022
+#| echo: FALSE
+#| warning: FALSE
+welcome_2022<-es%>%
+filter(q=="UC [CAMPUS] is a welcoming campus"&year=="2022")%>%
+ clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(welcome_2022, cols_pos)%>%
+  plot_diff_rect(., welcome_2022,.76,.99, "Less Agree", "")+
+  labs(title="UCSD is a welcoming campus",
+         caption=caption_ug,
+      subtitle = "UCSD UG who at least somewhat agree")
+  
+ ggsave("viz/sob/welcome_2022.png", width=9, height=5, units="in", dpi=300)
+```
+
+While overall about 86% of UC undergraduates feel comfortable with the climate for diversity and inclusion on campus, and about 80% feel that channels are readily available to address discrimination, these proportions are much lower for African American students, and slightly lower than average for Hispanic/Latinx and American Indian Students.  
+
+
+#### Comfort with the climate for diversity and inclusiveness
+
+```{r}
+#| label: climate_edi_2022
+#| echo: FALSE
+#| warning: FALSE
+#| 
+climate_edi_2022<-es%>%
+filter(q=="Overall, I feel comfortable with the climate for diversity and inclusiveness at this university"&year=="2022")%>%
+ clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(climate_edi_2022, cols_pos)%>%
+  plot_diff_rect(., climate_edi_2022,.58,.98, "More Disagree", "")+
+  labs(title="Overall, I feel comfortable with the climate for \ndiversity and inclusiveness at this university",
+         caption=caption_ug,
+      subtitle = "UCSD UG who at least somewhat agree")
+  
+ ggsave("viz/sob/climate_edi_2022.png", width=9, height=5, units="in", dpi=300)
+
+
+
+```
+
+#### Availability of channels for addressing discrimination
+```{r}
+#| label: channel_dis
+#| echo: FALSE
+#| warning: FALSE
+
+
+channel_diss_2022<-es%>%
+filter(q=="Channels for expressing discrimination or harassment complaints are readily available to students at UC"&year=="2022")%>%
+ clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(channel_diss_2022, cols_pos)%>%
+  plot_diff_rect(., channel_diss_2022,.58,.93, "Less Agree", "")+
+  labs(title="Channels for expressing discrimination or harassment complaints are \nreadily available to students at UCSD",
+         caption=caption_ug,
+      subtitle = "UCSD UG who at least somewhat agreee")
+  
+ ggsave("viz/sob/channel_diss_2022.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+#### To be visualized
+
+* Top campus administrators are genuinely committed to promoting respect for and understanding of group differences at  UC
+* Students of my [… ] are respected on this campus
+  + socio-economic status
+  + sexual orientation
+  + religious beliefs
+  + race/ethnicity
+  + Political beliefs
+  + Gender
+  + Immigrant background
+  + Disability of condition
+
+
+
+
+### Sense of Belonging within Classes, Majors, with Faculty
+
+This section is under development - available UCUES questions include:
+
+* Overall, I feel comfortable with the climate for diversity and inclusion in my major
+* ... in my classes
+* In this academic year, I have heard about teaching faculty or instructors express negative views about…
+  + Genders
+  + Immigrant backgrounds
+  + Learning of psychological disabilities
+  + Physical disabilities
+  + Political affiliation, opinion, or beliefs
+  + Races or ethnicities
+  + Religions
+  + Sexual orientations
+  + Social Classes
+
+#### Student Social Life, Involvement, and Belonging
+
+#### Overall Social Experience  
 ```{r}
 #| label: social_ex
 #| echo: FALSE
@@ -123,84 +293,14 @@ plot_group_comp(overall_soc_2022, cols_neg)%>%
   
  ggsave("viz/sob/overall_soc_2022.png", width=9, height=5, units="in", dpi=300)
 ```
-### UCSD is a welcoming campus
-```{r}
-#| label: welcome_2022
-#| echo: FALSE
-#| warning: FALSE
-welcome_2022<-es%>%
-filter(q=="UC [CAMPUS] is a welcoming campus"&year=="2022")%>%
- clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
 
-plot_group_comp(welcome_2022, cols_neg)%>%
-  plot_diff_rect(., welcome_2022,.06,.31, "Less Disagree", "More Disagree")+
-  labs(title="UCSD is a welcoming campus",
-         caption=caption_ug,
-      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
-  
- ggsave("viz/sob/welcome_2022.png", width=9, height=5, units="in", dpi=300)
-```
+#### Engagement in High Impact Practices
+While not strictly about Sense of Belonging, a summary of student involvement in service learning, research, creative projects, and internships can be found in @sec-iie-hip in the Academic and Learning Experiences chapter
 
-
-```{r}
-#| label: climate_edi_2022
-#| echo: FALSE
-#| warning: FALSE
-#| 
-climate_edi_2022<-es%>%
-filter(q=="Overall, I feel comfortable with the climate for diversity and inclusiveness at this university"&year=="2022")%>%
- clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
-
-plot_group_comp(climate_edi_2022, cols_neg)%>%
-  plot_diff_rect(., climate_edi_2022,.06,.45, "Less Disagree", "More Disagree")+
-  labs(title="Overall, I feel comfortable with the climate for \ndiversity and inclusiveness at this university",
-         caption=caption_ug,
-      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
-  
- ggsave("viz/sob/climate_edi_2022.png", width=9, height=5, units="in", dpi=300)
-
-
-
-```
-
-### Channels for addressing discrimination
-```{r}
-#| label: channel_dis
-#| echo: FALSE
-#| warning: FALSE
-
-
-channel_diss_2022<-es%>%
-filter(q=="Channels for expressing discrimination or harassment complaints are readily available to students at UC"&year=="2022")%>%
- clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
-
-plot_group_comp(channel_diss_2022, cols_neg)%>%
-  plot_diff_rect(., channel_diss_2022,.11,.47, "Less Disagree", "More Disagree")+
-  labs(title="Channels for expressing discrimination or harassment complaints are readily available to students at UC",
-         caption=caption_ug,
-      subtitle = "UCSD UG who somewhat disagree, disagree, or strongly disagree")
-  
- ggsave("viz/sob/channel_diss_2022.png", width=9, height=5, units="in", dpi=300)
-
-
-
-
-```
+#### To be visualized
+* Have you been or are you currently involved in a student organization?
+* Are you or have you been an officer of a student organization?
+* Time Allocation: social activities etc.
 
 
 ## Graduate Students (UCGSES) {#sec-sob-grads}

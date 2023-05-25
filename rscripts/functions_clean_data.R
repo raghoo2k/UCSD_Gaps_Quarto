@@ -16,6 +16,7 @@ order_comp_group_urg<- function(data){
 
 
 
+
 order_comp_group_all<-function(data){
   data%>%
     #new gen seems wrong? too moderate? and then Domestic unknown is clutter

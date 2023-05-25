@@ -87,7 +87,7 @@ clean_wide_time<-function(data){
     mutate(All_UC=case_when(diff==0~UCSD+.001,
                             TRUE~All_UC))%>%
     mutate(year=as.factor(year))%>%
-    mutate(year=fct_relevel(year, "2022","2021","2020","2018","2016"))
+    mutate(year=fct_relevel(year, "2022","2021","2020","2018","2016","2014","2012","2010","2008","2006"))
 }
 
 #requires wider data see above    
@@ -104,9 +104,9 @@ plot_time_dumbell<-function(data){
              #set axis dimensions 
             
              #topline labels
-         geom_text(data=filter(data, year=="2016"), aes(x=year, y=UCSD, label="UCSD"),
+         geom_text(data=filter(data, year==min(levels(year))), aes(x=year, y=UCSD, label="UCSD"),
                                   color="#00629B", size=3, vjust=-1.5)+
-          geom_text(data=filter(data, year=="2016"), aes(x=year, y=All_UC, label="All UC"),
+          geom_text(data=filter(data, year==min(levels(year))), aes(x=year, y=All_UC, label="All UC"),
                                     color="#747678", size=3, vjust=-1.5)+
             #Data % Labels
             geom_text(aes(y=UCSD,label= scales::percent(UCSD,accuracy=1)), size=3, nudge_x =-.25)+
@@ -115,7 +115,7 @@ plot_time_dumbell<-function(data){
              
                theme(
                  plot.title = element_text(size=15),
-                 axis.title.y  = element_text(size=10),
+                 axis.title.y  = element_blank(),
                   axis.title.x = element_blank(),
                   axis.text.y = element_text(size=10),
                   panel.grid.major.x = element_blank(),
