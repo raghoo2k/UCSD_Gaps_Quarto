@@ -11,7 +11,7 @@ This is a chapter about Sense of Belonging at University of California San Diego
 
 Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
-This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/23/23. 
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 6/20/23. 
 ```{r}
 #| label: run_scripts
 #| include: FALSE
@@ -53,12 +53,13 @@ ucall_longit<-read_excel("data/ucues_longit_agg.xlsx")
 This section draws from recent waves of the University of California Undergraduate Experience Survey. 
 Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
 
+Members of the Sense of Belonging Collective Impact working group can also view a more in-depth multi-variate analysis of undergraduate sense of belonging prepared by colleagues in Institutional Research and Equity Diversity and Inclusion, available at this [link](https://docs.google.com/presentation/d/1Y_b76erhjAq9Ky0YuSgpK-8mcZ4UAs2I/edit?usp=sharing&ouid=112204274306994201533&rtpof=true&sd=true)
 
-### Sense of Belonging at the University Level
+### UCSD-wide Sense of Belonging
 
-UC San Diego undergraduates have consistently reported feeling a lower sense of belonging at their university than the UC system average. However, 2022 brought an increase to UCSD -with 80% of students at least somewhat agreeing they feel they belong at UCSD and the lowest difference between the UC average. 
+#### I feel I belong at this University
+UC San Diego undergraduates have consistently reported feeling a lower sense of belonging at their university than the UC system average. However, 2022 brought an increase to UCSD -with 80% of students at least somewhat agreeing they feel they belong at UCSD. This survey wave also brought the smallest differenc between UCSD and and the UC system. 
  
-
 ```{r}
 #| label: ug_belong_overtime
 #| echo: FALSE
@@ -102,8 +103,8 @@ belong_uccomp_wide<-clean_wide_time(belong_uccomp)
 ```
 
 
-#### I feel I belong at this University
 Substantial differences exist between student groups within UCSD, with Black undergraduates reporting the lowest rates of feeling like they belong, are valued, and respected on campus. This summary is far from the first to document this disparity. The [Black Academic Excellence Initiative](https://diversity.ucsd.edu/initiatives/black-academic-excellence/index.html) provides a more holistic review and summary of current programmatic efforts to change how the university supports Black students.
+
 ```{r}
 #| label: belong_2022
 #| echo: FALSE
@@ -128,6 +129,8 @@ plot_group_comp(belong_2022, cols_pos)%>%
 
 
 #### I feel valued as an individual at this institution
+
+The overall proportion of students who feel valued as an individual is lower than the proportion who feel they belong, at 72%. While a substantially lower than average proportion of African American students reports feeling valued (62%), the next lowest group is white students. 
 
 ```{r}
 #| label: valued_2022
@@ -269,7 +272,7 @@ This section is under development - available UCUES questions include:
   + Sexual orientations
   + Social Classes
 
-#### Student Social Life, Involvement, and Belonging
+### Student Social Life, Involvement, and Belonging
 
 #### Overall Social Experience  
 ```{r}
@@ -279,17 +282,17 @@ This section is under development - available UCUES questions include:
 overall_soc_2022<-es%>%
 filter(q=="Overall social experience"&year=="2022")%>%
  clean_vibe_satisfied(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(overall_soc_2022, cols_neg)%>%
-  plot_diff_rect(., overall_soc_2022,.28,.47, "Less Dissatisfied", "More Dissatisfied")+
+plot_group_comp(overall_soc_2022, cols_pos)%>%
+  plot_diff_rect(., overall_soc_2022,.55,.8, "Less Satisfied", "")+
   labs(title="Please Rate: Overall Social Experience",
          caption=caption_ug,
-      subtitle = "UCSD UG who are somewhat dissatisfied, dissatisfied, or very dissatisfied")
+      subtitle = "UCSD UG who are at least somewhat satisfied")
   
  ggsave("viz/sob/overall_soc_2022.png", width=9, height=5, units="in", dpi=300)
 ```
@@ -307,52 +310,10 @@ While not strictly about Sense of Belonging, a summary of student involvement in
 
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~31) on these questions, which skew more positive than the graduate student body average. The response count for African American graduate students is also small (18).  Interpret these trends with additional caution. 
 
-### I feel included by my peers
-```{r}
-#| label: include_peers
-#| echo: FALSE
-#| warning: FALSE
-
-
-include_peers_2021<-gses%>%
-  filter(q=="I feel included by... my peers")%>%
-  clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-    mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-plot_group_comp(include_peers_2021, cols_neg)%>%
-  plot_diff_rect(., include_peers_2021,.0,.18, "Fewer Disagree", "More Disagree")+
-  labs(title="I feel included by my peers",
-         caption=caption_grad,
-      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
- ggsave("viz/sob/included_2021.png", width=9, height=5, units="in", dpi=300)
-```
-
-### I feel included by... the administration and staff"
-
-```{r}
-#| label: include_admin
-#| echo: FALSE
-#| warning: FALSE
+### Interactions with Faculty
+#### I feel included by the faculty
  
-include_admin_2021<-gses%>%
-  filter(q=="I feel included by... the administration and staff")%>%
-  clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-    mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-plot_group_comp(include_admin_2021, cols_neg)%>%
-  plot_diff_rect(., include_admin_2021,0,.24, "Fewer Disagree", "More Disagree")+
-  labs(title="I feel included by the administration and staff",
-         caption=caption_grad,
-      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
- ggsave("viz/sob/included_admin_2021.png", width=9, height=5, units="in", dpi=300)
-```
- ###I feel included by the faculty
+ Graduate students generally feel included by faculty, resembling the proportions who feel included by administration and staff. LGBT graduate students are one exception, with 79% feeling included, 6 percentage points lower than average.
 
 ```{r}
 #| label: include_fac
@@ -362,18 +323,88 @@ plot_group_comp(include_admin_2021, cols_neg)%>%
 include_fac_2021<-gses%>%
   filter(q=="I feel included by... the faculty")%>%
   clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
     mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(include_fac_2021, cols_neg)%>%
-  plot_diff_rect(., include_fac_2021,.08,.24, "Fewer Disagree", "More Disagree")+
+plot_group_comp(include_fac_2021, cols_pos)%>%
+  plot_diff_rect(., include_fac_2021,.74,1, "Fewer Agree", "More Agree")+
   labs(title="I feel included by the faculty",
          caption=caption_grad,
-      subtitle = "UCSD Graduate Students who respond somewhat disagree, disagree, or strongly disagree")
+      subtitle = "UCSD Graduate Students who at least somwhat agree")
  ggsave("viz/sob/included_fac_2021.png", width=9, height=5, units="in", dpi=300)
 ```
+
+#### To be Visualized
+* Faculty in my graduate program make thoughtful efforts to advance inclusion in my program
+* Faculty in my graduate program make thoughtful efforts to understand racial justice
+* My culture is respected by…The faculty
+
+
+### Interactions with Peers
+#### I feel included by my peers
+
+Across graduate student groups, about 91% feel included by peers and there are not strong differences between groups. 
+```{r}
+#| label: include_peers
+#| echo: FALSE
+#| warning: FALSE
+
+
+include_peers_2021<-gses%>%
+  filter(q=="I feel included by... my peers")%>%
+  clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(include_peers_2021, cols_pos)%>%
+  plot_diff_rect(., include_peers_2021,.8,1.08, "Fewer Agree","")+
+  labs(title="I feel included by my peers",
+         caption=caption_grad,
+      subtitle = "UCSD Graduate Students who at least somewhat agree")
+ ggsave("viz/sob/included_2021.png", width=9, height=5, units="in", dpi=300)
+```
+
+#### To be visualized
+* Students in my graduate program make thoughtful efforts to understand racial injustice
+* Students in my graduate program make thoughtful effort to advance inclusion in my program.
+* There is a strong sense of community in my graduate program.
+* There is a strong sense of community among graduate students at the university.
+
+
+### Interactions with Administrators and Staff
+
+#### I feel included by... the administration and staff"
+The proportion of graduate students who feel included by the administration and staff is a bit lower than that for included by peers, at about 85%, with a few groups slightly lower than that average, including African American, Hispanic/Latinx, and Asian American. 
+
+```{r}
+#| label: include_admin
+#| echo: FALSE
+#| warning: FALSE
+ 
+include_admin_2021<-gses%>%
+  filter(q=="I feel included by... the administration and staff")%>%
+  clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(include_admin_2021, cols_pos)%>%
+  plot_diff_rect(., include_admin_2021,.75,1.06, "Fewer Agree", "More Agree")+
+  labs(title="I feel included by the administration and staff",
+         caption=caption_grad,
+      subtitle = "UCSD Graduate Students who at least somewhat agree")
+ ggsave("viz/sob/included_admin_2021.png", width=9, height=5, units="in", dpi=300)
+```
+### General Belonging
+#### To Be Visualized
+* The university is hostile toward students when they raise concerns.
+* My graduate program is hostile toward students when they raise concerns.
+* In the past 12 months, have you been on the receiving end of a significant instance of bias, discrimination or harassment by someone in your graduate program? (another student, faculty member, member of administration or staff, by member of another group) 
 
 ## Response Rates {#sec-sob-rr}
 

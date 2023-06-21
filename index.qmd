@@ -1,7 +1,31 @@
 # Preface {.unnumbered}
 
-This is a Quarto book.
+**What is the point of this website?**
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+This website is meant as a reference material for Collective Impact working group members  and is designed with this use case in mind .  The static visuals are specifically designed to show equity gaps in student experiences at UCSD. . 
 
-This is currently a placeholder for future content
+Users interested in more polished  and deeply interpreted data should turn to the many other resources highlighted through the book published by UCSD Institutional Research, Equity, Diversity and Inclusion, and should stay tuned for future reports from Collective Impact.  Users interested in conducting their own data analysis should turn to the many Tableau Dashboards hosted by UCSD and UCOP. 
+
+## **Why a website?**
+
+Having a website allows for the Collective Impact backbone group to continuously update our data visualization library without having to constantly share new versions - as you would with a static pdf. The website also has an interactive table of contents and section links, allowing users to browse through sections of interest.
+
+\
+\
+\
+
+## **Why is the URL not \@UCSD.edu? Why isn't it in Tableau?**
+
+We built this website as an adhoc tool /proof of concept using resources available. More mature iterations will try to work with UCSD ITS to build a more institutionally connected resource, or as an extension to existing data resources.
+
+The website is built using[Quarto Publishing](https://quarto.org/) - "an open-source scientific and technical publishing system" as a  [Quarto Book](https://quarto.org/docs/books/) by Collective Impact backbone staff member Sarah Nolan (hence url "sanolan.quarto.pub" .  
+
+## **Can I share this website?**
+
+All the data on this website is publicly available aggregate data - downloaded from publicly available dashboards. A few links go to Tableau dashboards behind a sso login.  However, any shares should stress the preliminary and incomplete nature of the current website. 
+
+## **I have comments, concerns, corrections, queries!**
+
+Contact sanolan\@ucsd.edu . 
+
+\
