@@ -310,6 +310,8 @@ While not strictly about Sense of Belonging, a summary of student involvement in
 
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~31) on these questions, which skew more positive than the graduate student body average. The response count for African American graduate students is also small (18).  Interpret these trends with additional caution. 
 
+As of 6/22, we have also added a few screengrabs from an additional UC San Diego Graduate student survey - GradSERU
+
 ### Interactions with Faculty
 #### I feel included by the faculty
  
@@ -337,12 +339,16 @@ plot_group_comp(include_fac_2021, cols_pos)%>%
 ```
 
 #### To be Visualized
+UCGSES 2021
 * Faculty in my graduate program make thoughtful efforts to advance inclusion in my program
 * Faculty in my graduate program make thoughtful efforts to understand racial justice
 * My culture is respected by…The faculty
 
+GradSeru
+
 
 ### Interactions with Peers
+
 #### I feel included by my peers
 
 Across graduate student groups, about 91% feel included by peers and there are not strong differences between groups. 
@@ -367,6 +373,17 @@ plot_group_comp(include_peers_2021, cols_pos)%>%
       subtitle = "UCSD Graduate Students who at least somewhat agree")
  ggsave("viz/sob/included_2021.png", width=9, height=5, units="in", dpi=300)
 ```
+
+#### There is a sense of solidarity among the students
+These visuals come from the [2021 gradSERU at UCSD](https://ir.ucsd.edu/grad/surveys/gradseru/gradseru-results2021.html). The 80% yellow dot represents that campus average of 80% in comparison to displayed student subpopulations.
+
+![Degree Program](viz/sob/Solidarity_2021_gradseru_level.png)
+![URM Status](viz/sob/Solidarity_2021_gradseru_urm.png)
+
+
+#### I have friends in my graduate/professional program
+![Degree Program](viz/sob/friends_2021_gradseru_level.png)
+![URM Status](viz/sob/friends_2021_gradseru_urm.png)
 
 #### To be visualized
 * Students in my graduate program make thoughtful efforts to understand racial injustice
