@@ -4,15 +4,11 @@
 
 This website is meant as a reference material for Collective Impact working group members  and is designed with this use case in mind .  The static visuals are specifically designed to show equity gaps in student experiences at UCSD. . 
 
-Users interested in more polished  and deeply interpreted data should turn to the many other resources highlighted through the book published by UCSD Institutional Research, Equity, Diversity and Inclusion, and should stay tuned for future reports from Collective Impact.  Users interested in conducting their own data analysis should turn to the many Tableau Dashboards hosted by UCSD and UCOP. 
+Users interested in more polished and deeply interpreted data should turn to the many other resources highlighted throughout this online book, including those published by UCSD Institutional Research, Equity, Diversity and Inclusion, and from the UC Infocenter.  Users interested in conducting their own data analysis should turn to the many Tableau Dashboards hosted by UCSD and the UC Infocenter. 
 
 ## **Why a website?**
 
-Having a website allows for the Collective Impact backbone group to continuously update our data visualization library without having to constantly share new versions - as you would with a static pdf. The website also has an interactive table of contents and section links, allowing users to browse through sections of interest.
-
-\
-\
-\
+Having a website allows for the Collective Impact backbone group to continuously update our data visualization library without having to constantly share new versions - as you would with a static pdf. The website also has an interactive table of contents and section links, allowing users to browse through sections of interest.\
 
 ## **Why is the URL not \@UCSD.edu? Why isn't it in Tableau?**
 
