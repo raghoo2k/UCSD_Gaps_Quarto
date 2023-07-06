@@ -13,7 +13,7 @@ This is a chapter about mentoring, coaching, and advising at University of Calif
 Readers should note that the number of American Indian student respondents is low,about 36 respondents for the UCUES questions and too few to report for UCGSES. While this low response number is in line with the low number of American Indian students at UCSD, the low number means one or two students' responses can change the overall takeaway for any given question. You may see high variability in responses for this group as a result. 
 
 
-This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 3/21/23. 
+This chapter continues be updated and edited with additional interpretation and student groups - most recent updates 7/06/23. 
 
 ```{r}
 #| label: run_scripts
@@ -282,81 +282,24 @@ plot_group_comp(adv_fac_2020, cols_neg)%>%
 
 
 ## Graduate Students {#sec-mca-grads}
+
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~35) on these questions, which skew more positive than the graduate student body average. Interpret these trends with additional caution. 
 
-### Opportunities to form research/academic mentorship relationships with faculty members
-```{r}
-#| label: opp_research_ment
-#| echo: FALSE
-#| warning: FALSE
-opp_research_ment_2021<-gses%>%
-  filter(q=="Opportunities to form research/academic mentorship relationships with faculty members")%>%
-  clean_vibe_rate(.)%>%
-  collapse_negative_vibe(.)%>%
-    mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
+### Faculty Advising and Mentoring
 
-plot_group_comp(opp_research_ment_2021, cols_neg)%>%
-  plot_diff_rect(., opp_research_ment_2021,.13,.4, "Fewer Low Ratings", "More Low Ratings")+
-  labs(title="Please Rate: Opportunities to form research/academic \nmentorship relationships with faculty members",
-         caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
- ggsave("viz/mca/opp_research_ment2021.png", width=9, height=5, units="in", dpi=300)
+An overview of all UC graduate student responses related to faculty advising and mentoring is available at this [link](https://www.ucop.edu/institutional-research-academic-planning/_files/survey-documents-graduate/2021-ucgses-advising.pdf).Graduate students across the UC, and also within UC San Diego, identified advising as one of their top three priorities.
+
+![UC San Diego Graduate Student Priorities 2021](viz/mca/grad_priorities_ucsd.png)
+
+#### The mentorship and advising I receive in my program
+
+84% of UC San Diego graduate student respondents reported being at least somewhat satisfied with the mentorship and advising they received in their program, slightly higher than the all UC average of 81%. Satisfaction with thesis and dissertation research is also slightly higher, 86% at UC San Diego vs 84% at the UC, while satisfaction with career support is about the same, ~75% of students reporting being at least somewhat satisfied at both UC San Diego and within the UC more broadly. 
 
 
-```
+![UC San Diego Graduate Student Priorities 2021](viz/mca/grad_advising_sat_by_campus.png)
 
 
-### Opportunities to form non-research/academic mentorship relationships with faculty members
-```{r}
-#| label: opp_ment
-#| echo: FALSE
-#| warning: FALSE
-opp_ment_2021<-gses%>%
-  filter(q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program")%>%
-  clean_vibe_rate(.)%>%
-  collapse_negative_vibe(.)%>%
-    mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-plot_group_comp(opp_ment_2021, cols_neg)%>%
-  plot_diff_rect(., opp_ment_2021,.19,.52, "Fewer Low Ratings", "More Low Ratings")+
-  labs(title="Please Rate: Opportunities to form non-research/academic \nmentorship relationships with faculty members",
-    caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
- ggsave("viz/mca/opp_ment2021.png", width=9, height=5, units="in", dpi=300)
-
-
-```
-
-### The career support I receive in my program
-
-```{r}
-#| label: career_supp
-#| echo: FALSE
-#| warning: FALSE
-
-career_sup_2021<-gses%>%
-  filter(q=="the career support I receive in my program")%>%
-  clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
-    mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  filter(group_label!="All")
-
-plot_group_comp(career_sup_2021, cols_neg)%>%
-  plot_diff_rect(., career_sup_2021,.08,.35, "Fewer Dissatisfied", "More Dissatisfied")+
-  labs(title="I'm satisfied with the career support I recieve in my program",
-    caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
- ggsave("viz/mca/career_supp2021.png", width=9, height=5, units="in", dpi=300)
-
-
-```
-
-### The mentorship and advising I receive in my program
+Looking at difference in satisfaction within UC San Diego, LGBTQ+ students and Hispanic/Latinx students at UC San Diego report the lowest levels of satisfaction, disparities also present in the UC analysis.  
 
 ```{r}
 #| label: grad_mentorship
@@ -366,22 +309,22 @@ plot_group_comp(career_sup_2021, cols_neg)%>%
 mentor_gen_2021<-gses%>%
   filter(q=="the mentorship and advising I receive in my program")%>%
   clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
     mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(mentor_gen_2021, cols_neg)%>%
-  plot_diff_rect(., mentor_gen_2021,.12,.3, "Fewer Dissatisfied", "More Dissatisfied")+
+plot_group_comp(mentor_gen_2021, cols_pos)%>%
+  plot_diff_rect(., mentor_gen_2021,.74,.92, "Less Satisfied", "")+
   labs(title="I'm satisfied with the mentorship and advising I receive in my program",
     caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
+      subtitle = "Percent of UCSD Graduate Students who are at least somewhat satisfied")
  ggsave("viz/mca/ment_gen2021.png", width=9, height=5, units="in", dpi=300)
 
 
 ```
 
-### The support I received regarding my thesis/dissertation research
+#### The support I received regarding my thesis/dissertation research
 
 ```{r}
 #| label: support_thesis
@@ -391,20 +334,92 @@ plot_group_comp(mentor_gen_2021, cols_neg)%>%
 diss_supp_2021<-gses%>%
   filter(q=="the support I received regarding my thesis/dissertation research")%>%
   clean_vibe_agree(.)%>%
-  collapse_negative_vibe(.)%>%
+  collapse_positive_vibe(.)%>%
     mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   filter(group_label!="All")
 
-plot_group_comp(diss_supp_2021, cols_neg)%>%
-  plot_diff_rect(., diss_supp_2021,.09,.28, "Fewer Dissatisfied", "More Dissatisfied")+
+plot_group_comp(diss_supp_2021, cols_pos)%>%
+  plot_diff_rect(., diss_supp_2021,.76,.95, "Less Satisfied", "")+
   labs(title="I'm satisfied with the support I received regarding \nmy thesis/dissertation research",
     caption=caption_grad,
-      subtitle = "Percent of UCSD Graduate Students who Strongly Disagree, Disagree, Somewhat Disagree")
- ggsave("viz/mca/diss_supp_20212021.png", width=9, height=5, units="in", dpi=300)
+      subtitle = "Percent of UCSD Graduate Students who are at least somewhat satisfied")
+ ggsave("viz/mca/diss_supp_2021.png", width=9, height=5, units="in", dpi=300)
 
 
 ```
+
+
+#### The career support I receive in my program
+
+```{r}
+#| label: career_supp
+#| echo: FALSE
+#| warning: FALSE
+
+career_sup_2021<-gses%>%
+  filter(q=="the career support I receive in my program")%>%
+  clean_vibe_agree(.)%>%
+  collapse_positive_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(career_sup_2021, cols_pos)%>%
+  plot_diff_rect(., career_sup_2021,.66,.96, "Less Satisfied", "More Satisfied")+
+  labs(title="I'm satisfied with the career support I recieve in my program",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who are at least somewhat satisfied")
+ ggsave("viz/mca/career_supp2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+
+
+
+
+#### Opportunities to form research/academic mentorship relationships with faculty members
+Master's students and Hispanic/Latinx students report difficulties in finding opportunities to form research and academic mentorship relationships with faculty members at UC San Diego. 
+```{r}
+#| label: opp_research_ment
+#| echo: FALSE
+#| warning: FALSE
+opp_research_ment_2021<-gses%>%
+  filter(q=="Opportunities to form research/academic mentorship relationships with faculty members")%>%
+  clean_vibe_rate(.)%>%
+  collapse_positive_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(opp_research_ment_2021, cols_pos)%>%
+  plot_diff_rect(., opp_research_ment_2021,.65,.92, "Fewer report opportunity", "")+
+  labs(title="Please Rate: Opportunities to form research/academic \nmentorship relationships with faculty members",
+         caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who feel opportunities at least Good")
+ ggsave("viz/mca/opp_research_ment2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
+### Additional Relationships between Advising and Student Outcomes
+
+While the Collective Impact team currently does not have sufficient data access to replicate analyses at UC San Diego, the [UC system-wide report](https://www.ucop.edu/institutional-research-academic-planning/_files/survey-documents-graduate/2021-ucgses-advising.pdf) found the following relationships between advising and student outcomes:
+
+* Students reported more variation regarding the frequency with which they met their advisor. For
+example, eight percent reported meeting zero times in the past term and 22 percent reported
+meeting more than six times. Reported meeting frequency was strongly associated with advisor
+satisfaction ratings.
+
+* Satisfaction with mentorship and advising was associated with greater self-reports of student
+engagement in day-to-day work and being on track to complete one’s degree program on time.
+
+*  Advisors who met more frequently with their students received more favorable ratings regarding
+their career advice. Students who were satisfied with their ad visor tended to feel more upbeat
+about their post-graduation career prospects and reported having a greater sense of direction
+for their career post-graduation.
+
+* Advisor satisfaction was negatively associated with depressive symptomology.
+
 ## Appendix:Response Rates {#sec-mca-rr}
 
 ### Undergraduates:UCUES
@@ -481,7 +496,7 @@ gtsave(gt_ug_rr_2020, "mca_rr_ug_2020.png", path = "viz/mca")
 #| warning: FALSE
 grad_rr<-gses%>%
   filter(q=="Opportunities to form research/academic mentorship relationships with faculty members"|
-           q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program"| 
+           #q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program"| 
            q=="the career support I receive in my program"|
            q=="the career support I receive in my program"|
            q=="the mentorship and advising I receive in my program"|
@@ -517,3 +532,24 @@ gtsave(gt_grad_rr, "mca_rr_grad.png", path = "viz/mca")
 ```
 
 
+```{r}
+#| label: opp_ment
+#| results: FALSE
+#| warning: FALSE
+opp_ment_2021<-gses%>%
+  filter(q=="Opportunities to form non-research/academic mentorship relationships with faculty members in your program")%>%
+  clean_vibe_rate(.)%>%
+  collapse_negative_vibe(.)%>%
+    mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  filter(group_label!="All")
+
+plot_group_comp(opp_ment_2021, cols_neg)%>%
+  plot_diff_rect(., opp_ment_2021,.19,.52, "Fewer Low Ratings", "More Low Ratings")+
+  labs(title="Please Rate: Opportunities to form non-research/academic \nmentorship relationships with faculty members",
+    caption=caption_grad,
+      subtitle = "Percent of UCSD Graduate Students who respond Very Poor, Poor or Fair")
+ ggsave("viz/mca/opp_ment2021.png", width=9, height=5, units="in", dpi=300)
+
+
+```
