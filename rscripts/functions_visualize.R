@@ -61,8 +61,9 @@ plot_diff_rect<-function(g,data,ll,ul,stringlow,stringhigh){
   g+
   scale_x_continuous(expand=c(.02,.02), 
                      limits=c(ll, ul),
-                     #sets labels for average line, and diff in rectangle as if axis labels
-                     breaks=c((ll+.01),data%$% all[1],ul*.85,(ul-.01)), 
+                     #sets labels for average line, and diff in rectangle as if axis labels 
+    #experiment- changed upper limit string to be *ul rather than .85?
+                     breaks=c((ll+.01),data%$% all[1],ul*.95,(ul-.01)), 
   labels=c(stringlow,"Student Average", stringhigh, "Difference from \nAverage"), 
   position="top")+
   scale_y_discrete(expand=c(0,1.2))+

@@ -52,11 +52,101 @@ gses<-read_excel("data/UCGSES.xlsx")%>%
 This section draws from recent waves of the University of California Undergraduate Experience Survey. 
 Please refer to @sec-UCUES for more information on UCUES. For readers affiliated with UCSD and a working Active Directory login, a few longitudinal questions can be explored on [Institutional Research's Dashboard](https://tableau.ucsd.edu/#/views/UCUES_UC_SanDiego/AcademicEngagement?:iid=1)
 
+It seems the number of questions related to mentoring, coaching and non-academic advising are relatively limited on the UCUES. We show results related to students seeking help, working with their classmates, and connections with faculty as one way to start understanding the importance of relationships. 
+
+### Academic Advising
+The following three questions are from the 2020 UCUES as these questions were not continued into 2022
+#### Faculty
+
+```{r}
+#| label: adv_fac
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_fac_2020<-es%>%
+filter(q=="Academic advising by faculty"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_fac_2020, cols_pos)%>%
+  plot_diff_rect(., adv_fac_2020,.77,.9, "Less Satisfied", "More Satisfied")+
+  labs(title="How satisfied are you with: Academic advising by faculty",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG at least somehwat satisfied")
+ ggsave("viz/mca/adv_fac_2020.png", width=9, height=5, units="in", dpi=300)
 
 
 
 
-### Reluctance to ask for academic help when I need it
+```
+#### Academic advising by school or college staff
+
+
+```{r}
+#| label: adv_college
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_coll_2020<-es%>%
+filter(q=="Academic advising by school or college staff"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  #rarely or never is "positive" in clean vibe function - so we want to collapse those
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_coll_2020, cols_pos)%>%
+  plot_diff_rect(., adv_coll_2020,.68,.89, "Less Satisfied", "More Satisfied")+
+  labs(title="How satisfied are you with: Academic advising by school or college staff",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG at least somehwat satisfied")
+ ggsave("viz/mca/adv_coll_2020.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+
+### Academic advising by Departmental Staff
+```{r}
+#| label: adv_dep
+#| echo: FALSE
+#| warning: FALSE
+
+
+adv_dep_2020<-es%>%
+filter(q=="Academic advising by departmental staff"&year=="2020")%>%
+ clean_vibe_satisfied(.)%>%
+  collapse_positive_vibe(.)%>%
+   mutate(all=filter(., comp=="All")%$% value)%>%
+  create_diff_cols(.)%>%
+  #low sample size
+  filter(group_label!="All")
+
+plot_group_comp(adv_dep_2020, cols_pos)%>%
+  plot_diff_rect(., adv_dep_2020,.71,.89, "Less Satisfied", "More Satisfied")+
+  labs(title="How satisfied are you with: Academic advising by departmental staff",
+         caption="Source: UCUES 2020",
+      subtitle = "Percent of UCSD UG at least somehwat satisfied")
+ ggsave("viz/mca/adv_dep_2020.png", width=9, height=5, units="in", dpi=300)
+
+
+
+
+```
+
+
+### Help-seeking
+
+#### Reluctance to ask for academic help when I need it
 ```{r}
 #| label: rel_help
 #| echo: FALSE
@@ -80,8 +170,7 @@ plot_group_comp(rel_help_2022, cols_neg)%>%
 ```
 
 
-
-### Sought academic help from instructor or tutor when needed
+#### Sought academic help from instructor or tutor when needed
 
 ```{r}
 #| label: sought_help
@@ -91,21 +180,21 @@ sought_help_2022<-es%>%
 filter(q=="Sought academic help from instructor or tutor when needed"&year=="2022")%>%
  clean_vibe_freq(.)%>%
   #rarely or never is positive
-  collapse_positive_vibe(.)%>%
+  collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(sought_help_2022, cols_neg)%>%
-  plot_diff_rect(., sought_help_2022,.12,.36, "More helpseeking", "Less helpseeking")+
+plot_group_comp(sought_help_2022, cols_pos)%>%
+  plot_diff_rect(., sought_help_2022,.69,.92, "Less helpseeking","More helpseeking")+
   labs(title="How often have you sought academic help from \nan instructor or tutor when needed?",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who responded rarely or never")
+      subtitle = "Percent of UCSD UG who at least occasionally seek help")
  ggsave("viz/mca/sought_help_2022.png", width=9, height=5, units="in", dpi=300)
 ```
-
-### Studied as a group with classmates outside of class
+### Working with Classmates
+#### Studied as a group with classmates outside of class
 
 ```{r}
 #| label: study_group
@@ -116,22 +205,22 @@ study_group_2022<-es%>%
 filter(q=="Studied as a group with classmates outside of class"&year=="2022")%>%
  clean_vibe_freq(.)%>%
   #rarely or never is "positive" in clean vibe function - so we want to collapse those
-  collapse_positive_vibe(.)%>%
+  collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(study_group_2022, cols_neg)%>%
-  plot_diff_rect(., study_group_2022,.22,.42, "More group study", "Less group study")+
+plot_group_comp(study_group_2022, cols_pos)%>%
+  plot_diff_rect(., study_group_2022,.63,.81,  "Less group study","More group study")+
   labs(title="How often have you: studied as a group \nwith classmates outside of class ?",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who responded rarely or never")
+      subtitle = "Percent of UCSD UG who at least occasionally study with classmates")
  ggsave("viz/mca/group_study_2022.png", width=9, height=5, units="in", dpi=300)
 
 ```
 
-### Helped a classmate better understand the course material when studying together
+#### Helped a classmate better understand the course material when studying together
 
 ```{r}
 #| label: help_classmate
@@ -141,23 +230,26 @@ plot_group_comp(study_group_2022, cols_neg)%>%
 help_class_2022<-es%>%
 filter(q=="Helped a classmate better understand the course material when studying together"&year=="2022")%>%
  clean_vibe_freq(.)%>%
-  #rarely or never is "positive" in clean vibe function - so we want to collapse those
-  collapse_positive_vibe(.)%>%
+  #rarely or never is "positive" in clean vibe function -
+  collapse_negative_vibe(.)%>%
    mutate(all=filter(., comp=="All")%$% value)%>%
   create_diff_cols(.)%>%
   #low sample size
   filter(group_label!="All")
 
-plot_group_comp(help_class_2022, cols_neg)%>%
-  plot_diff_rect(., help_class_2022,.12,.36, "More helping", "Less helping")+
+plot_group_comp(help_class_2022, cols_pos)%>%
+  plot_diff_rect(., help_class_2022,.67,.89,  "Less helping","More helping")+
   labs(title="How often have you: Helped a classmate \nbetter understand the course material when studying together",
          caption=caption_ug,
-      subtitle = "Percent of UCSD UG who responded rarely or never")
+      subtitle = "Percent of UCSD UG who at least occasionally help a classmate")
  ggsave("viz/mca/help_class_2022.png", width=9, height=5, units="in", dpi=300)
 
 
 ```
-### Faculty know my name
+
+### Faculty Connection
+
+####Faculty know my name
 
 ![](viz/acex/fac_name_2022.png)
 
@@ -187,96 +279,6 @@ plot_group_comp(num_prof_2022, cols_neg)%>%
          caption=caption_ug,
       subtitle = "Percent of UCSD UG who know 0 professors well enough")
  ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
-```
-
-
-### Academic advising by school or college staff
-The following three questions are from the 2020 UCUES as these questions were not continued into 2022
-
-```{r}
-#| label: adv_college
-#| echo: FALSE
-#| warning: FALSE
-
-
-adv_coll_2020<-es%>%
-filter(q=="Academic advising by school or college staff"&year=="2020")%>%
- clean_vibe_satisfied(.)%>%
-  #rarely or never is "positive" in clean vibe function - so we want to collapse those
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
-
-plot_group_comp(adv_coll_2020, cols_neg)%>%
-  plot_diff_rect(., adv_coll_2020,.16,.36, "Less Dissatisfied", "More Dissatisfied")+
-  labs(title="How satisfied are you with: Academic advising by school or college staff",
-         caption="Source: UCUES 2020",
-      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
- ggsave("viz/mca/adv_coll_2020.png", width=9, height=5, units="in", dpi=300)
-
-
-
-
-```
-### Academic advising by Departmental Staff
-```{r}
-#| label: adv_dep
-#| echo: FALSE
-#| warning: FALSE
-
-
-adv_coll_2020<-es%>%
-filter(q=="Academic advising by departmental staff"&year=="2020")%>%
- clean_vibe_satisfied(.)%>%
-  #rarely or never is "positive" in clean vibe function - so we want to collapse those
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
-
-plot_group_comp(adv_coll_2020, cols_neg)%>%
-  plot_diff_rect(., adv_coll_2020,.13,.32, "Less Dissatisfied", "More Dissatisfied")+
-  labs(title="How satisfied are you with: Academic advising by departmental staff",
-         caption="Source: UCUES 2020",
-      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
- ggsave("viz/mca/adv_dep_2020.png", width=9, height=5, units="in", dpi=300)
-
-
-
-
-```
-
-### Academic advising by faculty
-
-```{r}
-#| label: adv_fac
-#| echo: FALSE
-#| warning: FALSE
-
-
-adv_fac_2020<-es%>%
-filter(q=="Academic advising by faculty"&year=="2020")%>%
- clean_vibe_satisfied(.)%>%
-  #rarely or never is "positive" in clean vibe function - so we want to collapse those
-  collapse_negative_vibe(.)%>%
-   mutate(all=filter(., comp=="All")%$% value)%>%
-  create_diff_cols(.)%>%
-  #low sample size
-  filter(group_label!="All")
-
-plot_group_comp(adv_fac_2020, cols_neg)%>%
-  plot_diff_rect(., adv_coll_2020,.12,.26, "Less Dissatisfied", "More Dissatisfied")+
-  labs(title="How satisfied are you with: Academic advising by faculty",
-         caption="Source: UCUES 2020",
-      subtitle = "Percent of UCSD UG who responded somehwat dissatisfied, dissatisfied, or very dissatisfied")
- ggsave("viz/mca/adv_fac_2020.png", width=9, height=5, units="in", dpi=300)
-
-
-
-
 ```
 
 
