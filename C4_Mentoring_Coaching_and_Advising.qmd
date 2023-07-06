@@ -55,9 +55,9 @@ Please refer to @sec-UCUES for more information on UCUES. For readers affiliated
 It seems the number of questions related to mentoring, coaching and non-academic advising are relatively limited on the UCUES. We show results related to students seeking help, working with their classmates, and connections with faculty as one way to start understanding the importance of relationships. 
 
 ### Academic Advising
-The following three questions are from the 2020 UCUES as these questions were not continued into 2022
-#### Faculty
+The following three questions are from the 2020 UCUES as these questions were not continued into 2022. Instead, two questions about academic advising in general were added to a battery of questions about student's majors. 
 
+#### Faculty
 ```{r}
 #| label: adv_fac
 #| echo: FALSE
@@ -253,7 +253,7 @@ plot_group_comp(help_class_2022, cols_pos)%>%
 
 ![](viz/acex/fac_name_2022.png)
 
-### How many professors do you know well enough to ask for a letter of recommendation?
+#### How many professors do you know well enough to ask for a letter of recommendation?
 ```{r}
 #| label: num_prof
 #| echo: FALSE
@@ -281,7 +281,9 @@ plot_group_comp(num_prof_2022, cols_neg)%>%
  ggsave("viz/mca/num_prof_2022.png", width=9, height=5, units="in", dpi=300)
 ```
 
-
+### Future Visualizations
+*  Access to Academic Advising and Quality of Academic Advising -listed under "Major Evaluation" UCUES 2022
+* Barriers to success- poor study skills UCUES 2022
 
 ## Graduate Students {#sec-mca-grads}
 
