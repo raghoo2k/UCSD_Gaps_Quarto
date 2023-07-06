@@ -318,7 +318,7 @@ While not strictly about Sense of Belonging, a summary of student involvement in
 
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~31) on these questions, which skew more positive than the graduate student body average. The response count for African American graduate students is also small (18).  Interpret these trends with additional caution. 
 
-As of 6/22, we have also added a few screengrabs from an additional UC San Diego Graduate student survey - GradSERU
+As of 6/22, we have also added a few screengrabs from an additional UC San Diego Graduate student survey - GradSERU. For more on UC San Diego's implementation of gradSERU in 2019 and 2021 see @sec-gradseru
 
 ### Interactions with Faculty
 #### I feel included by the faculty
@@ -352,7 +352,6 @@ UCGSES 2021
 * Faculty in my graduate program make thoughtful efforts to understand racial justice
 * My culture is respected by…The faculty
 
-GradSeru
 
 
 ### Interactions with Peers

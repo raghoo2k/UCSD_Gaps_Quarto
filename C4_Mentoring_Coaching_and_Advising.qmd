@@ -285,6 +285,7 @@ plot_group_comp(adv_fac_2020, cols_neg)%>%
 
 The student groups available in publicly available data differ slightly for graduate students. The following draw from the UC Graduate Student Experience Survey in 2021.  Please refer to @sec-UCGSES for more on UCGSES. Please note that there are a very small number of "Professional Practice" (MD, Pharm.D.) student respondents (~35) on these questions, which skew more positive than the graduate student body average. Interpret these trends with additional caution. 
 
+UC San Diego graduate students also shared their experiences with mentoring and advising in the gradSERU survey, in 2019 and 2021. Graduate students responded to a set of questions of the frequency, helpfulness, and characteristics of their primary advisor relationship. For more on these results see UC San Diego's [dashboard](https://ir.ucsd.edu/grad/surveys/gradseru/gradseru-results2021.html).For more on UC San Diego's gradSERU implementation see @sec-gradseru   
 ### Faculty Advising and Mentoring
 
 An overview of all UC graduate student responses related to faculty advising and mentoring is available at this [link](https://www.ucop.edu/institutional-research-academic-planning/_files/survey-documents-graduate/2021-ucgses-advising.pdf).Graduate students across the UC, and also within UC San Diego, identified advising as one of their top three priorities.
